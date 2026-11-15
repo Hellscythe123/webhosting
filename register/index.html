@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="th" class="light-style customizer-hide" dir="ltr" data-theme="theme-default">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+    <title>สมัครสมาชิก | MinimalCloud.co.ltd</title>
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="/assets/sneat/vendor/fonts/boxicons.css" />
+
+    <!-- Core CSS -->
+    <link rel="stylesheet" href="/assets/sneat/vendor/css/core.css" class="template-customizer-core-css" />
+    <link rel="stylesheet" href="/assets/sneat/vendor/css/theme-default.css" class="template-customizer-theme-css" />
+    <link rel="stylesheet" href="/assets/sneat/css/demo.css" />
+    <link rel="stylesheet" href="/assets/sneat/css/register.css" />
+
+    <!-- Page -->
+    <link rel="stylesheet" href="/assets/sneat/vendor/css/pages/page-auth.css" />
+
+    <!-- Helpers -->
+    <script src="/assets/sneat/vendor/js/helpers.js"></script>
+    <script src="/assets/sneat/js/config.js"></script>
+
+    <!-- fontawsome 6.7x -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/js/all.min.js"></script>
+
+    <!-- Modern Theme & Main CSS -->
+    <link rel="stylesheet" href="/assets/css/client-theme.css" />
+    <link rel="stylesheet" href="/assets/css/main.css" />
+
+    <!-- Zero-Flicker Preload Script for Theme (Default System) -->
+    <script>
+        (function() {
+            try {
+                const storedTheme = localStorage.getItem('theme');
+                const activeTheme = storedTheme === 'dark' ? 'dark' : 'light'; // light is the default, no auto/OS follow
+                document.documentElement.setAttribute('data-bs-theme', activeTheme);
+                document.documentElement.classList.remove('light-style', 'dark-style');
+                document.documentElement.classList.add(activeTheme === 'dark' ? 'dark-style' : 'light-style');
+            } catch (e) {
+                console.error('Theme preload error:', e);
+            }
+        })();
+    </script>
+
+    <style>
+        /* 1. Default Focus State */
+        .input-group-merge:has(.form-control:focus) {
+            box-shadow: 0 0 0 3px rgba(47, 107, 255, 0.22) !important;
+            border-radius: 0.5rem;
+        }
+        .input-group-merge:has(.form-control:focus) .input-group-text,
+        .input-group-merge:has(.form-control:focus) .form-control {
+            border-color: #2f6bff !important;
+            box-shadow: none !important;
+        }
+
+        /* 2. Invalid State (Red) - Must override default focus */
+        .input-group-merge:has(.form-control.is-invalid) {
+            box-shadow: 0 0 0 3px rgba(255, 62, 29, 0.22) !important;
+            border-radius: 0.5rem;
+        }
+        .input-group-merge:has(.form-control.is-invalid) .input-group-text,
+        .input-group-merge:has(.form-control.is-invalid) .form-control {
+            border-color: #ff3e1d !important;
+            box-shadow: none !important;
+        }
+
+        /* 3. Invalid + Focus State (Red) - Highest priority */
+        .input-group-merge:has(.form-control.is-invalid:focus) {
+            box-shadow: 0 0 0 3px rgba(255, 62, 29, 0.3) !important;
+            border-radius: 0.5rem;
+        }
+        .input-group-merge:has(.form-control.is-invalid:focus) .input-group-text,
+        .input-group-merge:has(.form-control.is-invalid:focus) .form-control {
+            border-color: #ff3e1d !important;
+            box-shadow: none !important;
+        }
+
+        /* 4. Valid State (Green) */
+        .input-group-merge:has(.form-control.is-valid) {
+            box-shadow: 0 0 0 3px rgba(113, 221, 55, 0.22) !important;
+            border-radius: 0.5rem;
+        }
+        .input-group-merge:has(.form-control.is-valid) .input-group-text,
+        .input-group-merge:has(.form-control.is-valid) .form-control {
+            border-color: #71dd37 !important;
+            box-shadow: none !important;
+        }
+
+        /* 5. Valid + Focus State (Green) */
+        .input-group-merge:has(.form-control.is-valid:focus) {
+            box-shadow: 0 0 0 3px rgba(113, 221, 55, 0.3) !important;
+            border-radius: 0.5rem;
+        }
+        .input-group-merge:has(.form-control.is-valid:focus) .input-group-text,
+        .input-group-merge:has(.form-control.is-valid:focus) .form-control {
+            border-color: #71dd37 !important;
+            box-shadow: none !important;
+        }
+
+        /* Customer Type (สมัครในนาม) Cards */
+        .customer-type-card {
+            border: 1.5px solid var(--mc-border, #e2e8f0);
+            border-radius: 0.65rem;
+            padding: 0.65rem 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            background: var(--mc-bg-card, #ffffff);
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            height: 100%;
+        }
+        .customer-type-card:hover {
+            border-color: #6f9bff;
+            background: rgba(47, 107, 255, 0.04);
+        }
+        .customer-type-radio:checked + .customer-type-card {
+            border-color: #2f6bff !important;
+            background: rgba(47, 107, 255, 0.08) !important;
+            box-shadow: 0 0 0 2px rgba(47, 107, 255, 0.2) !important;
+        }
+        html.dark-style .customer-type-card {
+            border-color: rgba(255, 255, 255, 0.12);
+            background: rgba(30, 41, 59, 0.6);
+        }
+        html.dark-style .customer-type-card:hover {
+            border-color: #6f9bff;
+            background: rgba(47, 107, 255, 0.15);
+        }
+        html.dark-style .customer-type-radio:checked + .customer-type-card {
+            border-color: #6f9bff !important;
+            background: rgba(47, 107, 255, 0.22) !important;
+        }
+        .field-feedback-valid {
+            color: #198754;
+            font-size: 0.82rem;
+            margin-top: 0.25rem;
+            display: none;
+        }
+        .field-feedback-valid.show {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating Theme Toggle Button -->
+    <button type="button" class="floating-theme-toggle mc-theme-floating" id="themeToggleBtn" aria-label="สลับโหมดสว่าง/มืด" aria-pressed="false" title="สลับโหมดสว่าง/มืด">
+                                    <span class="mc-theme-ico" data-for="light"><i class="fa-solid fa-sun"></i></span>
+                                    <span class="mc-theme-ico" data-for="dark"><i class="fa-solid fa-moon"></i></span>
+                                    <span class="mc-theme-label">ธีม</span>
+                                </button>
+
+    <!-- Content -->
+    <div class="container-xxl">
+        <div class="authentication-wrapper authentication-basic container-p-y">
+            <div class="authentication-inner">
+                <!-- Register Card -->
+                <div class="card">
+                    <div class="card-body">
+                        <!-- Logo -->
+                        <div class="app-brand justify-content-center">
+                            <a href="/" class="app-brand-link gap-2">
+                                <img src="/assets/img/logo-cloud.png" id="logo" alt="logo">
+                                <span class="app-brand-text demo text-body fw-bolder">
+                                    MinimalCloud
+                                </span>
+                            </a>
+                        </div>
+                        <!-- /Logo -->
+                        <h4 class="mb-2">เริ่มต้นการใช้งาน 🚀</h4>
+                        <p class="mb-3">สร้างบัญชีของคุณและเริ่มต้นใช้งานได้ทันที!</p>
+
+                        <!-- Referral Program Welcome Alert -->
+                        
+                        <form id="formAuthentication" class="mb-3" action="/register" method="POST">
+                            <input type="hidden" name="_token" value="" autocomplete="off">
+                            <!-- Customer Type Selector (สมัครในนาม) -->
+                            <div class="mb-4">
+                                <label class="form-label fw-bold d-block mb-2">
+                                    <i class="fa-solid fa-user-tag text-primary me-1"></i> สมัครในนาม <span class="text-danger">*</span>
+                                </label>
+                                <div class="row g-2">
+                                    <div class="col-md-4">
+                                        <input type="radio" class="d-none customer-type-radio" name="customer_type" id="type_individual" value="individual" checked>
+                                        <label class="customer-type-card" for="type_individual">
+                                            <i class="fa-solid fa-user text-primary fs-5"></i>
+                                            <div>
+                                                <div class="fw-semibold text-body" style="font-size: 0.9rem;">บุคคลธรรมดา</div>
+                                                <small class="text-muted" style="font-size: 0.75rem;">สำหรับบุคคลทั่วไป</small>
+                                            </div>
+                                        </label>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input type="radio" class="d-none customer-type-radio" name="customer_type" id="type_company" value="company" >
+                                        <label class="customer-type-card" for="type_company">
+                                            <i class="fa-solid fa-building text-info fs-5"></i>
+                                            <div>
+                                                <div class="fw-semibold text-body" style="font-size: 0.9rem;">นิติบุคคล (บริษัท/หจก.)</div>
+                                                <small class="text-muted" style="font-size: 0.75rem;">บริษัท / ห้างหุ้นส่วนจำกัด</small>
+                                            </div>
+                                        </label>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input type="radio" class="d-none customer-type-radio" name="customer_type" id="type_government" value="government" >
+                                        <label class="customer-type-card" for="type_government">
+                                            <i class="fa-solid fa-landmark text-warning fs-5"></i>
+                                            <div>
+                                                <div class="fw-semibold text-body" style="font-size: 0.9rem;">หน่วยงานราชการ</div>
+                                                <small class="text-muted" style="font-size: 0.75rem;">ราชการ / รัฐวิสาหกิจ</small>
+                                            </div>
+                                        </label>
+                                    </div>
+                                </div>
+                                                            </div>
+
+                            <!-- Corporate & Government Fields (นิติบุคคล / หน่วยงานราชการ) -->
+                            <div id="corporateFields" style="display: none;">
+                                <div class="row">
+                                    <!-- Company / Organization Name -->
+                                    <div class="col-md-6 mb-3">
+                                        <label for="company_name" class="form-label" id="companyNameLabel">ชื่อหน่วยงาน / ชื่อบริษัท <span class="text-danger">*</span></label>
+                                        <div class="input-group input-group-merge">
+                                            <span class="input-group-text"><i class="fa-solid fa-building"></i></span>
+                                            <input type="text" class="form-control " id="company_name" name="company_name" value="" placeholder="เช่น บริษัท มินิมอลคลาวด์ จำกัด หรือ กรม..." />
+                                        </div>
+                                        <div id="companyNameFeedback" class="invalid-feedback d-block"></div>
+                                                                            </div>
+
+                                    <!-- Tax ID (13 Digits) -->
+                                    <div class="col-md-6 mb-3">
+                                        <label for="tax_id" class="form-label">เลขประจำตัวผู้เสียภาษี (13 หลัก) <span class="text-danger">*</span></label>
+                                        <div class="input-group input-group-merge">
+                                            <span class="input-group-text"><i class="fa-solid fa-receipt"></i></span>
+                                            <input type="text" class="form-control " id="tax_id" name="tax_id" value="" placeholder="0-XXXX-XXXXX-XX-X" maxlength="17" />
+                                        </div>
+                                        <div id="taxIdFeedback" class="invalid-feedback d-block"></div>
+                                        <div id="taxIdValidFeedback" class="field-feedback-valid"><i class="fa-solid fa-circle-check me-1"></i> เลขประจำตัวผู้เสียภาษีถูกต้อง</div>
+                                                                            </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <!-- Branch Type & Code -->
+                                    <div class="col-md-6 mb-3 mb-md-0">
+                                        <label class="form-label d-block">สำนักงานใหญ่ / สาขา</label>
+                                        <div class="d-flex align-items-center gap-3 pt-1">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="branch_type" id="branch_head" value="head_office" checked>
+                                                <label class="form-check-label" for="branch_head">
+                                                    สำนักงานใหญ่ (Head Office)
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="branch_type" id="branch_sub" value="branch" >
+                                                <label class="form-check-label" for="branch_sub">
+                                                    สาขา (Branch)
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6" id="branchCodeWrapper" style="display: none;">
+                                        <label for="branch_code" class="form-label">รหัสสาขา (5 หลัก)</label>
+                                        <div class="input-group input-group-merge">
+                                            <span class="input-group-text"><i class="fa-solid fa-code-branch"></i></span>
+                                            <input type="text" class="form-control " id="branch_code" name="branch_code" value="00001" placeholder="เช่น 00001" maxlength="5" />
+                                        </div>
+                                                                                <div id="branchCodeFeedback" class="invalid-feedback d-block"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <!-- Name / Contact Person -->
+                                <div class="col-md-6 mb-3">
+                                    <label for="name" class="form-label" id="nameLabel">
+                                        <span id="nameLabelText">ชื่อ-นามสกุล</span> <span class="text-danger">*</span>
+                                    </label>
+                                    <div class="input-group input-group-merge">
+                                        <span class="input-group-text"><i class="fa-solid fa-user"></i></span>
+                                        <input type="text" class="form-control " id="name" name="name" value="" placeholder="กรอกชื่อ-นามสกุล" autofocus />
+                                    </div>
+                                    <div id="nameFeedback" class="invalid-feedback d-block"></div>
+                                                                    </div>
+
+                                <!-- Thai National ID (สำหรับบุคคลธรรมดา) -->
+                                <div class="col-md-6 mb-3" id="individualIdWrapper" style="display: block;">
+                                    <label for="id_card" class="form-label">เลขบัตรประชาชน (13 หลัก)</label>
+                                    <div class="input-group input-group-merge">
+                                        <span class="input-group-text"><i class="fa-solid fa-id-card"></i></span>
+                                        <input type="text" class="form-control " id="id_card" name="id_card" value="" placeholder="X-XXXX-XXXXX-XX-X" maxlength="17" />
+                                    </div>
+                                    <div id="idCardFeedback" class="invalid-feedback d-block"></div>
+                                    <div id="idCardValidFeedback" class="field-feedback-valid"><i class="fa-solid fa-circle-check me-1"></i> เลขบัตรประชาชนถูกต้อง</div>
+                                                                    </div>
+
+                                <!-- Email -->
+                                <div class="col-md-6 mb-3">
+                                    <label for="email" class="form-label">อีเมล <span class="text-danger">*</span></label>
+                                    <div class="input-group input-group-merge">
+                                        <span class="input-group-text"><i class="fa-solid fa-envelope"></i></span>
+                                        <input type="email" class="form-control " id="email" name="email" value="" placeholder="กรอกอีเมลของคุณ" />
+                                    </div>
+                                    <div id="emailFeedback" class="invalid-feedback d-block"></div>
+                                                                    </div>
+
+                                <!-- Phone -->
+                                <div class="col-md-6 mb-3">
+                                    <label for="phone" class="form-label">เบอร์โทรศัพท์ <span class="text-danger">*</span></label>
+                                    <div class="input-group input-group-merge">
+                                        <span class="input-group-text">+66</span>
+                                        <input type="tel" class="form-control " id="phone" name="phone" value="" placeholder="XX-XXX-XXXX" />
+                                    </div>
+                                    <div id="phoneFeedback" class="invalid-feedback d-block"></div>
+                                                                    </div>
+                            </div>
+
+                            <!-- Address -->
+                            <div class="mb-3">
+                                <label for="address" class="form-label">ที่อยู่</label>
+                                <div class="input-group input-group-merge">
+                                     <span class="input-group-text"><i class="fa-solid fa-location-dot"></i></span>
+                                     <textarea class="form-control " id="address" name="address" rows="5" cols="10" placeholder="กรอกที่อยู่ของคุณ"></textarea>
+                                </div>
+                                <div id="addressFeedback" class="invalid-feedback d-block"></div>
+                                                            </div>
+
+                            <!-- Referral Code (Affiliate & Referral Program) -->
+                            <div class="mb-3">
+                                <label for="referral_code" class="form-label d-flex justify-content-between align-items-center">
+                                    <span><i class="fa-solid fa-handshake-angle me-1 text-primary"></i> รหัสผู้แนะนำ (Referral Code)</span>
+                                    <small class="text-muted">(ไม่บังคับ)</small>
+                                </label>
+                                <div class="input-group input-group-merge">
+                                    <span class="input-group-text"><i class="fa-solid fa-tag"></i></span>
+                                    <input 
+                                        type="text" 
+                                        class="form-control text-uppercase font-monospace " 
+                                        id="referral_code" 
+                                        name="referral_code" 
+                                        value="" 
+                                        placeholder="เช่น 9A2F8C1D (รหัส 8 หลัก)" 
+                                        maxlength="20"
+                                    />
+                                </div>
+                                                            </div>
+
+                            <div class="row">
+                                <!-- Password -->
+                                <div class="col-md-6 mb-3 form-password-toggle">
+                                    <label class="form-label" for="password">รหัสผ่าน</label>
+                                    <div class="input-group input-group-merge">
+                                        <span class="input-group-text"><i class="fa-solid fa-lock"></i></span>
+                                        <input type="password" id="password" class="form-control " name="password" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" />
+                                        <span class="input-group-text cursor-pointer"><i class="fa-solid fa-eye-slash"></i></span>
+                                    </div>
+                                    <div id="passwordFeedback" class="invalid-feedback d-block"></div>
+                                                                    </div>
+
+                                <!-- Confirm Password -->
+                                <div class="col-md-6 mb-3 form-password-toggle">
+                                    <label class="form-label" for="password_confirmation">ยืนยันรหัสผ่าน</label>
+                                    <div class="input-group input-group-merge">
+                                        <span class="input-group-text"><i class="fa-solid fa-lock"></i></span>
+                                        <input type="password" id="password_confirmation" class="form-control" name="password_confirmation" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" />
+                                        <span class="input-group-text cursor-pointer"><i class="fa-solid fa-eye-slash"></i></span>
+                                    </div>
+                                    <div id="passwordConfirmationFeedback" class="invalid-feedback d-block"></div>
+                                </div>
+                            </div>
+
+                            <!-- Terms and Conditions -->
+                            <div class="mb-4 mt-3 d-flex justify-content-center">
+                                <div class="form-check bg-lighter p-2 px-3 rounded border">
+                                    <input class="form-check-input ms-0 mt-1 me-2" type="checkbox" id="terms-conditions" name="terms" />
+                                    <label class="form-check-label" for="terms-conditions">
+                                        ฉันยอมรับ <a href="javascript:void(0);" class="fw-bold text-primary" data-bs-toggle="modal" data-bs-target="#termsModal">ข้อกำหนดและเงื่อนไข</a> ของระบบ
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="d-flex flex-column align-items-center gap-3">
+                                <button id="registerButton" class="btn btn-primary w-100" type="submit" disabled>
+                                    <i class="fa-solid fa-user-plus me-2"></i> สมัครสมาชิก
+                                </button>
+                            </div>
+                        </form>
+
+                        <div class="text-center mt-4 pt-3 border-top">
+                            <span class="text-muted">มีบัญชีอยู่แล้วใช่ไหม?</span>
+                            <a href="/login" class="fw-bold ms-1 text-primary">
+                                <i class="fa-solid fa-arrow-right-to-bracket me-1"></i>เข้าสู่ระบบ
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!-- /Register Card -->
+            </div>
+        </div>
+    </div>
+    <!-- / Content -->
+
+    <!-- Terms and Conditions Modal -->
+    <div class="modal fade" id="termsModal" data-bs-backdrop="static" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-scrollable" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalLongTitle">ข้อตกลงการใช้งานบริการ</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    
+                    <p><strong>ปรับปรุงล่าสุด: พ.ศ. 2569</strong></p>
+
+                                            <div class="terms-dynamic-content">
+                            <p>MinimalCloud ("ผู้ให้บริการ") เป็นผู้ให้บริการเว็บโฮสติ้งและบริการที่เกี่ยวข้อง การสมัครใช้บริการ ("บริการ") ของท่าน ("ผู้ใช้บริการ") ถือว่าท่านได้อ่านและยอมรับข้อตกลงและเงื่อนไขดังต่อไปนี้ทุกประการ</p>
+
+<h6 class="mt-4 fw-bold">1. บัญชีผู้ใช้และความรับผิดชอบ</h6>
+<ul>
+    <li><strong>ข้อมูลส่วนตัว:</strong> ผู้ใช้บริการต้องให้ข้อมูลที่เป็นจริง ถูกต้อง และเป็นปัจจุบันในการสมัคร หากผู้ให้บริการตรวจพบว่าข้อมูลเป็นเท็จ ขอสงวนสิทธิ์ในการระงับหรือยกเลิกบริการโดยไม่ต้องแจ้งให้ทราบล่วงหน้า</li>
+    <li><strong>ความรับผิดชอบ:</strong> การกระทำใดๆ ที่เกิดขึ้นภายใต้บัญชีของผู้ใช้บริการ รวมถึงเนื้อหาบนเว็บไซต์และอีเมล ถือเป็นความรับผิดชอบของผู้ใช้บริการแต่เพียงผู้เดียว ผู้ให้บริการไม่มีส่วนเกี่ยวข้องใดๆ ทั้งสิ้น</li>
+    <li><strong>รหัสผ่าน:</strong> ผู้ใช้บริการต้องเก็บรหัสผ่านเป็นความลับ และควรเปลี่ยนรหัสผ่านอย่างสม่ำเสมอเพื่อความปลอดภัย</li>
+</ul>
+
+<h6 class="mt-4 fw-bold">2. การใช้งานที่ไม่ได้รับอนุญาต (Prohibited Use)</h6>
+<p>ห้ามใช้บริการในลักษณะต่อไปนี้โดยเด็ดขาด:</p>
+<ul>
+    <li><strong>เนื้อหาผิดกฎหมาย:</strong> เผยแพร่เนื้อหาที่ผิดกฎหมาย, ละเมิดลิขสิทธิ์ (เช่น โปรแกรมเถื่อน, ไฟล์เพลง/หนัง), ลามกอนาจาร, การพนัน, หรือเนื้อหาที่ขัดต่อศีลธรรมอันดี</li>
+    <li><strong>ความมั่นคงของชาติ:</strong> เผยแพร่ อ้างอิง หรือดูหมิ่นสถาบันชาติ ศาสนา และพระมหากษัตริย์</li>
+    <li><strong>สแปม (SPAM):</strong> ส่งอีเมลที่ผู้รับไม่ยินยอมหรือไม่ได้รับอนุญาต ไม่ว่าจะส่งจากเซิร์ฟเวอร์โดยตรงหรืออ้างอิงถึงก็ตาม</li>
+    <li><strong>การโจมตีระบบ:</strong> ใช้บริการเพื่อโจมตีระบบอื่น (เช่น Hacking, Cracking, DDoS, Port Scanning) หรือกระทำการใดๆ ที่เป็นอันตรายต่อระบบเซิร์ฟเวอร์ของผู้ให้บริการหรือผู้ใช้งานอื่น</li>
+    <li><strong>การใช้ทรัพยากรเกินขีดจำกัด:</strong> ติดตั้งโปรแกรมหรือสคริปต์ที่ใช้ทรัพยากรเซิร์ฟเวอร์ (CPU, RAM) หนักเกินไปจนส่งผลกระทบต่อผู้ใช้งานท่านอื่น</li>
+</ul>
+
+<h6 class="mt-4 fw-bold">3. การชำระเงิน, เครดิต และการระงับบริการ</h6>
+<ul>
+    <li><strong>การชำระเงิน:</strong> บริการทั้งหมดเป็นแบบชำระเงินล่วงหน้า ผู้ใช้บริการต้องชำระค่าบริการก่อนครบกำหนดเพื่อใช้งานอย่างต่อเนื่อง</li>
+    <li><strong>ระบบเครดิต:</strong> เครดิตที่เติมเข้าระบบใช้สำหรับชำระค่าบริการต่างๆ ของเราเท่านั้น <strong>เครดิตคงเหลือในบัญชีไม่สามารถแลกเปลี่ยนเป็นเงินสดหรือขอคืนได้ในทุกกรณี</strong></li>
+    <li><strong>การระงับบริการ:</strong> ผู้ให้บริการขอสงวนสิทธิ์ในการระงับบริการชั่วคราว หากผู้ใช้บริการไม่ชำระค่าบริการภายใน 2 วันหลังครบกำหนด</li>
+    <li><strong>การลบข้อมูล:</strong> หากไม่ชำระค่าบริการ ผู้ให้บริการจะลบข้อมูลทั้งหมดของผู้ใช้บริการออกจากระบบตามกำหนดเวลาดังนี้:
+        <ul>
+            <li>Hosting: ภายใน 7 วันหลังครบกำหนด</li>
+            <li>VPS / Cloud Server: ภายใน 2 วันหลังครบกำหนด</li>
+        </ul>
+    </li>
+    <li><strong>การคืนเงิน (Refund):</strong> การรับประกันความพึงพอใจและการคืนเงินจะมีผลเฉพาะบริการ Shared Hosting ตามที่ระบุในหน้าสั่งซื้อเท่านั้น บริการประเภทอื่นและการยกเลิกบริการอันเนื่องมาจากการทำผิดข้อตกลง ผู้ให้บริการขอสงวนสิทธิ์ไม่คืนเงินค่าบริการในทุกกรณี</li>
+</ul>
+
+<h6 class="mt-4 fw-bold">4. การรับประกันและข้อจำกัดความรับผิด</h6>
+<ul>
+    <li><strong>การสำรองข้อมูล:</strong> ผู้ให้บริการมีการสำรองข้อมูลอย่างสม่ำเสมอ แต่ไม่รับประกันความเสียหายหรือการสูญหายของข้อมูล ผู้ใช้บริการควรสำรองข้อมูลสำคัญของตนเองไว้เสมอ</li>
+    <li><strong>การย้ายข้อมูล:</strong> ผู้ให้บริการจะย้ายข้อมูลให้ฟรีเฉพาะครั้งแรกที่สั่งซื้อบริการ Hosting เท่านั้น</li>
+    <li><strong>ความเสถียรของระบบ:</strong> ผู้ให้บริการจะพยายามอย่างเต็มที่เพื่อรักษาเสถียรภาพของระบบ แต่จะไม่รับผิดชอบต่อความเสียหายใดๆ ที่อยู่นอกเหนือการควบคุม</li>
+</ul>
+
+<h6 class="mt-4 fw-bold">5. การเปลี่ยนแปลงและยกเลิกข้อตกลง</h6>
+<p>ผู้ให้บริการขอสงวนสิทธิ์ในการเปลี่ยนแปลงข้อตกลงนี้ได้ตลอดเวลา โดยจะมีการแจ้งให้ทราบผ่านช่องทางที่เหมาะสม และขอสงวนสิทธิ์ในการปฏิเสธหรือยกเลิกบริการแก่ผู้ที่ละเมิดข้อตกลงโดยไม่จำเป็นต้องแจ้งให้ทราบล่วงหน้า</p>
+                        </div>
+                                    </div>
+            </div>
+        </div>
+    </div>
+
+    
+    <script src="/assets/sneat/vendor/libs/jquery/jquery.js"></script>
+    <script src="/assets/sneat/vendor/libs/popper/popper.js"></script>
+    <script src="/assets/sneat/vendor/js/bootstrap.js"></script>
+    <script src="/assets/sneat/js/main.js"></script>
+    <script src="/assets/sneat/js/auth/register.js"></script>
+
+    <!-- Theme Switcher Engine (Dark / Light Mode, Default System) -->
+    <script>
+        function getStoredTheme() {
+            return localStorage.getItem('theme') === 'dark' ? 'dark' : 'light';
+        }
+
+        function applyTheme(theme) {
+            const html = document.documentElement;
+            html.setAttribute('data-bs-theme', theme);
+            
+            const icon = document.getElementById('themeToggleIcon');
+            const label = document.getElementById('themeToggleLabel');
+            const btn = document.getElementById('themeToggleBtn');
+            
+            if (theme === 'dark') {
+                html.classList.remove('light-style');
+                html.classList.add('dark-style');
+                if (icon) icon.className = 'fa-solid fa-sun text-warning';
+                if (label) label.textContent = 'โหมดมืด';
+                if (btn) btn.setAttribute('title', 'สลับเป็นโหมดสว่าง (Light Mode)');
+            } else {
+                html.classList.remove('dark-style');
+                html.classList.add('light-style');
+                if (icon) icon.className = 'fa-solid fa-moon text-secondary';
+                if (label) label.textContent = 'โหมดสว่าง';
+                if (btn) btn.setAttribute('title', 'สลับเป็นโหมดมืด (Dark Mode)');
+            }
+            
+            localStorage.setItem('theme', theme);
+        }
+
+        function toggleTheme() {
+            const current = document.documentElement.getAttribute('data-bs-theme') || 'light';
+            const next = current === 'dark' ? 'light' : 'dark';
+            applyTheme(next);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            applyTheme(getStoredTheme());
+        });
+    </script>
+    <script src="/assets/js/demo-auth.js"></script>
+    <script src="/assets/js/theme-mode.js"></script>
+</body>
+</html>

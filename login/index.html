@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="th" class="light-style layout-menu-fixed" dir="ltr" data-theme="theme-default">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+        <title>เข้าสู่ระบบ | MinimalCloud.co.ltd</title>
+
+        <!-- Icons -->
+        <link rel="stylesheet" href="/assets/sneat/vendor/fonts/boxicons.css" />
+
+        <!-- Core CSS -->
+        <link rel="stylesheet" href="/assets/sneat/vendor/css/core.css" class="template-customizer-core-css" />
+        <link rel="stylesheet" href="/assets/sneat/vendor/css/theme-default.css" class="template-customizer-theme-css" />
+        <link rel="stylesheet" href="/assets/sneat/css/demo.css" />
+        <link rel="stylesheet" href="/assets/sneat/css/login.css" />
+
+        <!-- Page -->
+        <link rel="stylesheet" href="/assets/sneat/vendor/css/pages/page-auth.css" />
+
+        <!-- fontawsome 6.7x -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/js/all.min.js"></script>
+
+        <!-- Modern Theme & Main CSS -->
+        <link rel="stylesheet" href="/assets/css/client-theme.css" />
+        <link rel="stylesheet" href="/assets/css/main.css" />
+
+        <!-- Zero-Flicker Preload Script for Theme (Default System) -->
+        <script>
+            (function() {
+                try {
+                    const storedTheme = localStorage.getItem('theme');
+                    const activeTheme = storedTheme === 'dark' ? 'dark' : 'light'; // light is the default, no auto/OS follow
+                    document.documentElement.setAttribute('data-bs-theme', activeTheme);
+                    document.documentElement.classList.remove('light-style', 'dark-style');
+                    document.documentElement.classList.add(activeTheme === 'dark' ? 'dark-style' : 'light-style');
+                } catch (e) {
+                    console.error('Theme preload error:', e);
+                }
+            })();
+        </script>
+
+        <style>
+            /* 1. Default Focus State */
+            .input-group-merge:has(.form-control:focus) {
+                box-shadow: 0 0 0 3px rgba(47, 107, 255, 0.22) !important;
+                border-radius: 0.5rem;
+            }
+            .input-group-merge:has(.form-control:focus) .input-group-text,
+            .input-group-merge:has(.form-control:focus) .form-control {
+                border-color: #2f6bff !important;
+                box-shadow: none !important;
+            }
+
+            /* 2. Invalid State (Red) - Must override default focus */
+            .input-group-merge:has(.form-control.is-invalid) {
+                box-shadow: 0 0 0 3px rgba(255, 62, 29, 0.22) !important;
+                border-radius: 0.5rem;
+            }
+            .input-group-merge:has(.form-control.is-invalid) .input-group-text,
+            .input-group-merge:has(.form-control.is-invalid) .form-control {
+                border-color: #ff3e1d !important;
+                box-shadow: none !important;
+            }
+
+            /* 3. Invalid + Focus State (Red) - Highest priority */
+            .input-group-merge:has(.form-control.is-invalid:focus) {
+                box-shadow: 0 0 0 3px rgba(255, 62, 29, 0.3) !important;
+                border-radius: 0.5rem;
+            }
+            .input-group-merge:has(.form-control.is-invalid:focus) .input-group-text,
+            .input-group-merge:has(.form-control.is-invalid:focus) .form-control {
+                border-color: #ff3e1d !important;
+                box-shadow: none !important;
+            }
+            
+            /* 4. Valid State (Green) */
+            .input-group-merge:has(.form-control.is-valid) {
+                box-shadow: 0 0 0 3px rgba(113, 221, 55, 0.22) !important;
+                border-radius: 0.5rem;
+            }
+            .input-group-merge:has(.form-control.is-valid) .input-group-text,
+            .input-group-merge:has(.form-control.is-valid) .form-control {
+                border-color: #71dd37 !important;
+                box-shadow: none !important;
+            }
+
+            /* 5. Valid + Focus State (Green) */
+            .input-group-merge:has(.form-control.is-valid:focus) {
+                box-shadow: 0 0 0 3px rgba(113, 221, 55, 0.3) !important;
+                border-radius: 0.5rem;
+            }
+            .input-group-merge:has(.form-control.is-valid:focus) .input-group-text,
+            .input-group-merge:has(.form-control.is-valid:focus) .form-control {
+                border-color: #71dd37 !important;
+                box-shadow: none !important;
+            }
+
+            /* Back to home link */
+            .back-to-home {
+                color: #64748b;
+                font-size: 0.9rem;
+                font-weight: 500;
+                transition: all 0.2s ease;
+                display: inline-flex;
+                align-items: center;
+                gap: 0.45rem;
+                text-decoration: none;
+            }
+            .back-to-home:hover {
+                color: #2f6bff;
+                transform: translateX(-2px);
+            }
+            html.dark-style .back-to-home {
+                color: #94a3b8;
+            }
+            html.dark-style .back-to-home:hover {
+                color: #9dbcff;
+            }
+        </style>
+
+        <!-- Livewire Styles --><style >[wire\:loading][wire\:loading], [wire\:loading\.delay][wire\:loading\.delay], [wire\:loading\.inline-block][wire\:loading\.inline-block], [wire\:loading\.inline][wire\:loading\.inline], [wire\:loading\.block][wire\:loading\.block], [wire\:loading\.flex][wire\:loading\.flex], [wire\:loading\.table][wire\:loading\.table], [wire\:loading\.grid][wire\:loading\.grid], [wire\:loading\.inline-flex][wire\:loading\.inline-flex] {display: none;}[wire\:loading\.delay\.none][wire\:loading\.delay\.none], [wire\:loading\.delay\.shortest][wire\:loading\.delay\.shortest], [wire\:loading\.delay\.shorter][wire\:loading\.delay\.shorter], [wire\:loading\.delay\.short][wire\:loading\.delay\.short], [wire\:loading\.delay\.default][wire\:loading\.delay\.default], [wire\:loading\.delay\.long][wire\:loading\.delay\.long], [wire\:loading\.delay\.longer][wire\:loading\.delay\.longer], [wire\:loading\.delay\.longest][wire\:loading\.delay\.longest] {display: none;}[wire\:offline][wire\:offline] {display: none;}[wire\:dirty]:not(textarea):not(input):not(select) {display: none;}:root {--livewire-progress-bar-color: #2299dd;}[x-cloak="x-cloak"],[x-cloak=""] {display: none !important;}[wire\:cloak="wire:cloak"],[wire\:cloak=""] {display: none !important;}dialog#livewire-error::backdrop {background-color: rgba(0, 0, 0, .6);}</style>
+
+        <!-- Helpers -->
+        <script src="/assets/sneat/vendor/js/helpers.js"></script>
+        <script src="/assets/sneat/js/config.js"></script>
+
+    <body>
+        <!-- Floating Theme Toggle Button -->
+        <button type="button" class="floating-theme-toggle mc-theme-floating" id="themeToggleBtn" aria-label="สลับโหมดสว่าง/มืด" aria-pressed="false" title="สลับโหมดสว่าง/มืด">
+                                    <span class="mc-theme-ico" data-for="light"><i class="fa-solid fa-sun"></i></span>
+                                    <span class="mc-theme-ico" data-for="dark"><i class="fa-solid fa-moon"></i></span>
+                                    <span class="mc-theme-label">ธีม</span>
+                                </button>
+
+        <!-- Content -->
+        <div class="container-xxl">
+            <div class="authentication-wrapper authentication-basic container-p-y">
+                <div class="authentication-inner">
+                    <!-- Login Card -->
+                    <div class="card">
+                        <div class="card-body">
+                            <!-- Logo -->
+                            <div class="app-brand justify-content-center">
+                                <a href="/" class="app-brand-link gap-2">
+                                    <img src="/assets/img/logo-cloud.png" id="logo" alt="logo">
+                                    <span class="app-brand-text demo text-body fw-bolder">
+                                        MinimalCloud
+                                    </span>
+                                </a>
+                            </div>
+                            <!-- /Logo -->
+                            <h4 class="mb-2">ยินดีต้อนรับ! 👋</h4>
+                            <p class="mb-4">กรุณาลงชื่อเข้าใช้บัญชีของคุณ</p>
+
+                            <!-- Session Status -->
+                            
+                            <form id="formAuthentication" class="mb-3" action="/login" method="POST">
+                                <input type="hidden" name="_token" value="" autocomplete="off">                                <!-- Email -->
+                                <div class="mb-3">
+                                    <label for="email" class="form-label">อีเมล</label>
+                                    <div class="input-group input-group-merge">
+                                        <span class="input-group-text"><i class="fa-solid fa-envelope"></i></span>
+                                        <input
+                                            type="text"
+                                            class="form-control "
+                                            id="email"
+                                            name="email"
+                                            value=""
+                                            placeholder="กรอกอีเมลของคุณ"
+                                            autofocus
+                                        />
+                                    </div>
+                                                                    </div>
+
+                                <!-- Password -->
+                                <div class="mb-3 form-password-toggle">
+                                    <div class="d-flex justify-content-between">
+                                        <label class="form-label" for="password">รหัสผ่าน</label>
+                                                                                    <a href="/forgot-password">
+                                                <small>ลืมรหัสผ่าน?</small>
+                                            </a>
+                                                                            </div>
+                                    <div class="input-group input-group-merge">
+                                        <span class="input-group-text">
+                                            <i class="fa-solid fa-lock"></i>
+                                        </span>
+                                        <input
+                                            type="password"
+                                            id="password"
+                                            class="form-control "
+                                            name="password"
+                                            placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
+                                            aria-describedby="password"
+                                        />
+                                        <span class="input-group-text cursor-pointer">
+                                            <i class="fa-solid fa-eye-slash"></i>
+                                        </span>
+                                    </div>
+                                                                    </div>
+
+                                <!-- Remember Me -->
+                                <div class="mb-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="remember-me" name="remember" />
+                                        <label class="form-check-label" for="remember-me"> จดจำฉันไว้ในระบบ </label>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <button class="btn btn-primary d-grid w-100" type="submit">เข้าสู่ระบบ</button>
+                                </div>
+                            </form>
+
+                            <p class="text-center mb-0">
+                                <span>ยังไม่มีบัญชี?</span>
+                                <a href="/register">
+                                    <span>สร้างบัญชีใหม่</span>
+                                </a>
+                            </p>
+
+                            <div class="text-center mt-3">
+                                <a href="/" class="back-to-home">
+                                    <i class="fa-solid fa-house small"></i>
+                                    <span>กลับไปยังหน้าแรก</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /Login Card -->
+                </div>
+            </div>
+        </div>
+        <!-- / Content -->
+        <script src="/assets/js/demo-auth.js"></script>
+    <script src="/assets/js/theme-mode.js"></script>
+</body>
+    
+    <script src="/assets/sneat/vendor/libs/jquery/jquery.js"></script>
+    <script src="/assets/sneat/vendor/libs/popper/popper.js"></script>
+    <script src="/assets/sneat/vendor/js/bootstrap.js"></script>
+    <script src="/assets/sneat/js/main.js"></script>
+    <script src="/assets/sneat/js/auth/login.js"></script>
+
+    <!-- Theme Switcher Engine (Dark / Light Mode, Default System) -->
+    <script>
+        function getStoredTheme() {
+            return localStorage.getItem('theme') === 'dark' ? 'dark' : 'light';
+        }
+
+        function applyTheme(theme) {
+            const html = document.documentElement;
+            html.setAttribute('data-bs-theme', theme);
+            
+            const icon = document.getElementById('themeToggleIcon');
+            const label = document.getElementById('themeToggleLabel');
+            const btn = document.getElementById('themeToggleBtn');
+            
+            if (theme === 'dark') {
+                html.classList.remove('light-style');
+                html.classList.add('dark-style');
+                if (icon) icon.className = 'fa-solid fa-sun text-warning';
+                if (label) label.textContent = 'โหมดมืด';
+                if (btn) btn.setAttribute('title', 'สลับเป็นโหมดสว่าง (Light Mode)');
+            } else {
+                html.classList.remove('dark-style');
+                html.classList.add('light-style');
+                if (icon) icon.className = 'fa-solid fa-moon text-secondary';
+                if (label) label.textContent = 'โหมดสว่าง';
+                if (btn) btn.setAttribute('title', 'สลับเป็นโหมดมืด (Dark Mode)');
+            }
+            
+            localStorage.setItem('theme', theme);
+        }
+
+        function toggleTheme() {
+            const current = document.documentElement.getAttribute('data-bs-theme') || 'light';
+            const next = current === 'dark' ? 'light' : 'dark';
+            applyTheme(next);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            applyTheme(getStoredTheme());
+        });
+    </script>
+</html>

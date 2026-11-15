@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="th" class="light-style layout-menu-fixed" dir="ltr" data-theme="theme-default" data-bs-theme="light">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+    <title>สั่งซื้อบริการ | MinimalCloud</title>
+    
+    <link rel="icon" type="image/x-icon" href="/assets/img/minimalhouse-128x128.ico" />
+    
+    <!-- Zero-Flicker Preload Script for Theme -->
+    <script>
+        (function() {
+            try {
+                const storedTheme = localStorage.getItem('theme');
+                const activeTheme = storedTheme === 'dark' ? 'dark' : 'light'; // light is the default, no auto/OS follow
+                document.documentElement.setAttribute('data-bs-theme', activeTheme);
+                document.documentElement.classList.remove('light-style', 'dark-style');
+                document.documentElement.classList.add(activeTheme === 'dark' ? 'dark-style' : 'light-style');
+            } catch (e) {
+                console.error('Theme preload error:', e);
+            }
+        })();
+    </script>
+
+    <!-- Core CSS -->
+    <link rel="stylesheet" href="/assets/sneat/vendor/css/core.css" class="template-customizer-core-css" />
+    <link rel="stylesheet" href="/assets/sneat/vendor/css/theme-default.css" class="template-customizer-theme-css" />
+    <link rel="stylesheet" href="/assets/sneat/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+    <link rel="stylesheet" href="/assets/sneat/css/demo.css" />
+    <link rel="stylesheet" href="/assets/css/client-theme.css" />
+    
+    <!-- FontAwesome 6.7x -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/js/all.min.js"></script>
+    <script src="https://js.stripe.com/v3/"></script>
+    
+    <!-- SweetAlert2 (Loaded in Head for Global Prompt Overriding) -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        // Store native functions
+        window._nativeConfirm = window.confirm;
+        window._nativeAlert = window.alert;
+
+        // Custom Async Confirm Action Helper
+        window.confirmAction = function(message, callback, title = 'ยืนยันการดำเนินการ') {
+            if (typeof Swal !== 'undefined') {
+                Swal.fire({
+                    title: title,
+                    text: message,
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#2f6bff',
+                    cancelButtonColor: '#8592a3',
+                    confirmButtonText: 'ยืนยัน',
+                    cancelButtonText: 'ยกเลิก',
+                    reverseButtons: true
+                }).then((result) => {
+                    if (result.isConfirmed && typeof callback === 'function') {
+                        callback();
+                    }
+                });
+                return false;
+            }
+            if (window._nativeConfirm(message)) {
+                if (typeof callback === 'function') callback();
+                return true;
+            }
+            return false;
+        };
+
+        // Global window.alert override with SweetAlert2
+        window.alert = function(message, title = 'แจ้งเตือน') {
+            if (typeof Swal !== 'undefined') {
+                Swal.fire({
+                    title: title,
+                    text: String(message),
+                    icon: 'info',
+                    confirmButtonText: 'ตกลง',
+                    confirmButtonColor: '#2f6bff'
+                });
+                return;
+            }
+            window._nativeAlert(message);
+        };
+    </script>
+    
+    <!-- Livewire Styles --><style >[wire\:loading][wire\:loading], [wire\:loading\.delay][wire\:loading\.delay], [wire\:loading\.inline-block][wire\:loading\.inline-block], [wire\:loading\.inline][wire\:loading\.inline], [wire\:loading\.block][wire\:loading\.block], [wire\:loading\.flex][wire\:loading\.flex], [wire\:loading\.table][wire\:loading\.table], [wire\:loading\.grid][wire\:loading\.grid], [wire\:loading\.inline-flex][wire\:loading\.inline-flex] {display: none;}[wire\:loading\.delay\.none][wire\:loading\.delay\.none], [wire\:loading\.delay\.shortest][wire\:loading\.delay\.shortest], [wire\:loading\.delay\.shorter][wire\:loading\.delay\.shorter], [wire\:loading\.delay\.short][wire\:loading\.delay\.short], [wire\:loading\.delay\.default][wire\:loading\.delay\.default], [wire\:loading\.delay\.long][wire\:loading\.delay\.long], [wire\:loading\.delay\.longer][wire\:loading\.delay\.longer], [wire\:loading\.delay\.longest][wire\:loading\.delay\.longest] {display: none;}[wire\:offline][wire\:offline] {display: none;}[wire\:dirty]:not(textarea):not(input):not(select) {display: none;}:root {--livewire-progress-bar-color: #2299dd;}[x-cloak="x-cloak"],[x-cloak=""] {display: none !important;}[wire\:cloak="wire:cloak"],[wire\:cloak=""] {display: none !important;}dialog#livewire-error::backdrop {background-color: rgba(0, 0, 0, .6);}</style>
+    <link rel="stylesheet" href="/assets/css/pricing.css" />
+</head>
+<body>
+    <!-- Layout wrapper -->
+    <div class="layout-wrapper layout-content-navbar">
+        <div class="layout-container">
+            <!-- Menu (Sidebar) -->
+            <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+                <div class="app-brand demo">
+                    <a href="/client" class="app-brand-link">
+                        <span class="app-brand-text demo menu-text fw-bolder ms-2" id="logo">
+                            <img src="/assets/img/logo-cloud.png" alt="logo" style="max-height: 36px;">
+                            MinimalCloud
+                        </span>
+                    </a>
+
+                    <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
+                        <i class="fa-solid fa-chevron-left align-middle"></i>
+                    </a>
+                </div>
+                <div class="menu-inner-shadow"></div>
+
+                <ul class="menu-inner py-1">
+                    <li class="menu-item" data-nav="overview">
+                        <a href="/client" class="menu-link">
+                            <i class="menu-icon tf-icons fa-solid fa-table-cells-large"></i>
+                            <div>ภาพรวม</div>
+                        </a>
+                    </li>
+                    <li class="menu-header"><span class="menu-header-text">บริการ</span></li>
+                    <li class="menu-item" data-nav="hosting">
+                        <a href="/client/cloud-hosting" class="menu-link">
+                            <i class="menu-icon tf-icons fa-solid fa-cloud"></i>
+                            <div>Cloud Hosting</div>
+                        </a>
+                    </li>
+                    <li class="menu-item" data-nav="vps">
+                        <a href="/client/cloud-vps" class="menu-link">
+                            <i class="menu-icon tf-icons fa-solid fa-server"></i>
+                            <div>Cloud VPS</div>
+                            <span class="badge bg-label-secondary ms-auto">เร็วๆ นี้</span>
+                        </a>
+                    </li>
+                    <li class="menu-item" data-nav="domains">
+                        <a href="/client/domain-registry/my-domains" class="menu-link">
+                            <i class="menu-icon tf-icons fa-solid fa-globe"></i>
+                            <div>โดเมนของฉัน</div>
+                        </a>
+                    </li>
+                    <li class="menu-item active" data-nav="order">
+                        <a href="/client/order" class="menu-link">
+                            <i class="menu-icon tf-icons fa-solid fa-circle-plus"></i>
+                            <div>สั่งซื้อบริการ</div>
+                        </a>
+                    </li>
+                    <li class="menu-header"><span class="menu-header-text">การเงิน</span></li>
+                    <li class="menu-item" data-nav="billing">
+                        <a href="/client/billing" class="menu-link">
+                            <i class="menu-icon tf-icons fa-solid fa-receipt"></i>
+                            <div>บิลและใบแจ้งหนี้</div>
+                        </a>
+                    </li>
+                    <li class="menu-item" data-nav="credit">
+                        <a href="/client/credit" class="menu-link">
+                            <i class="menu-icon tf-icons fa-solid fa-wallet"></i>
+                            <div>เติมเครดิต</div>
+                        </a>
+                    </li>
+                    <li class="menu-header"><span class="menu-header-text">ช่วยเหลือ</span></li>
+                    <li class="menu-item" data-nav="tickets">
+                        <a href="/client/tickets" class="menu-link">
+                            <i class="menu-icon tf-icons fa-solid fa-headset"></i>
+                            <div>แจ้งปัญหา</div>
+                        </a>
+                    </li>
+                    <li class="menu-item" data-nav="setting">
+                        <a href="/client/setting" class="menu-link">
+                            <i class="menu-icon tf-icons fa-solid fa-gear"></i>
+                            <div>ตั้งค่าบัญชี</div>
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="/" class="menu-link">
+                            <i class="menu-icon tf-icons fa-solid fa-arrow-left"></i>
+                            <div>กลับหน้าเว็บไซต์</div>
+                        </a>
+                    </li>
+                </ul>
+            </aside>
+            <!-- / Menu -->
+
+            <!-- Layout container -->
+            <div class="layout-page">
+                <!-- Navbar -->
+                <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme" id="layout-navbar">
+                    <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
+                        <a class="nav-item nav-link px-0 me-xl-4 text-secondary" href="javascript:void(0)">
+                            <i class="fa-solid fa-bars fs-4"></i>
+                        </a>
+                    </div>
+                    <nav class="mc-nav-crumb d-none d-md-flex" aria-label="breadcrumb"><a href="/client">ภาพรวม</a><span aria-hidden="true">›</span><span>บริการ</span><span aria-hidden="true">›</span><span class="is-current">สั่งซื้อบริการ</span></nav>
+
+                    <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+                        <ul class="navbar-nav flex-row align-items-center ms-auto gap-2">
+
+                            <!-- Credit Balance Widget -->
+                            <li class="nav-item">
+                                <div class="navbar-credit-pill">
+                                    <i class="fa-solid fa-coins coin-icon"></i>
+                                    <div class="d-flex flex-column align-items-start leading-tight">
+                                        <span class="fw-bold" style="font-size: 0.95rem;">
+                                            0.00 <small class="text-muted" style="font-size: 0.7rem;">THB</small>
+                                        </span>
+                                        <small class="text-muted" style="font-size: 0.68rem; line-height: 1;">เครดิตคงเหลือ</small>
+                                    </div>
+                                    <a href="/client/credit" class="topup-btn ms-1" title="เติมเงิน">
+                                        <i class="fa-solid fa-plus me-1" style="font-size: 0.7rem;"></i> เติมเงิน
+                                    </a>
+                                </div>
+                            </li>
+
+                            <!-- Theme Toggle Button -->
+                            <li class="nav-item">
+                                <button type="button" class="theme-toggle-btn" id="themeToggleBtn" aria-label="สลับโหมดสว่าง/มืด" aria-pressed="false" title="สลับโหมดสว่าง/มืด">
+                                        <span class="mc-theme-ico" data-for="light"><i class="fa-solid fa-sun"></i></span>
+                                        <span class="mc-theme-ico" data-for="dark"><i class="fa-solid fa-moon"></i></span>
+                                    </button>
+                            </li>
+
+                            <!-- User Profile Dropdown -->
+                            <li class="nav-item navbar-dropdown dropdown-user dropdown ms-1">
+                                <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+                                    <div class="avatar avatar-online">
+                                        <div class="rounded-circle d-flex align-items-center justify-content-center text-white fw-bold shadow-sm" style="width: 40px; height: 40px; background: linear-gradient(135deg, #2f6bff 0%, #1f56e6 100%);">
+                                            ผ
+                                        </div>
+                                    </div>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end shadow-lg py-2">
+                                    <li class="px-3 py-2">
+                                        <div class="d-flex align-items-center">
+                                            <div class="flex-shrink-0 me-3">
+                                                <div class="rounded-circle d-flex align-items-center justify-content-center text-white fw-bold" style="width: 40px; height: 40px; background: linear-gradient(135deg, #2f6bff 0%, #1f56e6 100%);">
+                                                    ผ
+                                                </div>
+                                            </div>
+                                            <div class="flex-grow-1 overflow-hidden">
+                                                <span class="fw-bold d-block text-truncate">
+                                                    ผู้ใช้ ตัวอย่าง
+                                                </span>
+                                                <small class="badge bg-label-primary px-2 py-0 text-capitalize" style="font-size: 0.72rem;">
+                                                    ลูกค้าทั่วไป
+                                                </small>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li><div class="dropdown-divider my-1"></div></li>
+                                    <li>
+                                        <a class="dropdown-item py-2" href="/client/setting">
+                                            <i class="fa-solid fa-user-gear me-2 text-primary"></i>
+                                            <span class="align-middle">ตั้งค่าบัญชี</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item py-2" href="/client/credit">
+                                            <i class="fa-solid fa-wallet me-2 text-warning"></i>
+                                            <span class="align-middle">เติมเครดิต</span>
+                                        </a>
+                                    </li>
+                                    <li><div class="dropdown-divider my-1"></div></li>
+                                    <li>
+                                        <form method="POST" action="/logout">
+                                            <input type="hidden" name="_token" value="" autocomplete="off">                                            <a class="dropdown-item py-2 text-danger" href="/login/?logged_out=1">
+                                                <i class="fa-solid fa-right-from-bracket me-2"></i>
+                                                <span class="align-middle">ออกจากระบบ</span>
+                                            </a>
+                                        </form>
+                                    </li>
+                                </ul>
+                            </li>
+                            <!--/ User -->
+
+                        </ul>
+                    </div>
+                </nav>
+                <!-- / Navbar -->
+
+                <!-- Content wrapper -->
+                <div class="content-wrapper">
+                    <!-- Content -->
+                    <div class="container-xxl flex-grow-1 container-p-y">
+                        
+                        
+    <div wire:snapshot="{&quot;data&quot;:{&quot;selectedPlan&quot;:null,&quot;domain_option&quot;:&quot;register&quot;,&quot;domain_name&quot;:&quot;&quot;,&quot;subdomain_prefix&quot;:&quot;&quot;,&quot;isFreePlan&quot;:false,&quot;ddns_domain&quot;:&quot;-v1.minimalcloud.sbs&quot;,&quot;allowed_ddns_subdomains&quot;:[[],{&quot;s&quot;:&quot;arr&quot;}],&quot;selected_ddns_subdomain&quot;:&quot;&quot;,&quot;ddns_structure_mode&quot;:&quot;single_level&quot;,&quot;ddns_random_code_length&quot;:6},&quot;memo&quot;:{&quot;id&quot;:&quot;KY3GAVPgLnyfp7uwIXnX&quot;,&quot;name&quot;:&quot;dashboard&quot;,&quot;path&quot;:&quot;client&quot;,&quot;method&quot;:&quot;GET&quot;,&quot;release&quot;:&quot;a-a-a&quot;,&quot;children&quot;:[],&quot;scripts&quot;:[],&quot;assets&quot;:[],&quot;errors&quot;:[],&quot;locale&quot;:&quot;th&quot;},&quot;checksum&quot;:&quot;62b95f8fe11ed762008f87f007f972751065224c25f12e2cd69b51aa92829a3c&quot;}" wire:effects="[]" wire:id="KY3GAVPgLnyfp7uwIXnX" class="dashboard-wrapper">
+    <!-- Hero Welcome Banner -->
+    <div class="mc-page-head">
+        <h4 class="mc-page-title">สั่งซื้อบริการ</h4>
+    </div>
+    <div class="row g-4 mb-4">
+        <div class="col-md-4"><a href="#plans" class="card h-100 mc-order-tile is-selected" aria-current="true"><div class="card-body">
+            <span class="mc-svc-icon"><i class="fa-solid fa-cloud"></i></span>
+            <strong>Cloud Hosting</strong><small>เว็บไซต์ อีเมล ฐานข้อมูล พร้อมใช้ทันที</small></div></a></div>
+        <div class="col-md-4"><a href="/client/domain-registry" class="card h-100 mc-order-tile"><div class="card-body">
+            <span class="mc-svc-icon"><i class="fa-solid fa-globe"></i></span>
+            <strong>จดโดเมน</strong><small>ค้นหาและจดชื่อโดเมน .com .net .co.th</small></div></a></div>
+        <div class="col-md-4"><div class="card h-100 mc-order-tile is-disabled" aria-disabled="true"><div class="card-body">
+            <span class="mc-svc-icon"><i class="fa-solid fa-server"></i></span>
+            <strong>Cloud VPS <span class="badge bg-label-secondary ms-1">เร็วๆ นี้</span></strong><small>เปิดให้บริการเร็วๆ นี้</small></div></div></div>
+    </div>
+
+    <!-- Plans & pricing (DEMO DATA: prices/limits copied from the live plans; yearly = monthly × 12, no invented discount) -->
+    <section class="mc-pricing" id="plans" aria-labelledby="plansTitle">
+        <div class="mc-pricing-head">
+            <div>
+                <h5 class="mb-1" id="plansTitle">แพ็กเกจ Cloud Hosting</h5>
+                <p class="text-muted mb-0">ติดตั้งฟรี พร้อมใช้งานทันที ไม่มีค่าธรรมเนียมแอบแฝง</p>
+            </div>
+            <div class="mc-seg" role="tablist" aria-label="แสดงราคาแบบ">
+                <span class="mc-seg-thumb" aria-hidden="true"></span>
+                <button type="button" role="tab" class="is-on" aria-selected="true" data-period="m">ต่อเดือน</button>
+                <button type="button" role="tab" aria-selected="false" data-period="y">ต่อปี</button>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            <!-- Freedom: the plan this account is on -->
+            <div class="col-lg-4">
+                <article class="mc-plan is-current">
+                    <span class="mc-plan-tab"><span class="mc-dot is-ok"></span>แพ็กเกจปัจจุบัน</span>
+                    <h3 class="mc-plan-name">Freedom</h3>
+                    <p class="mc-plan-for">เว็บไซต์แรกของคุณ ใช้ฟรีตลอดชีพ</p>
+                    <div class="mc-plan-price">
+                        <span class="mc-plan-amt" data-m="฿0" data-y="฿0">฿0</span>
+                        <span class="mc-plan-unit"><span data-m="/ เดือน" data-y="/ ปี">/ เดือน</span><small>ฟรีตลอดชีพ</small></span>
+                    </div>
+                    <ul class="mc-plan-feats">
+                        <li><i class="fa-solid fa-check"></i>พื้นที่ <b>50 MB</b></li>
+                        <li><i class="fa-solid fa-check"></i>Bandwidth <b>1 GB</b> / เดือน</li>
+                        <li><i class="fa-solid fa-check"></i>ฐานข้อมูล MySQL <b>1</b></li>
+                        <li class="is-off"><i class="fa-solid fa-xmark"></i>กล่องอีเมลโดเมน</li>
+                        <li><i class="fa-solid fa-check"></i>FTP <b>1</b> บัญชี</li>
+                        <li><i class="fa-solid fa-check"></i>SSL ฟรี</li>
+                    </ul>
+                    <button type="button" class="btn btn-outline-secondary w-100" disabled>ใช้งานอยู่</button>
+                </article>
+            </div>
+
+            <!-- Starter: sold out right now -->
+            <div class="col-lg-4">
+                <article class="mc-plan is-soldout">
+                    <span class="mc-plan-tab"><span class="mc-dot is-idle"></span>เซิร์ฟเวอร์เต็ม</span>
+                    <h3 class="mc-plan-name">Starter</h3>
+                    <p class="mc-plan-for">เว็บไซต์ธุรกิจเล็ก จ่ายรายวันตามจริง</p>
+                    <div class="mc-plan-price">
+                        <span class="mc-plan-amt" data-m="฿150" data-y="฿1,825">฿150</span>
+                        <span class="mc-plan-unit"><span data-m="/ เดือน" data-y="/ ปี">/ เดือน</span><small>คิดรายวัน ฿5 / วัน</small></span>
+                    </div>
+                    <ul class="mc-plan-feats">
+                        <li><i class="fa-solid fa-check"></i>พื้นที่ <b>300 MB</b></li>
+                        <li><i class="fa-solid fa-check"></i>Bandwidth <b>5 GB</b> / เดือน</li>
+                        <li><i class="fa-solid fa-check"></i>ฐานข้อมูล MySQL <b>1</b></li>
+                        <li><i class="fa-solid fa-check"></i>กล่องอีเมลโดเมน <b>1</b></li>
+                        <li><i class="fa-solid fa-check"></i>FTP <b>1</b> บัญชี</li>
+                        <li><i class="fa-solid fa-check"></i>SSL ฟรี</li>
+                    </ul>
+                    <button type="button" class="btn btn-outline-secondary w-100" disabled>เต็มชั่วคราว</button>
+                </article>
+            </div>
+
+            <!-- Junior: recommended -->
+            <div class="col-lg-4">
+                <article class="mc-plan is-featured">
+                    <span class="mc-plan-tab"><span class="mc-dot is-accent"></span>ยอดนิยม</span>
+                    <h3 class="mc-plan-name">Junior</h3>
+                    <p class="mc-plan-for">ร้านค้าออนไลน์และเว็บที่มีคนเข้าเยอะ</p>
+                    <div class="mc-plan-price">
+                        <span class="mc-plan-amt" data-m="฿50" data-y="฿600">฿50</span>
+                        <span class="mc-plan-unit"><span data-m="/ เดือน" data-y="/ ปี">/ เดือน</span><small data-m="ชำระรายเดือน" data-y="฿50 × 12 เดือน">ชำระรายเดือน</small></span>
+                    </div>
+                    <ul class="mc-plan-feats">
+                        <li><i class="fa-solid fa-check"></i>พื้นที่ <b>1 GB</b></li>
+                        <li><i class="fa-solid fa-check"></i>Bandwidth <b>100 GB</b> / เดือน</li>
+                        <li><i class="fa-solid fa-check"></i>ฐานข้อมูล MySQL <b>2</b></li>
+                        <li><i class="fa-solid fa-check"></i>กล่องอีเมลโดเมน <b>1</b></li>
+                        <li><i class="fa-solid fa-check"></i>FTP <b>1</b> บัญชี</li>
+                        <li><i class="fa-solid fa-check"></i>SSL ฟรี</li>
+                    </ul>
+                    <button type="button" class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#buyPlanModal" data-plan="Cloud Hosting Junior" data-price-m="50" data-price-y="600">เลือก Junior</button>
+                </article>
+            </div>
+        </div>
+    </section>
+
+<!-- ส่วน Modal สำหรับสั่งซื้อ (Bootstrap Modal) -->
+    <div wire:ignore.self class="modal fade" id="buyPlanModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border shadow-lg">
+                <div class="modal-header pb-2 border-bottom d-flex align-items-center justify-content-between">
+                    <h5 class="modal-title fw-bold d-flex align-items-center mb-0">
+                        <i class="fa-solid fa-cart-shopping text-primary me-2"></i> สั่งซื้อแพ็กเกจโฮสติ้ง
+                    </h5>
+                    <button type="button" 
+                            class="btn-close" 
+                            data-bs-dismiss="modal" 
+                            aria-label="Close" 
+                            style="position: static !important; transform: none !important; margin: 0 !important; box-shadow: none !important; background-color: transparent !important; opacity: 0.75;">
+                    </button>
+                </div>
+                <div class="modal-body p-4">
+                    <!--[if BLOCK]><![endif]--><!--[if ENDBLOCK]><![endif]-->                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('livewire:initialized', () => {
+            Livewire.on('close-modal', () => {
+                const modalEl = document.getElementById('buyPlanModal');
+                if (modalEl) {
+                    const modal = bootstrap.Modal.getInstance(modalEl);
+                    if (modal) modal.hide();
+                }
+            });
+
+            Livewire.on('open-buy-modal', () => {
+                const modalEl = document.getElementById('buyPlanModal');
+                if (modalEl) {
+                    const modal = bootstrap.Modal.getOrCreateInstance(modalEl);
+                    modal.show();
+                }
+            });
+        });
+    </script>
+</div>
+
+
+                    </div>
+                    <!-- / Content -->
+
+                    <div class="content-backdrop fade"></div>
+                </div>
+                <!-- Content wrapper -->
+            </div>
+            <!-- / Layout page -->
+        </div>
+    </div>
+    <!-- / Layout wrapper -->
+
+    <!-- JS Main -->
+    <script src="/assets/sneat/vendor/js/helpers.js"></script>
+    <script src="/assets/sneat/js/config.js"></script>
+    <script src="/assets/sneat/vendor/libs/jquery/jquery.js"></script>
+    <script src="/assets/sneat/vendor/libs/popper/popper.js"></script>
+    <script src="/assets/sneat/vendor/js/bootstrap.js"></script>
+    <script src="/assets/sneat/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+    <script src="/assets/sneat/vendor/js/menu.js"></script>
+    <script src="/assets/sneat/js/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- Theme Switcher Engine -->
+    <script>
+        function getStoredTheme() {
+            return localStorage.getItem('theme') === 'dark' ? 'dark' : 'light';
+        }
+
+        function applyTheme(theme) {
+            const html = document.documentElement;
+            html.setAttribute('data-bs-theme', theme);
+            
+            const icon = document.getElementById('themeToggleIcon');
+            const btn = document.getElementById('themeToggleBtn');
+            
+            if (theme === 'dark') {
+                html.classList.remove('light-style');
+                html.classList.add('dark-style');
+                if (icon) {
+                    icon.className = 'fa-solid fa-sun text-warning';
+                }
+                if (btn) {
+                    btn.setAttribute('title', 'สลับเป็นโหมดสว่าง (Light Mode)');
+                }
+            } else {
+                html.classList.remove('dark-style');
+                html.classList.add('light-style');
+                if (icon) {
+                    icon.className = 'fa-solid fa-moon text-secondary';
+                }
+                if (btn) {
+                    btn.setAttribute('title', 'สลับเป็นโหมดมืด (Dark Mode)');
+                }
+            }
+            
+            localStorage.setItem('theme', theme);
+            window.dispatchEvent(new CustomEvent('theme-changed', { detail: { theme } }));
+        }
+
+        function toggleTheme() {
+            const current = document.documentElement.getAttribute('data-bs-theme') || 'light';
+            const next = current === 'dark' ? 'light' : 'dark';
+            applyTheme(next);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const theme = getStoredTheme();
+            applyTheme(theme);
+        });
+
+        // Global Livewire Alert & Confirm Adapter for SweetAlert2
+        document.addEventListener('livewire:init', () => {
+            Livewire.on('alert', (event) => {
+                const data = Array.isArray(event) ? event[0] : event;
+                if (typeof Swal !== 'undefined') {
+                    Swal.fire({
+                        icon: data.type || 'info',
+                        title: data.title || (data.type === 'success' ? 'สำเร็จ' : (data.type === 'error' ? 'แจ้งเตือนข้อผิดพลาด' : 'แจ้งเตือน')),
+                        text: data.message || '',
+                        confirmButtonText: 'ตกลง',
+                        confirmButtonColor: '#2f6bff'
+                    });
+                }
+            });
+
+            // Override Livewire 3 wire:confirm directive implementation with SweetAlert2
+            if (typeof Livewire.directive === 'function') {
+                Livewire.directive('confirm', ({ el, directive }) => {
+                    let message = directive.expression;
+                    let shouldPrompt = directive.modifiers.includes('prompt');
+                    message = message.replaceAll('\\n', '\n');
+                    if (message === '') message = 'คุณแน่ใจหรือไม่?';
+
+                    el.__livewire_confirm = (action, instead) => {
+                        if (shouldPrompt) {
+                            let [question, expected] = message.split('|');
+                            Swal.fire({
+                                title: 'ยืนยันการทำรายการ',
+                                text: question || 'กรุณากรอกข้อความเพื่อยืนยัน',
+                                input: 'text',
+                                inputPlaceholder: expected || '',
+                                showCancelButton: true,
+                                confirmButtonColor: '#2f6bff',
+                                cancelButtonColor: '#8592a3',
+                                confirmButtonText: 'ยืนยัน',
+                                cancelButtonText: 'ยกเลิก',
+                                reverseButtons: true
+                            }).then((result) => {
+                                if (result.isConfirmed && result.value === expected) {
+                                    action();
+                                } else {
+                                    instead();
+                                }
+                            });
+                        } else {
+                            Swal.fire({
+                                title: 'ยืนยันการทำรายการ',
+                                text: message,
+                                icon: 'warning',
+                                showCancelButton: true,
+                                confirmButtonColor: '#2f6bff',
+                                cancelButtonColor: '#8592a3',
+                                confirmButtonText: 'ยืนยัน',
+                                cancelButtonText: 'ยกเลิก',
+                                reverseButtons: true
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    action();
+                                } else {
+                                    instead();
+                                }
+                            });
+                        }
+                    };
+                });
+            }
+
+            // Global Livewire 3 Error Interceptor & Graceful Recovery
+            if (typeof Livewire.hook === 'function') {
+                Livewire.hook('request', ({ uri, options, payload, respond, succeed, fail }) => {
+                    fail(({ status, content, preventDefault }) => {
+                        // Prevent the intrusive default modal in production / UX
+                        if (typeof preventDefault === 'function') {
+                            preventDefault();
+                        }
+                        
+                        let errTitle = 'การเชื่อมต่อขัดข้อง';
+                        let errMsg = 'เซิร์ฟเวอร์ตอบสนองล่าช้า หรือหมดเวลาเชื่อมต่อ กรุณาลองใหม่อีกครั้ง';
+
+                        if (status === 419) {
+                            errTitle = 'เซสชันหมดอายุ (Session Expired)';
+                            errMsg = 'เซสชันการใช้งานของคุณหมดอายุแล้ว กำลังรีเฟรชหน้าเว็บ...';
+                            if (typeof Swal !== 'undefined') {
+                                Swal.fire({
+                                    icon: 'warning',
+                                    title: errTitle,
+                                    text: errMsg,
+                                    showConfirmButton: false,
+                                    timer: 2500
+                                }).then(() => {
+                                    window.location.reload();
+                                });
+                                return;
+                            } else {
+                                window.location.reload();
+                                return;
+                            }
+                        } else if (status === 404) {
+                            errTitle = 'ไม่พบข้อมูลปลายทาง (404 Not Found)';
+                            errMsg = 'ไม่พบทรัพยากรหรือบริการที่ร้องขอ';
+                        } else if (status === 500) {
+                            errTitle = 'ข้อผิดพลาดระบบ (500 Server Error)';
+                            errMsg = 'เซิร์ฟเวอร์เกิดข้อผิดพลาดในการประมวลผลคำสั่ง';
+                        }
+
+                        if (typeof Swal !== 'undefined') {
+                            Swal.fire({
+                                icon: 'error',
+                                title: errTitle,
+                                text: errMsg,
+                                confirmButtonText: 'ตกลง',
+                                confirmButtonColor: '#2f6bff'
+                            });
+                        } else {
+                            console.error('Livewire Request Failed:', status, content);
+                        }
+                    });
+                });
+            }
+        });
+    </script>
+
+    <!-- Livewire Scripts -->
+<script src="/livewire/livewire.js?id=d73b2798"   data-csrf="" data-update-uri="/livewire/update" data-navigate-once="true"></script>
+        <script src="/assets/js/theme-mode.js"></script>
+    <script src="/assets/js/pricing.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="th" class="light-style layout-menu-fixed" dir="ltr" data-theme="theme-default" data-bs-theme="light">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+    <title>Dashboard | MinimalCloud</title>
+    
+    <link rel="icon" type="image/x-icon" href="/assets/img/minimalhouse-128x128.ico" />
+    
+    <!-- Zero-Flicker Preload Script for Theme -->
+    <script>
+        (function() {
+            try {
+                const storedTheme = localStorage.getItem('theme');
+                const activeTheme = storedTheme === 'dark' ? 'dark' : 'light'; // light is the default, no auto/OS follow
+                document.documentElement.setAttribute('data-bs-theme', activeTheme);
+                document.documentElement.classList.remove('light-style', 'dark-style');
+                document.documentElement.classList.add(activeTheme === 'dark' ? 'dark-style' : 'light-style');
+            } catch (e) {
+                console.error('Theme preload error:', e);
+            }
+        })();
+    </script>
+
+    <!-- Core CSS -->
+    <link rel="stylesheet" href="/assets/sneat/vendor/css/core.css" class="template-customizer-core-css" />
+    <link rel="stylesheet" href="/assets/sneat/vendor/css/theme-default.css" class="template-customizer-theme-css" />
+    <link rel="stylesheet" href="/assets/sneat/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+    <link rel="stylesheet" href="/assets/sneat/css/demo.css" />
+    <link rel="stylesheet" href="/assets/css/client-theme.css" />
+    
+    <!-- FontAwesome 6.7x -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/js/all.min.js"></script>
+    <script src="https://js.stripe.com/v3/"></script>
+    
+    <!-- SweetAlert2 (Loaded in Head for Global Prompt Overriding) -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        // Store native functions
+        window._nativeConfirm = window.confirm;
+        window._nativeAlert = window.alert;
+
+        // Custom Async Confirm Action Helper
+        window.confirmAction = function(message, callback, title = 'ยืนยันการดำเนินการ') {
+            if (typeof Swal !== 'undefined') {
+                Swal.fire({
+                    title: title,
+                    text: message,
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#2f6bff',
+                    cancelButtonColor: '#8592a3',
+                    confirmButtonText: 'ยืนยัน',
+                    cancelButtonText: 'ยกเลิก',
+                    reverseButtons: true
+                }).then((result) => {
+                    if (result.isConfirmed && typeof callback === 'function') {
+                        callback();
+                    }
+                });
+                return false;
+            }
+            if (window._nativeConfirm(message)) {
+                if (typeof callback === 'function') callback();
+                return true;
+            }
+            return false;
+        };
+
+        // Global window.alert override with SweetAlert2
+        window.alert = function(message, title = 'แจ้งเตือน') {
+            if (typeof Swal !== 'undefined') {
+                Swal.fire({
+                    title: title,
+                    text: String(message),
+                    icon: 'info',
+                    confirmButtonText: 'ตกลง',
+                    confirmButtonColor: '#2f6bff'
+                });
+                return;
+            }
+            window._nativeAlert(message);
+        };
+    </script>
+    
+    <!-- Livewire Styles --><style >[wire\:loading][wire\:loading], [wire\:loading\.delay][wire\:loading\.delay], [wire\:loading\.inline-block][wire\:loading\.inline-block], [wire\:loading\.inline][wire\:loading\.inline], [wire\:loading\.block][wire\:loading\.block], [wire\:loading\.flex][wire\:loading\.flex], [wire\:loading\.table][wire\:loading\.table], [wire\:loading\.grid][wire\:loading\.grid], [wire\:loading\.inline-flex][wire\:loading\.inline-flex] {display: none;}[wire\:loading\.delay\.none][wire\:loading\.delay\.none], [wire\:loading\.delay\.shortest][wire\:loading\.delay\.shortest], [wire\:loading\.delay\.shorter][wire\:loading\.delay\.shorter], [wire\:loading\.delay\.short][wire\:loading\.delay\.short], [wire\:loading\.delay\.default][wire\:loading\.delay\.default], [wire\:loading\.delay\.long][wire\:loading\.delay\.long], [wire\:loading\.delay\.longer][wire\:loading\.delay\.longer], [wire\:loading\.delay\.longest][wire\:loading\.delay\.longest] {display: none;}[wire\:offline][wire\:offline] {display: none;}[wire\:dirty]:not(textarea):not(input):not(select) {display: none;}:root {--livewire-progress-bar-color: #2299dd;}[x-cloak="x-cloak"],[x-cloak=""] {display: none !important;}[wire\:cloak="wire:cloak"],[wire\:cloak=""] {display: none !important;}dialog#livewire-error::backdrop {background-color: rgba(0, 0, 0, .6);}</style>
+</head>
+<body>
+    <!-- Layout wrapper -->
+    <div class="layout-wrapper layout-content-navbar">
+        <div class="layout-container">
+            <!-- Menu (Sidebar) -->
+            <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+                <div class="app-brand demo">
+                    <a href="/client" class="app-brand-link">
+                        <span class="app-brand-text demo menu-text fw-bolder ms-2" id="logo">
+                            <img src="/assets/img/logo-cloud.png" alt="logo" style="max-height: 36px;">
+                            MinimalCloud
+                        </span>
+                    </a>
+
+                    <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
+                        <i class="fa-solid fa-chevron-left align-middle"></i>
+                    </a>
+                </div>
+                <div class="menu-inner-shadow"></div>
+
+                <ul class="menu-inner py-1">
+                    <li class="menu-item" data-nav="overview">
+                        <a href="/client" class="menu-link">
+                            <i class="menu-icon tf-icons fa-solid fa-table-cells-large"></i>
+                            <div>ภาพรวม</div>
+                        </a>
+                    </li>
+                    <li class="menu-header"><span class="menu-header-text">บริการ</span></li>
+                    <li class="menu-item" data-nav="hosting">
+                        <a href="/client/cloud-hosting" class="menu-link">
+                            <i class="menu-icon tf-icons fa-solid fa-cloud"></i>
+                            <div>Cloud Hosting</div>
+                        </a>
+                    </li>
+                    <li class="menu-item" data-nav="vps">
+                        <a href="/client/cloud-vps" class="menu-link">
+                            <i class="menu-icon tf-icons fa-solid fa-server"></i>
+                            <div>Cloud VPS</div>
+                            <span class="badge bg-label-secondary ms-auto">เร็วๆ นี้</span>
+                        </a>
+                    </li>
+                    <li class="menu-item" data-nav="domains">
+                        <a href="/client/domain-registry/my-domains" class="menu-link">
+                            <i class="menu-icon tf-icons fa-solid fa-globe"></i>
+                            <div>โดเมนของฉัน</div>
+                        </a>
+                    </li>
+                    <li class="menu-item" data-nav="order">
+                        <a href="/client/order" class="menu-link">
+                            <i class="menu-icon tf-icons fa-solid fa-circle-plus"></i>
+                            <div>สั่งซื้อบริการ</div>
+                        </a>
+                    </li>
+                    <li class="menu-header"><span class="menu-header-text">การเงิน</span></li>
+                    <li class="menu-item" data-nav="billing">
+                        <a href="/client/billing" class="menu-link">
+                            <i class="menu-icon tf-icons fa-solid fa-receipt"></i>
+                            <div>บิลและใบแจ้งหนี้</div>
+                        </a>
+                    </li>
+                    <li class="menu-item" data-nav="credit">
+                        <a href="/client/credit" class="menu-link">
+                            <i class="menu-icon tf-icons fa-solid fa-wallet"></i>
+                            <div>เติมเครดิต</div>
+                        </a>
+                    </li>
+                    <li class="menu-header"><span class="menu-header-text">ช่วยเหลือ</span></li>
+                    <li class="menu-item" data-nav="tickets">
+                        <a href="/client/tickets" class="menu-link">
+                            <i class="menu-icon tf-icons fa-solid fa-headset"></i>
+                            <div>แจ้งปัญหา</div>
+                        </a>
+                    </li>
+                    <li class="menu-item active" data-nav="setting">
+                        <a href="/client/setting" class="menu-link">
+                            <i class="menu-icon tf-icons fa-solid fa-gear"></i>
+                            <div>ตั้งค่าบัญชี</div>
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="/" class="menu-link">
+                            <i class="menu-icon tf-icons fa-solid fa-arrow-left"></i>
+                            <div>กลับหน้าเว็บไซต์</div>
+                        </a>
+                    </li>
+                </ul>
+            </aside>
+            <!-- / Menu -->
+
+            <!-- Layout container -->
+            <div class="layout-page">
+                <!-- Navbar -->
+                <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme" id="layout-navbar">
+                    <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
+                        <a class="nav-item nav-link px-0 me-xl-4 text-secondary" href="javascript:void(0)">
+                            <i class="fa-solid fa-bars fs-4"></i>
+                        </a>
+                    </div>
+                    <nav class="mc-nav-crumb d-none d-md-flex" aria-label="breadcrumb"><a href="/client">ภาพรวม</a><span aria-hidden="true">›</span><span>ช่วยเหลือ</span><span aria-hidden="true">›</span><span class="is-current">ตั้งค่าบัญชี</span></nav>
+
+                    <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+                        <ul class="navbar-nav flex-row align-items-center ms-auto gap-2">
+
+                            <!-- Credit Balance Widget -->
+                            <li class="nav-item">
+                                <div class="navbar-credit-pill">
+                                    <i class="fa-solid fa-coins coin-icon"></i>
+                                    <div class="d-flex flex-column align-items-start leading-tight">
+                                        <span class="fw-bold" style="font-size: 0.95rem;">
+                                            0.00 <small class="text-muted" style="font-size: 0.7rem;">THB</small>
+                                        </span>
+                                        <small class="text-muted" style="font-size: 0.68rem; line-height: 1;">เครดิตคงเหลือ</small>
+                                    </div>
+                                    <a href="/client/credit" class="topup-btn ms-1" title="เติมเงิน">
+                                        <i class="fa-solid fa-plus me-1" style="font-size: 0.7rem;"></i> เติมเงิน
+                                    </a>
+                                </div>
+                            </li>
+
+                            <!-- Theme Toggle Button -->
+                            <li class="nav-item">
+                                <button type="button" class="theme-toggle-btn" id="themeToggleBtn" aria-label="สลับโหมดสว่าง/มืด" aria-pressed="false" title="สลับโหมดสว่าง/มืด">
+                                        <span class="mc-theme-ico" data-for="light"><i class="fa-solid fa-sun"></i></span>
+                                        <span class="mc-theme-ico" data-for="dark"><i class="fa-solid fa-moon"></i></span>
+                                    </button>
+                            </li>
+
+                            <!-- User Profile Dropdown -->
+                            <li class="nav-item navbar-dropdown dropdown-user dropdown ms-1">
+                                <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+                                    <div class="avatar avatar-online">
+                                        <div class="rounded-circle d-flex align-items-center justify-content-center text-white fw-bold shadow-sm" style="width: 40px; height: 40px; background: linear-gradient(135deg, #2f6bff 0%, #1f56e6 100%);">
+                                            ผ
+                                        </div>
+                                    </div>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end shadow-lg py-2">
+                                    <li class="px-3 py-2">
+                                        <div class="d-flex align-items-center">
+                                            <div class="flex-shrink-0 me-3">
+                                                <div class="rounded-circle d-flex align-items-center justify-content-center text-white fw-bold" style="width: 40px; height: 40px; background: linear-gradient(135deg, #2f6bff 0%, #1f56e6 100%);">
+                                                    ผ
+                                                </div>
+                                            </div>
+                                            <div class="flex-grow-1 overflow-hidden">
+                                                <span class="fw-bold d-block text-truncate">
+                                                    ผู้ใช้ ตัวอย่าง
+                                                </span>
+                                                <small class="badge bg-label-primary px-2 py-0 text-capitalize" style="font-size: 0.72rem;">
+                                                    ลูกค้าทั่วไป
+                                                </small>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li><div class="dropdown-divider my-1"></div></li>
+                                    <li>
+                                        <a class="dropdown-item py-2" href="/client/setting">
+                                            <i class="fa-solid fa-user-gear me-2 text-primary"></i>
+                                            <span class="align-middle">ตั้งค่าบัญชี</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item py-2" href="/client/credit">
+                                            <i class="fa-solid fa-wallet me-2 text-warning"></i>
+                                            <span class="align-middle">เติมเครดิต</span>
+                                        </a>
+                                    </li>
+                                    <li><div class="dropdown-divider my-1"></div></li>
+                                    <li>
+                                        <form method="POST" action="/logout">
+                                            <input type="hidden" name="_token" value="" autocomplete="off">                                            <a class="dropdown-item py-2 text-danger" href="/login/?logged_out=1">
+                                                <i class="fa-solid fa-right-from-bracket me-2"></i>
+                                                <span class="align-middle">ออกจากระบบ</span>
+                                            </a>
+                                        </form>
+                                    </li>
+                                </ul>
+                            </li>
+                            <!--/ User -->
+
+                        </ul>
+                    </div>
+                </nav>
+                <!-- / Navbar -->
+
+                <!-- Content wrapper -->
+                <div class="content-wrapper">
+                    <!-- Content -->
+                    <div class="container-xxl flex-grow-1 container-p-y">
+                        
+                            <div wire:snapshot="{&quot;data&quot;:{&quot;customer_type&quot;:&quot;individual&quot;,&quot;company_name&quot;:&quot;&quot;,&quot;tax_id&quot;:&quot;&quot;,&quot;branch_type&quot;:&quot;head_office&quot;,&quot;branch_code&quot;:&quot;00000&quot;,&quot;name&quot;:&quot;\u0e1c\u0e39\u0e49\u0e43\u0e0a\u0e49 \u0e15\u0e31\u0e27\u0e2d\u0e22\u0e48\u0e32\u0e07&quot;,&quot;email&quot;:&quot;user@example.com&quot;,&quot;phone&quot;:&quot;080-000-0000&quot;,&quot;thai_id&quot;:&quot;0-0000-00000-00-0&quot;,&quot;address&quot;:&quot;123 ถนนตัวอย่าง&quot;,&quot;current_password&quot;:null,&quot;password&quot;:null,&quot;password_confirmation&quot;:null,&quot;discord_webhook&quot;:&quot;&quot;,&quot;line_webhook&quot;:&quot;&quot;,&quot;telegram_webhook&quot;:&quot;&quot;,&quot;two_factor_enabled&quot;:false,&quot;show_2fa_modal&quot;:false,&quot;two_factor_secret_temp&quot;:&quot;&quot;,&quot;two_factor_qr_url&quot;:&quot;&quot;,&quot;two_factor_code&quot;:&quot;&quot;,&quot;recovery_codes&quot;:[[],{&quot;s&quot;:&quot;arr&quot;}],&quot;referral_code&quot;:&quot;DEMO1234&quot;,&quot;referral_link&quot;:&quot;https:\/\/minimalcloud.sbs\/register?ref=DEMO1234&quot;,&quot;referral_commission&quot;:10,&quot;referred_count&quot;:0,&quot;referral_earnings&quot;:0},&quot;memo&quot;:{&quot;id&quot;:&quot;tw0PN9lJaB6oRadT916O&quot;,&quot;name&quot;:&quot;client.setting-manager&quot;,&quot;path&quot;:&quot;client\/setting&quot;,&quot;method&quot;:&quot;GET&quot;,&quot;release&quot;:&quot;a-a-a&quot;,&quot;children&quot;:[],&quot;scripts&quot;:[&quot;1111168910-0&quot;],&quot;assets&quot;:[],&quot;errors&quot;:[],&quot;locale&quot;:&quot;th&quot;},&quot;checksum&quot;:&quot;e010604e4e42c3036a8b500785079b8bf5472600c5d747bf401a272396df4206&quot;}" wire:effects="{&quot;scripts&quot;:{&quot;1111168910-0&quot;:&quot;&lt;script&gt;\n    window.formatThaiIdInline = function(el, feedbackId) {\n        let raw = el.value.replace(\/\\D\/g, &#039;&#039;).substring(0, 13);\n        let formatted = &#039;&#039;;\n        if (raw.length &gt; 0) formatted += raw.substring(0, 1);\n        if (raw.length &gt; 1) formatted += &#039;-&#039; + raw.substring(1, 5);\n        if (raw.length &gt; 5) formatted += &#039;-&#039; + raw.substring(5, 10);\n        if (raw.length &gt; 10) formatted += &#039;-&#039; + raw.substring(10, 12);\n        if (raw.length &gt; 12) formatted += &#039;-&#039; + raw.substring(12, 13);\n        el.value = formatted;\n\n        const feedback = document.getElementById(feedbackId);\n        if (feedback) {\n            if (raw.length === 13) {\n                let sum = 0;\n                for (let i = 0; i &lt; 12; i++) {\n                    sum += parseInt(raw.charAt(i), 10) * (13 - i);\n                }\n                const check = (11 - (sum % 11)) % 10;\n                const valid = (parseInt(raw.charAt(12), 10) === check) &amp;&amp; !(\/^(\\d)\\1{12}$\/.test(raw));\n                if (valid) {\n                    feedback.innerHTML = &#039;&lt;span class=\&quot;text-success fw-medium\&quot;&gt;&lt;i class=\&quot;fa-solid fa-circle-check me-1\&quot;&gt;&lt;\/i&gt;\u0e40\u0e25\u0e02 13 \u0e2b\u0e25\u0e31\u0e01\u0e16\u0e39\u0e01\u0e15\u0e49\u0e2d\u0e07\u0e2a\u0e21\u0e1a\u0e39\u0e23\u0e13\u0e4c&lt;\/span&gt;&#039;;\n                    feedback.style.display = &#039;block&#039;;\n                } else {\n                    feedback.innerHTML = &#039;&lt;span class=\&quot;text-danger fw-medium\&quot;&gt;&lt;i class=\&quot;fa-solid fa-circle-xmark me-1\&quot;&gt;&lt;\/i&gt;\u0e40\u0e25\u0e02 13 \u0e2b\u0e25\u0e31\u0e01\u0e44\u0e21\u0e48\u0e16\u0e39\u0e01\u0e15\u0e49\u0e2d\u0e07\u0e15\u0e32\u0e21\u0e2b\u0e25\u0e31\u0e01\u0e04\u0e33\u0e19\u0e27\u0e13&lt;\/span&gt;&#039;;\n                    feedback.style.display = &#039;block&#039;;\n                }\n            } else if (raw.length &gt; 0) {\n                feedback.innerHTML = `&lt;span class=\&quot;text-warning fw-medium\&quot;&gt;&lt;i class=\&quot;fa-solid fa-pen me-1\&quot;&gt;&lt;\/i&gt;\u0e01\u0e33\u0e25\u0e31\u0e07\u0e1e\u0e34\u0e21\u0e1e\u0e4c (${raw.length}\/13 \u0e2b\u0e25\u0e31\u0e01)&lt;\/span&gt;`;\n                feedback.style.display = &#039;block&#039;;\n            } else {\n                feedback.style.display = &#039;none&#039;;\n            }\n        }\n        \n        el.dispatchEvent(new Event(&#039;input&#039;));\n    };\n\n    const phoneInput = document.getElementById(&#039;phone&#039;);\n    if (phoneInput) {\n        phoneInput.addEventListener(&#039;input&#039;, function(e) {\n            let rawValue = this.value.replace(\/\\D\/g, &#039;&#039;);\n            if (rawValue.length &gt; 10) rawValue = rawValue.substring(0, 10);\n\n            let formattedValue = rawValue;\n            if (rawValue.length &gt; 6) {\n                formattedValue = `${rawValue.substring(0, 3)}-${rawValue.substring(3, 6)}-${rawValue.substring(6)}`;\n            } else if (rawValue.length &gt; 3) {\n                formattedValue = `${rawValue.substring(0, 3)}-${rawValue.substring(3)}`;\n            }\n            this.value = formattedValue;\n            this.dispatchEvent(new Event(&#039;input&#039;));\n        });\n    }\n&lt;\/script&gt;\n    &quot;}}" wire:id="tw0PN9lJaB6oRadT916O">
+    <h4 class="fw-bold py-3 mb-4 mc-page-title">ตั้งค่าบัญชี
+    </h4>
+
+    <div class="row">
+        <!-- ข้อมูลส่วนตัว -->
+        <div class="col-xl-8 col-lg-7 col-md-12 mb-4">
+            <div class="card shadow-sm border-0 h-100">
+                <div class="card-header border-bottom">
+                    <h5 class="mb-0"><i class="fa-solid fa-user-pen me-2"></i> ข้อมูลส่วนตัว</h5>
+                </div>
+                <div class="card-body mt-3">
+                    <form wire:submit.prevent="updateProfile">
+                        <!-- สมัครในนาม (ประเภทลูกค้า) -->
+                        <div class="mb-4">
+                            <label class="form-label fw-bold d-block text-secondary mb-2">
+                                <i class="fa-solid fa-user-tag text-primary me-1"></i> สมัครในนาม (ประเภทลูกค้า) <span class="text-danger">*</span>
+                            </label>
+                            <div class="row g-2">
+                                <div class="col-md-4">
+                                    <label class="card p-2.5 h-100 border cursor-pointer customer-type-card" style="cursor: pointer; transition: all 0.2s;">
+                                        <div class="d-flex align-items-center">
+                                            <input type="radio" wire:model.live="customer_type" value="individual" class="form-check-input me-2 mt-0">
+                                            <div>
+                                                <div class="fw-semibold text-dark"><i class="fa-solid fa-user me-1 text-primary"></i> บุคคลธรรมดา</div>
+                                                <small class="text-muted" style="font-size: 0.75rem;">สำหรับผู้ใช้ทั่วไป</small>
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="card p-2.5 h-100 border cursor-pointer customer-type-card " style="cursor: pointer; transition: all 0.2s;">
+                                        <div class="d-flex align-items-center">
+                                            <input type="radio" wire:model.live="customer_type" value="company" class="form-check-input me-2 mt-0">
+                                            <div>
+                                                <div class="fw-semibold text-dark"><i class="fa-solid fa-building me-1 text-info"></i> นิติบุคคล</div>
+                                                <small class="text-muted" style="font-size: 0.75rem;">บริษัท / หจก.</small>
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="card p-2.5 h-100 border cursor-pointer customer-type-card " style="cursor: pointer; transition: all 0.2s;">
+                                        <div class="d-flex align-items-center">
+                                            <input type="radio" wire:model.live="customer_type" value="government" class="form-check-input me-2 mt-0">
+                                            <div>
+                                                <div class="fw-semibold text-dark"><i class="fa-solid fa-landmark me-1 text-warning"></i> หน่วยงานรัฐ</div>
+                                                <small class="text-muted" style="font-size: 0.75rem;">ราชการ / รัฐวิสาหกิจ</small>
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ฟิลด์สำหรับนิติบุคคล / หน่วยงานราชการ -->
+                        <!--[if BLOCK]><![endif]--><!--[if ENDBLOCK]><![endif]-->
+                        <div class="row mb-3">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-semibold">
+                                    ชื่อ-นามสกุล
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <input type="text" class="form-control " wire:model="name" placeholder="ชื่อ-นามสกุล">
+                                <!--[if BLOCK]><![endif]--><!--[if ENDBLOCK]><![endif]-->                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-semibold">อีเมล</label>
+                                <input type="email" class="form-control text-muted" wire:model="email" value="user@example.com" disabled readonly>
+                                <small class="text-muted">อีเมลใช้สำหรับเข้าสู่ระบบ และไม่สามารถเปลี่ยนได้</small>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-semibold" for="phone">เบอร์โทรศัพท์</label>
+                                <div class="input-group input-group-merge">
+                                    <span class="input-group-text">+66</span>
+                                    <input type="text" id="phone" class="form-control " wire:model="phone" placeholder="XX-XXX-XXXX">
+                                </div>
+                                <!--[if BLOCK]><![endif]--><!--[if ENDBLOCK]><![endif]-->                            </div>
+
+                            <!--[if BLOCK]><![endif]-->                                <div class="col-md-6 mb-3">
+                                    <label class="form-label fw-semibold" for="id_card">เลขบัตรประชาชน (13 หลัก)</label>
+                                    <div class="input-group input-group-merge">
+                                        <span class="input-group-text"><i class="fa-solid fa-id-card"></i></span>
+                                        <input type="text" id="client_thai_id" class="form-control " wire:model="thai_id" placeholder="X-XXXX-XXXXX-XX-X" maxlength="17" oninput="formatThaiIdInline(this, 'client_thai_id_feedback')">
+                                    </div>
+                                    <div id="client_thai_id_feedback" class="small mt-1" style="display:none;"></div>
+                                    <!--[if BLOCK]><![endif]--><!--[if ENDBLOCK]><![endif]-->                                </div>
+                            <!--[if ENDBLOCK]><![endif]-->
+                            <div class="col-12 mb-3">
+                                <label class="form-label fw-semibold">ที่อยู่ (สำหรับการออกใบเสร็จ/ใบกำกับภาษี)</label>
+                                <textarea class="form-control " wire:model="address" rows="3" placeholder="บ้านเลขที่, อาคาร/ชั้น, ถนน, ตำบล/แขวง, อำเภอ/เขต, จังหวัด, รหัสไปรษณีย์"></textarea>
+                                <!--[if BLOCK]><![endif]--><!--[if ENDBLOCK]><![endif]-->                            </div>
+                        </div>
+                        <div class="d-flex justify-content-end">
+                            <button type="submit" class="btn btn-primary px-4">
+                                <span wire:loading.remove wire:target="updateProfile"><i class="fa-solid fa-save me-1"></i> บันทึกข้อมูล</span>
+                                <span wire:loading wire:target="updateProfile"><i class="fa-solid fa-spinner fa-spin me-1"></i> กำลังบันทึก...</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- เปลี่ยนรหัสผ่าน -->
+        <div class="col-xl-4 col-lg-5 col-md-12 mb-4">
+            <div class="card shadow-sm border-0 h-100">
+                <div class="card-header border-bottom">
+                    <h5 class="mb-0"><i class="fa-solid fa-lock me-2"></i> เปลี่ยนรหัสผ่าน</h5>
+                </div>
+                <div class="card-body mt-3">
+                    <form wire:submit.prevent="updatePassword">
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">รหัสผ่านปัจจุบัน <span class="text-danger">*</span></label>
+                            <input type="password" class="form-control " wire:model="current_password" placeholder="********">
+                            <!--[if BLOCK]><![endif]--><!--[if ENDBLOCK]><![endif]-->                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">รหัสผ่านใหม่ <span class="text-danger">*</span></label>
+                            <input type="password" class="form-control " wire:model="password" placeholder="********">
+                            <!--[if BLOCK]><![endif]--><!--[if ENDBLOCK]><![endif]-->                        </div>
+                        <div class="mb-4">
+                            <label class="form-label fw-semibold">ยืนยันรหัสผ่านใหม่ <span class="text-danger">*</span></label>
+                            <input type="password" class="form-control" wire:model="password_confirmation" placeholder="********">
+                        </div>
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary">
+                                <span wire:loading.remove wire:target="updatePassword"><i class="fa-solid fa-key me-1"></i> อัปเดตรหัสผ่าน</span>
+                                <span wire:loading wire:target="updatePassword"><i class="fa-solid fa-spinner fa-spin me-1"></i> กำลังอัปเดต...</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Security & Expansion Section -->
+    <div class="row mt-2">
+        <!-- 2FA Two-Factor Authentication -->
+        <div class="col-xl-6 col-md-12 mb-4">
+            <div class="card shadow-sm border-0 h-100">
+                <div class="card-header border-bottom d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0"><i class="fa-solid fa-shield-halved me-2"></i> ความปลอดภัย 2FA</h5>
+                    <!--[if BLOCK]><![endif]-->                        <span class="badge bg-secondary font-monospace"><i class="fa-solid fa-circle-xmark me-1"></i> ยังไม่เปิดใช้งาน</span>
+                    <!--[if ENDBLOCK]><![endif]-->                </div>
+                <div class="card-body mt-3">
+                    <p class="text-muted small mb-3">
+                        เพิ่มความปลอดภัยสูงสุดให้กับบัญชี Cloud Hosting ของคุณด้วยการยืนยันรหัสผ่านร่วมกับแอปพลิเคชัน Authenticator (เช่น Google Authenticator, 1Password, Microsoft Authenticator)
+                    </p>
+
+                    <!--[if BLOCK]><![endif]-->                        <button type="button" class="btn btn-outline-primary" wire:click="initiate2fa">
+                            <i class="fa-solid fa-qrcode me-1"></i> เริ่มต้นเปิดใช้งาน 2FA ตอนนี้
+                        </button>
+                    <!--[if ENDBLOCK]><![endif]-->                </div>
+            </div>
+        </div>
+
+        <!-- Webhook Integration -->
+        <div class="col-xl-6 col-md-12 mb-4">
+            <div class="card shadow-sm border-0 h-100">
+                <div class="card-header border-bottom">
+                    <h5 class="mb-0"><i class="fa-solid fa-tower-broadcast me-2"></i> การแจ้งเตือน Webhooks</h5>
+                </div>
+                <div class="card-body mt-3">
+                    <p class="text-muted small mb-3">
+                        รับการแจ้งเตือนแบบเรียลไทม์เกี่ยวกับสถานะเซิร์ฟเวอร์, การชำระเงิน, และคำร้องช่วยเหลือ ผ่าน Webhook URL
+                    </p>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold small"><i class="fa-brands fa-discord text-primary me-1"></i> Discord Webhook URL</label>
+                        <div class="input-group">
+                            <input type="url" class="form-control font-monospace small" wire:model="discord_webhook" placeholder="https://discord.com/api/webhooks/...">
+                            <button class="btn btn-outline-secondary btn-sm" type="button" wire:click="testWebhook('discord')">ทดสอบ</button>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold small"><i class="fa-brands fa-line text-success me-1"></i> LINE Webhook / Notify URL</label>
+                        <div class="input-group">
+                            <input type="url" class="form-control font-monospace small" wire:model="line_webhook" placeholder="https://notify-api.line.me/api/notify...">
+                            <button class="btn btn-outline-secondary btn-sm" type="button" wire:click="testWebhook('line')">ทดสอบ</button>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold small"><i class="fa-brands fa-telegram text-info me-1"></i> Telegram Bot Webhook</label>
+                        <div class="input-group">
+                            <input type="url" class="form-control font-monospace small" wire:model="telegram_webhook" placeholder="https://api.telegram.org/bot...">
+                            <button class="btn btn-outline-secondary btn-sm" type="button" wire:click="testWebhook('telegram')">ทดสอบ</button>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-end">
+                        <button type="button" class="btn btn-primary px-4" wire:click="saveWebhooks">
+                            <i class="fa-solid fa-floppy-disk me-1"></i> บันทึก Webhooks
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Affiliate & Referral Program -->
+        <div class="col-12 mb-4">
+            <div class="card shadow-sm border-0">
+                <div class="card-header border-bottom bg-transparent d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0"><i class="fa-solid fa-handshake-angle me-2"></i> โปรแกรมแนะนำเพื่อน & พันธมิตร</h5>
+                    <span class="badge bg-label-warning font-monospace">ค่าคอมมิชชัน 10฿ / บัญชี</span>
+                </div>
+                <div class="card-body mt-3">
+                    <div class="row align-items-center">
+                        <div class="col-lg-7">
+                            <p class="text-muted small mb-3">
+                                แชร์ลิงก์แนะนำเพื่อนของคุณ เพื่อรับโบนัสเครดิตส่วนลดค่าบริการ Cloud Hosting เมื่อมีเพื่อนสมัครใช้งานผ่านลิงก์ของคุณ
+                            </p>
+                            <label class="form-label fw-semibold small">ลิงก์แนะนำของคุณ:</label>
+                            <div class="input-group mb-2">
+                                <input type="text" class="form-control font-monospace text-primary fw-bold" id="affiliateLinkInput" value="/register?ref=DEMO1234" readonly>
+                                <button class="btn btn-primary" type="button" onclick="navigator.clipboard.writeText('/register?ref=DEMO1234'); Swal.fire({ icon: 'success', title: 'คัดลอกสำเร็จ!', text: 'คัดลอกลิงก์แนะนำเรียบร้อยแล้ว', timer: 2000, showConfirmButton: false });">
+                                    <i class="fa-solid fa-copy me-1"></i> คัดลอกลิงก์
+                                </button>
+                            </div>
+                            <div class="small text-muted">
+                                รหัสแนะนำของคุณ: <span class="badge bg-label-primary font-monospace">DEMO1234</span>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-5 mt-3 mt-lg-0">
+                            <div class="row g-2">
+                                <div class="col-6">
+                                    <div class="border rounded p-3 text-center bg-light">
+                                        <div class="text-muted small mb-1">เพื่อนที่แนะนำแล้ว</div>
+                                        <div class="fs-4 fw-bold text-primary font-monospace">0 คน</div>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="border rounded p-3 text-center bg-light">
+                                        <div class="text-muted small mb-1">เครดิตโบนัสสะสม</div>
+                                        <div class="fs-4 fw-bold text-success font-monospace">฿0.00</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    <!-- / Content -->
+
+                    <div class="content-backdrop fade"></div>
+                </div>
+                <!-- Content wrapper -->
+            </div>
+            <!-- / Layout page -->
+        </div>
+    </div>
+    <!-- / Layout wrapper -->
+
+    <!-- JS Main -->
+    <script src="/assets/sneat/vendor/js/helpers.js"></script>
+    <script src="/assets/sneat/js/config.js"></script>
+    <script src="/assets/sneat/vendor/libs/jquery/jquery.js"></script>
+    <script src="/assets/sneat/vendor/libs/popper/popper.js"></script>
+    <script src="/assets/sneat/vendor/js/bootstrap.js"></script>
+    <script src="/assets/sneat/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+    <script src="/assets/sneat/vendor/js/menu.js"></script>
+    <script src="/assets/sneat/js/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- Theme Switcher Engine -->
+    <script>
+        function getStoredTheme() {
+            return localStorage.getItem('theme') === 'dark' ? 'dark' : 'light';
+        }
+
+        function applyTheme(theme) {
+            const html = document.documentElement;
+            html.setAttribute('data-bs-theme', theme);
+            
+            const icon = document.getElementById('themeToggleIcon');
+            const btn = document.getElementById('themeToggleBtn');
+            
+            if (theme === 'dark') {
+                html.classList.remove('light-style');
+                html.classList.add('dark-style');
+                if (icon) {
+                    icon.className = 'fa-solid fa-sun text-warning';
+                }
+                if (btn) {
+                    btn.setAttribute('title', 'สลับเป็นโหมดสว่าง (Light Mode)');
+                }
+            } else {
+                html.classList.remove('dark-style');
+                html.classList.add('light-style');
+                if (icon) {
+                    icon.className = 'fa-solid fa-moon text-secondary';
+                }
+                if (btn) {
+                    btn.setAttribute('title', 'สลับเป็นโหมดมืด (Dark Mode)');
+                }
+            }
+            
+            localStorage.setItem('theme', theme);
+            window.dispatchEvent(new CustomEvent('theme-changed', { detail: { theme } }));
+        }
+
+        function toggleTheme() {
+            const current = document.documentElement.getAttribute('data-bs-theme') || 'light';
+            const next = current === 'dark' ? 'light' : 'dark';
+            applyTheme(next);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const theme = getStoredTheme();
+            applyTheme(theme);
+        });
+
+        // Global Livewire Alert & Confirm Adapter for SweetAlert2
+        document.addEventListener('livewire:init', () => {
+            Livewire.on('alert', (event) => {
+                const data = Array.isArray(event) ? event[0] : event;
+                if (typeof Swal !== 'undefined') {
+                    Swal.fire({
+                        icon: data.type || 'info',
+                        title: data.title || (data.type === 'success' ? 'สำเร็จ' : (data.type === 'error' ? 'แจ้งเตือนข้อผิดพลาด' : 'แจ้งเตือน')),
+                        text: data.message || '',
+                        confirmButtonText: 'ตกลง',
+                        confirmButtonColor: '#2f6bff'
+                    });
+                }
+            });
+
+            // Override Livewire 3 wire:confirm directive implementation with SweetAlert2
+            if (typeof Livewire.directive === 'function') {
+                Livewire.directive('confirm', ({ el, directive }) => {
+                    let message = directive.expression;
+                    let shouldPrompt = directive.modifiers.includes('prompt');
+                    message = message.replaceAll('\\n', '\n');
+                    if (message === '') message = 'คุณแน่ใจหรือไม่?';
+
+                    el.__livewire_confirm = (action, instead) => {
+                        if (shouldPrompt) {
+                            let [question, expected] = message.split('|');
+                            Swal.fire({
+                                title: 'ยืนยันการทำรายการ',
+                                text: question || 'กรุณากรอกข้อความเพื่อยืนยัน',
+                                input: 'text',
+                                inputPlaceholder: expected || '',
+                                showCancelButton: true,
+                                confirmButtonColor: '#2f6bff',
+                                cancelButtonColor: '#8592a3',
+                                confirmButtonText: 'ยืนยัน',
+                                cancelButtonText: 'ยกเลิก',
+                                reverseButtons: true
+                            }).then((result) => {
+                                if (result.isConfirmed && result.value === expected) {
+                                    action();
+                                } else {
+                                    instead();
+                                }
+                            });
+                        } else {
+                            Swal.fire({
+                                title: 'ยืนยันการทำรายการ',
+                                text: message,
+                                icon: 'warning',
+                                showCancelButton: true,
+                                confirmButtonColor: '#2f6bff',
+                                cancelButtonColor: '#8592a3',
+                                confirmButtonText: 'ยืนยัน',
+                                cancelButtonText: 'ยกเลิก',
+                                reverseButtons: true
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    action();
+                                } else {
+                                    instead();
+                                }
+                            });
+                        }
+                    };
+                });
+            }
+
+            // Global Livewire 3 Error Interceptor & Graceful Recovery
+            if (typeof Livewire.hook === 'function') {
+                Livewire.hook('request', ({ uri, options, payload, respond, succeed, fail }) => {
+                    fail(({ status, content, preventDefault }) => {
+                        // Prevent the intrusive default modal in production / UX
+                        if (typeof preventDefault === 'function') {
+                            preventDefault();
+                        }
+                        
+                        let errTitle = 'การเชื่อมต่อขัดข้อง';
+                        let errMsg = 'เซิร์ฟเวอร์ตอบสนองล่าช้า หรือหมดเวลาเชื่อมต่อ กรุณาลองใหม่อีกครั้ง';
+
+                        if (status === 419) {
+                            errTitle = 'เซสชันหมดอายุ (Session Expired)';
+                            errMsg = 'เซสชันการใช้งานของคุณหมดอายุแล้ว กำลังรีเฟรชหน้าเว็บ...';
+                            if (typeof Swal !== 'undefined') {
+                                Swal.fire({
+                                    icon: 'warning',
+                                    title: errTitle,
+                                    text: errMsg,
+                                    showConfirmButton: false,
+                                    timer: 2500
+                                }).then(() => {
+                                    window.location.reload();
+                                });
+                                return;
+                            } else {
+                                window.location.reload();
+                                return;
+                            }
+                        } else if (status === 404) {
+                            errTitle = 'ไม่พบข้อมูลปลายทาง (404 Not Found)';
+                            errMsg = 'ไม่พบทรัพยากรหรือบริการที่ร้องขอ';
+                        } else if (status === 500) {
+                            errTitle = 'ข้อผิดพลาดระบบ (500 Server Error)';
+                            errMsg = 'เซิร์ฟเวอร์เกิดข้อผิดพลาดในการประมวลผลคำสั่ง';
+                        }
+
+                        if (typeof Swal !== 'undefined') {
+                            Swal.fire({
+                                icon: 'error',
+                                title: errTitle,
+                                text: errMsg,
+                                confirmButtonText: 'ตกลง',
+                                confirmButtonColor: '#2f6bff'
+                            });
+                        } else {
+                            console.error('Livewire Request Failed:', status, content);
+                        }
+                    });
+                });
+            }
+        });
+    </script>
+
+    <!-- Livewire Scripts -->
+<script src="/livewire/livewire.js?id=d73b2798"   data-csrf="" data-update-uri="/livewire/update" data-navigate-once="true"></script>
+        <script src="/assets/js/theme-mode.js"></script>
+</body>
+</html>
+

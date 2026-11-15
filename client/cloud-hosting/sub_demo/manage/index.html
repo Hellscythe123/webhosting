@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="th" class="light-style layout-menu-fixed" dir="ltr" data-theme="theme-default" data-bs-theme="light">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+    <title>Dashboard | MinimalCloud</title>
+    
+    <link rel="icon" type="image/x-icon" href="/assets/img/minimalhouse-128x128.ico" />
+    
+    <!-- Zero-Flicker Preload Script for Theme -->
+    <script>
+        (function() {
+            try {
+                const storedTheme = localStorage.getItem('theme');
+                const activeTheme = storedTheme === 'dark' ? 'dark' : 'light'; // light is the default, no auto/OS follow
+                document.documentElement.setAttribute('data-bs-theme', activeTheme);
+                document.documentElement.classList.remove('light-style', 'dark-style');
+                document.documentElement.classList.add(activeTheme === 'dark' ? 'dark-style' : 'light-style');
+            } catch (e) {
+                console.error('Theme preload error:', e);
+            }
+        })();
+    </script>
+
+    <!-- Core CSS -->
+    <link rel="stylesheet" href="/assets/sneat/vendor/css/core.css" class="template-customizer-core-css" />
+    <link rel="stylesheet" href="/assets/sneat/vendor/css/theme-default.css" class="template-customizer-theme-css" />
+    <link rel="stylesheet" href="/assets/sneat/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+    <link rel="stylesheet" href="/assets/sneat/css/demo.css" />
+    <link rel="stylesheet" href="/assets/css/client-theme.css" />
+    <link rel="stylesheet" href="/assets/css/manage.css" />
+    
+    <!-- FontAwesome 6.7x -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/js/all.min.js"></script>
+    
+    <!-- SweetAlert2 (Loaded in Head for Global Prompt Overriding) -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        // Store native functions
+        window._nativeConfirm = window.confirm;
+        window._nativeAlert = window.alert;
+
+        // Custom Async Confirm Action Helper
+        window.confirmAction = function(message, callback, title = 'ยืนยันการดำเนินการ') {
+            if (typeof Swal !== 'undefined') {
+                Swal.fire({
+                    title: title,
+                    text: message,
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#2f6bff',
+                    cancelButtonColor: '#8592a3',
+                    confirmButtonText: 'ยืนยัน',
+                    cancelButtonText: 'ยกเลิก',
+                    reverseButtons: true
+                }).then((result) => {
+                    if (result.isConfirmed && typeof callback === 'function') {
+                        callback();
+                    }
+                });
+                return false;
+            }
+            if (window._nativeConfirm(message)) {
+                if (typeof callback === 'function') callback();
+                return true;
+            }
+            return false;
+        };
+
+        // Global window.alert override with SweetAlert2
+        window.alert = function(message, title = 'แจ้งเตือน') {
+            if (typeof Swal !== 'undefined') {
+                Swal.fire({
+                    title: title,
+                    text: String(message),
+                    icon: 'info',
+                    confirmButtonText: 'ตกลง',
+                    confirmButtonColor: '#2f6bff'
+                });
+                return;
+            }
+            window._nativeAlert(message);
+        };
+    </script>
+    
+    <!-- Livewire Styles --><style >[wire\:loading][wire\:loading], [wire\:loading\.delay][wire\:loading\.delay], [wire\:loading\.inline-block][wire\:loading\.inline-block], [wire\:loading\.inline][wire\:loading\.inline], [wire\:loading\.block][wire\:loading\.block], [wire\:loading\.flex][wire\:loading\.flex], [wire\:loading\.table][wire\:loading\.table], [wire\:loading\.grid][wire\:loading\.grid], [wire\:loading\.inline-flex][wire\:loading\.inline-flex] {display: none;}[wire\:loading\.delay\.none][wire\:loading\.delay\.none], [wire\:loading\.delay\.shortest][wire\:loading\.delay\.shortest], [wire\:loading\.delay\.shorter][wire\:loading\.delay\.shorter], [wire\:loading\.delay\.short][wire\:loading\.delay\.short], [wire\:loading\.delay\.default][wire\:loading\.delay\.default], [wire\:loading\.delay\.long][wire\:loading\.delay\.long], [wire\:loading\.delay\.longer][wire\:loading\.delay\.longer], [wire\:loading\.delay\.longest][wire\:loading\.delay\.longest] {display: none;}[wire\:offline][wire\:offline] {display: none;}[wire\:dirty]:not(textarea):not(input):not(select) {display: none;}:root {--livewire-progress-bar-color: #2299dd;}[x-cloak="x-cloak"],[x-cloak=""] {display: none !important;}[wire\:cloak="wire:cloak"],[wire\:cloak=""] {display: none !important;}dialog#livewire-error::backdrop {background-color: rgba(0, 0, 0, .6);}</style>
+</head>
+<body>
+    <!-- Layout wrapper -->
+    <div class="layout-wrapper layout-content-navbar">
+        <div class="layout-container">
+            <!-- Menu (Sidebar) -->
+            <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+                <div class="app-brand demo">
+                    <a href="/client" class="app-brand-link">
+                        <span class="app-brand-text demo menu-text fw-bolder ms-2" id="logo">
+                            <img src="/assets/img/logo-cloud.png" alt="logo" style="max-height: 36px;">
+                            MinimalCloud
+                        </span>
+                    </a>
+
+                    <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
+                        <i class="fa-solid fa-chevron-left align-middle"></i>
+                    </a>
+                </div>
+                <div class="menu-inner-shadow"></div>
+
+                <ul class="menu-inner py-1">
+                    <li class="menu-item" data-nav="overview">
+                        <a href="/client" class="menu-link">
+                            <i class="menu-icon tf-icons fa-solid fa-table-cells-large"></i>
+                            <div>ภาพรวม</div>
+                        </a>
+                    </li>
+                    <li class="menu-header"><span class="menu-header-text">บริการ</span></li>
+                    <li class="menu-item active" data-nav="hosting">
+                        <a href="/client/cloud-hosting" class="menu-link">
+                            <i class="menu-icon tf-icons fa-solid fa-cloud"></i>
+                            <div>Cloud Hosting</div>
+                        </a>
+                    </li>
+                    <li class="menu-item" data-nav="vps">
+                        <a href="/client/cloud-vps" class="menu-link">
+                            <i class="menu-icon tf-icons fa-solid fa-server"></i>
+                            <div>Cloud VPS</div>
+                            <span class="badge bg-label-secondary ms-auto">เร็วๆ นี้</span>
+                        </a>
+                    </li>
+                    <li class="menu-item" data-nav="domains">
+                        <a href="/client/domain-registry/my-domains" class="menu-link">
+                            <i class="menu-icon tf-icons fa-solid fa-globe"></i>
+                            <div>โดเมนของฉัน</div>
+                        </a>
+                    </li>
+                    <li class="menu-item" data-nav="order">
+                        <a href="/client/order" class="menu-link">
+                            <i class="menu-icon tf-icons fa-solid fa-circle-plus"></i>
+                            <div>สั่งซื้อบริการ</div>
+                        </a>
+                    </li>
+                    <li class="menu-header"><span class="menu-header-text">การเงิน</span></li>
+                    <li class="menu-item" data-nav="billing">
+                        <a href="/client/billing" class="menu-link">
+                            <i class="menu-icon tf-icons fa-solid fa-receipt"></i>
+                            <div>บิลและใบแจ้งหนี้</div>
+                        </a>
+                    </li>
+                    <li class="menu-item" data-nav="credit">
+                        <a href="/client/credit" class="menu-link">
+                            <i class="menu-icon tf-icons fa-solid fa-wallet"></i>
+                            <div>เติมเครดิต</div>
+                        </a>
+                    </li>
+                    <li class="menu-header"><span class="menu-header-text">ช่วยเหลือ</span></li>
+                    <li class="menu-item" data-nav="tickets">
+                        <a href="/client/tickets" class="menu-link">
+                            <i class="menu-icon tf-icons fa-solid fa-headset"></i>
+                            <div>แจ้งปัญหา</div>
+                        </a>
+                    </li>
+                    <li class="menu-item" data-nav="setting">
+                        <a href="/client/setting" class="menu-link">
+                            <i class="menu-icon tf-icons fa-solid fa-gear"></i>
+                            <div>ตั้งค่าบัญชี</div>
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="/" class="menu-link">
+                            <i class="menu-icon tf-icons fa-solid fa-arrow-left"></i>
+                            <div>กลับหน้าเว็บไซต์</div>
+                        </a>
+                    </li>
+                </ul>
+            </aside>
+            <!-- / Menu -->
+
+            <!-- Layout container -->
+            <div class="layout-page">
+                <!-- Navbar -->
+                <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme" id="layout-navbar">
+                    <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
+                        <a class="nav-item nav-link px-0 me-xl-4 text-secondary" href="javascript:void(0)">
+                            <i class="fa-solid fa-bars fs-4"></i>
+                        </a>
+                    </div>
+                    <nav class="mc-nav-crumb d-none d-md-flex" aria-label="breadcrumb"><a href="/client">ภาพรวม</a><span aria-hidden="true">›</span><a href="/client/cloud-hosting">Cloud Hosting</a><span aria-hidden="true">›</span><span class="is-current">จัดการโฮสติ้ง</span></nav>
+
+                    <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+                        <ul class="navbar-nav flex-row align-items-center ms-auto gap-2">
+
+                            <!-- Credit Balance Widget -->
+                            <li class="nav-item">
+                                <div class="navbar-credit-pill">
+                                    <i class="fa-solid fa-coins coin-icon"></i>
+                                    <div class="d-flex flex-column align-items-start leading-tight">
+                                        <span class="fw-bold" style="font-size: 0.95rem;">
+                                            0.00 <small class="text-muted" style="font-size: 0.7rem;">THB</small>
+                                        </span>
+                                        <small class="text-muted" style="font-size: 0.68rem; line-height: 1;">เครดิตคงเหลือ</small>
+                                    </div>
+                                    <a href="/client/credit" class="topup-btn ms-1" title="เติมเงิน">
+                                        <i class="fa-solid fa-plus me-1" style="font-size: 0.7rem;"></i> เติมเงิน
+                                    </a>
+                                </div>
+                            </li>
+
+                            <!-- Theme Toggle Button -->
+                            <li class="nav-item">
+                                <button type="button" class="theme-toggle-btn" id="themeToggleBtn" aria-label="สลับโหมดสว่าง/มืด" aria-pressed="false" title="สลับโหมดสว่าง/มืด">
+                                        <span class="mc-theme-ico" data-for="light"><i class="fa-solid fa-sun"></i></span>
+                                        <span class="mc-theme-ico" data-for="dark"><i class="fa-solid fa-moon"></i></span>
+                                    </button>
+                            </li>
+
+                            <!-- User Profile Dropdown -->
+                            <li class="nav-item navbar-dropdown dropdown-user dropdown ms-1">
+                                <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+                                    <div class="avatar avatar-online">
+                                        <div class="rounded-circle d-flex align-items-center justify-content-center text-white fw-bold shadow-sm" style="width: 40px; height: 40px; background: linear-gradient(135deg, #2f6bff 0%, #1f56e6 100%);">
+                                            ผ
+                                        </div>
+                                    </div>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end shadow-lg py-2">
+                                    <li class="px-3 py-2">
+                                        <div class="d-flex align-items-center">
+                                            <div class="flex-shrink-0 me-3">
+                                                <div class="rounded-circle d-flex align-items-center justify-content-center text-white fw-bold" style="width: 40px; height: 40px; background: linear-gradient(135deg, #2f6bff 0%, #1f56e6 100%);">
+                                                    ผ
+                                                </div>
+                                            </div>
+                                            <div class="flex-grow-1 overflow-hidden">
+                                                <span class="fw-bold d-block text-truncate">
+                                                    ผู้ใช้ ตัวอย่าง
+                                                </span>
+                                                <small class="badge bg-label-primary px-2 py-0 text-capitalize" style="font-size: 0.72rem;">
+                                                    ลูกค้าทั่วไป
+                                                </small>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li><div class="dropdown-divider my-1"></div></li>
+                                    <li>
+                                        <a class="dropdown-item py-2" href="/client/setting">
+                                            <i class="fa-solid fa-user-gear me-2 text-primary"></i>
+                                            <span class="align-middle">ตั้งค่าบัญชี</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item py-2" href="/client/credit">
+                                            <i class="fa-solid fa-wallet me-2 text-warning"></i>
+                                            <span class="align-middle">เติมเครดิต</span>
+                                        </a>
+                                    </li>
+                                    <li><div class="dropdown-divider my-1"></div></li>
+                                    <li>
+                                        <form method="POST" action="/logout">
+                                            <input type="hidden" name="_token" value="" autocomplete="off">                                            <a class="dropdown-item py-2 text-danger" href="/login/?logged_out=1">
+                                                <i class="fa-solid fa-right-from-bracket me-2"></i>
+                                                <span class="align-middle">ออกจากระบบ</span>
+                                            </a>
+                                        </form>
+                                    </li>
+                                </ul>
+                            </li>
+                            <!--/ User -->
+
+                        </ul>
+                    </div>
+                </nav>
+                <!-- / Navbar -->
+
+                <!-- Content wrapper -->
+                <div class="content-wrapper">
+                    <!-- Content -->
+                    <div class="container-xxl flex-grow-1 container-p-y">
+                        
+                        
+    <div class="mc-mg">
+
+    <!-- ===== Service header ===== -->
+    <section class="mc-mg-head">
+        <div class="mc-mg-head-main">
+            <span class="mc-mg-eyebrow"><i class="fa-solid fa-cloud"></i> Cloud Hosting · Freedom</span>
+            <div class="d-flex align-items-center flex-wrap gap-2">
+                <h1 class="mc-mg-title">demo-ddns.minimalcloud.sbs</h1>
+                <span class="mc-status is-active">ใช้งานได้ปกติ</span>
+            </div>
+            <div class="mc-mg-chips">
+                <span class="mc-chip"><i class="fa-solid fa-location-dot"></i> TH · กรุงเทพฯ</span>
+                <span class="mc-chip"><i class="fa-solid fa-network-wired"></i> 203.0.113.10</span>
+                <span class="mc-chip"><i class="fa-solid fa-code"></i> PHP 8.2</span>
+                <span class="mc-chip"><i class="fa-solid fa-lock-open"></i> SSL ปิด</span>
+                <span class="mc-chip"><i class="fa-solid fa-infinity"></i> ตลอดชีพ</span>
+            </div>
+        </div>
+        <div class="mc-mg-actions">
+            <a class="btn btn-primary" href="https://demo-ddns.minimalcloud.sbs" target="_blank" rel="noopener">
+                <i class="fa-solid fa-arrow-up-right-from-square me-1"></i> เปิดเว็บไซต์
+            </a>
+            <button type="button" class="btn btn-outline-secondary" data-copy="203.0.113.10">
+                <i class="fa-regular fa-copy me-1"></i> คัดลอก IP
+            </button>
+            <a class="btn btn-outline-secondary" href="/client/cloud-hosting">
+                <i class="fa-solid fa-arrow-left me-1"></i> กลับหน้ารวม
+            </a>
+        </div>
+    </section>
+
+    <!-- ===== Usage at a glance ===== -->
+    <div class="mc-mg-stats">
+        <article class="mc-mg-stat">
+            <div class="mc-mg-stat-top"><span><i class="fa-solid fa-hard-drive"></i> พื้นที่ดิสก์</span><span class="mc-mg-pct">1%</span></div>
+            <strong>0.01 <small>/ 50 MB</small></strong>
+            <span class="mc-mg-bar" role="img" aria-label="ใช้พื้นที่ 1 เปอร์เซ็นต์"><i style="width:3%"></i></span>
+        </article>
+        <article class="mc-mg-stat">
+            <div class="mc-mg-stat-top"><span><i class="fa-solid fa-right-left"></i> แบนด์วิดธ์</span><span class="mc-mg-pct">0%</span></div>
+            <strong>0 B <small>/ 1 GB</small></strong>
+            <span class="mc-mg-bar" role="img" aria-label="ใช้แบนด์วิดธ์ 0 เปอร์เซ็นต์"></span>
+        </article>
+        <article class="mc-mg-stat">
+            <div class="mc-mg-stat-top"><span><i class="fa-regular fa-file-code"></i> ไฟล์ในเว็บไซต์</span></div>
+            <strong>1 <small>ไฟล์</small></strong>
+            <span class="mc-mg-stat-note">ใน /public_html</span>
+        </article>
+        <article class="mc-mg-stat">
+            <div class="mc-mg-stat-top"><span><i class="fa-solid fa-database"></i> ฐานข้อมูล</span><span class="mc-mg-pct">เต็ม</span></div>
+            <strong>1 <small>/ 1</small></strong>
+            <span class="mc-mg-bar" role="img" aria-label="ใช้ฐานข้อมูลเต็มโควตา"><i class="is-warn" style="width:100%"></i></span>
+        </article>
+    </div>
+
+    <!-- ===== Console ===== -->
+    <section class="mc-mg-console">
+        <nav class="mc-mg-tabs" role="tablist" aria-label="เมนูจัดการบริการ">
+            <button class="mc-mg-tab is-on" role="tab" aria-selected="true" data-mg-tab="files"><i class="fa-solid fa-folder-open"></i><span>จัดการไฟล์</span><span class="mc-mg-badge" title="จำนวนไฟล์">1</span></button>
+            <button class="mc-mg-tab" role="tab" aria-selected="false" data-mg-tab="database"><i class="fa-solid fa-database"></i><span>ฐานข้อมูล</span><span class="mc-mg-badge">1/1</span></button>
+            <button class="mc-mg-tab" role="tab" aria-selected="false" data-mg-tab="git"><i class="fa-brands fa-github"></i><span>Git Deploy</span></button>
+            <button class="mc-mg-tab" role="tab" aria-selected="false" data-mg-tab="apps"><i class="fa-solid fa-cubes"></i><span>ติดตั้งแอป</span></button>
+            <button class="mc-mg-tab" role="tab" aria-selected="false" data-mg-tab="php"><i class="fa-solid fa-code"></i><span>ตั้งค่า PHP</span><span class="mc-mg-badge">8.2</span></button>
+            <button class="mc-mg-tab" role="tab" aria-selected="false" data-mg-tab="ssl"><i class="fa-solid fa-shield-halved"></i><span>SSL</span></button>
+            <button class="mc-mg-tab" role="tab" aria-selected="false" data-mg-tab="backups"><i class="fa-solid fa-clock-rotate-left"></i><span>สำรองข้อมูล</span></button>
+            <button class="mc-mg-tab" role="tab" aria-selected="false" data-mg-tab="dns"><i class="fa-solid fa-network-wired"></i><span>DNS</span><span class="mc-mg-badge" title="จำนวนระเบียน DNS">3</span></button>
+            <button class="mc-mg-tab" role="tab" aria-selected="false" data-mg-tab="cron"><i class="fa-solid fa-clock"></i><span>Cron Jobs</span></button>
+            <button class="mc-mg-tab" role="tab" aria-selected="false" data-mg-tab="mail"><i class="fa-solid fa-envelope"></i><span>อีเมล</span></button>
+        </nav>
+
+        <div class="mc-mg-panels">
+
+            <!-- Files -->
+            <div class="mc-mg-panel is-on" role="tabpanel" data-mg-panel="files">
+                <h2>จัดการไฟล์</h2>
+                <p class="mc-mg-sub">โฟลเดอร์เว็บไซต์หลัก · ซิงค์ล่าสุด 15 พ.ย. 2569 12:54</p>
+                <div class="mc-mg-bar-row">
+                    <div class="mc-mg-path"><i class="fa-solid fa-folder"></i> /public_html <span class="mc-mg-muted">· 1 ไฟล์</span></div>
+                    <div class="mc-mg-tools">
+                        <label class="mc-mg-search"><i class="fa-solid fa-magnifying-glass"></i><input id="mgFileSearch" type="search" placeholder="ค้นหาไฟล์…" aria-label="ค้นหาไฟล์"></label>
+                        <button type="button" class="btn btn-sm btn-primary" data-mg-demo="อัปโหลดไฟล์"><i class="fa-solid fa-upload me-1"></i> อัปโหลด</button>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table mc-mg-table" id="mgFileTable">
+                        <thead><tr><th>ชื่อ</th><th>ขนาด</th><th>สิทธิ์</th><th>แก้ไขล่าสุด</th><th class="text-end">จัดการ</th></tr></thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="mc-mg-file"><i class="fa-regular fa-file-code"></i> index.html</span></td>
+                                <td>10.0 KB</td>
+                                <td><code>644</code></td>
+                                <td>15 พ.ย. 2569 12:54</td>
+                                <td class="text-end"><button type="button" class="btn btn-sm btn-outline-secondary" data-mg-demo="แก้ไขไฟล์">แก้ไข</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="mc-mg-hint"><i class="fa-solid fa-circle-info"></i> โหมดตัวอย่าง — รายการไฟล์และคำสั่งทั้งหมดเป็นข้อมูลจำลอง</p>
+            </div>
+
+            <!-- Database -->
+            <div class="mc-mg-panel" role="tabpanel" data-mg-panel="database">
+                <h2>ฐานข้อมูล</h2>
+                <p class="mc-mg-sub">MySQL / MariaDB · 1 ฐานข้อมูลจากโควตา 1</p>
+                <div class="mc-mg-grid cols-2">
+                    <div class="mc-mg-block">
+                        <h3><i class="fa-solid fa-database"></i> demo_db</h3>
+                        <dl class="mc-mg-kv">
+                            <dt>ผู้ใช้</dt><dd>demo_user</dd>
+                            <dt>ขนาด</dt><dd>0.4 MB</dd>
+                            <dt>ตาราง</dt><dd>3 ตาราง</dd>
+                        </dl>
+                    </div>
+                    <div class="mc-mg-block">
+                        <h3><i class="fa-solid fa-table-list"></i> ตารางในฐานข้อมูล</h3>
+                        <dl class="mc-mg-kv">
+                            <dt>users</dt><dd>12 แถว</dd>
+                            <dt>posts</dt><dd>48 แถว</dd>
+                            <dt>migrations</dt><dd>7 แถว</dd>
+                        </dl>
+                    </div>
+                </div>
+                <p class="mc-mg-hint"><i class="fa-solid fa-circle-info"></i> ตัวอย่างนี้แสดงข้อมูลจำลอง ไม่ได้เชื่อมต่อฐานข้อมูลจริง</p>
+            </div>
+
+            <!-- Git -->
+            <div class="mc-mg-panel" role="tabpanel" data-mg-panel="git">
+                <h2>Git Deploy</h2>
+                <p class="mc-mg-sub">เชื่อมรีโปแล้ว deploy อัตโนมัติทุกครั้งที่ push</p>
+                <div class="mc-mg-grid cols-2">
+                    <div>
+                        <div class="mc-mg-field">
+                            <label for="mgGitUrl">Repository URL</label>
+                            <input id="mgGitUrl" class="form-control" type="text" placeholder="https://github.com/user/repo.git" value="https://github.com/demo/site.git">
+                        </div>
+                        <div class="mc-mg-field">
+                            <label for="mgGitBranch">Branch</label>
+                            <select id="mgGitBranch" class="form-select"><option>main</option><option>develop</option></select>
+                            <small>Deploy อัตโนมัติเมื่อมีการ push เข้า branch นี้</small>
+                        </div>
+                        <button type="button" class="btn btn-primary btn-sm" data-mg-demo="เชื่อมต่อ Git">เชื่อมต่อรีโป</button>
+                    </div>
+                    <div class="mc-mg-block">
+                        <h3><i class="fa-solid fa-key"></i> Deploy key</h3>
+                        <p>เพิ่ม public key นี้ในรีโปของคุณ (ตัวอย่าง)</p>
+                        <div class="mc-mg-key">
+                            <textarea readonly aria-label="Deploy key">ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDemoKeyForPreviewOnly minimalcloud-demo</textarea>
+                            <button type="button" class="btn btn-outline-secondary btn-sm" data-copy="ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDemoKeyForPreviewOnly minimalcloud-demo">คัดลอก</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Apps -->
+            <div class="mc-mg-panel" role="tabpanel" data-mg-panel="apps">
+                <h2>ติดตั้งแอป</h2>
+                <p class="mc-mg-sub">ติดตั้ง CMS หรือเฟรมเวิร์กในคลิกเดียว</p>
+                <div class="mc-mg-grid cols-3">
+                    <div class="mc-mg-app"><span class="ic"><i class="fa-brands fa-wordpress"></i></span><strong>WordPress</strong><span>CMS ยอดนิยม · PHP 8.2</span><button type="button" class="btn btn-sm btn-outline-primary" data-mg-demo="ติดตั้ง WordPress">ติดตั้ง</button></div>
+                    <div class="mc-mg-app"><span class="ic"><i class="fa-brands fa-laravel"></i></span><strong>Laravel</strong><span>PHP Framework · Composer</span><button type="button" class="btn btn-sm btn-outline-primary" data-mg-demo="ติดตั้ง Laravel">ติดตั้ง</button></div>
+                    <div class="mc-mg-app"><span class="ic"><i class="fa-brands fa-node-js"></i></span><strong>Node.js App</strong><span>Runtime + Process manager</span><button type="button" class="btn btn-sm btn-outline-primary" data-mg-demo="ติดตั้ง Node.js">ติดตั้ง</button></div>
+                </div>
+            </div>
+
+            <!-- PHP -->
+            <div class="mc-mg-panel" role="tabpanel" data-mg-panel="php">
+                <h2>ตั้งค่า PHP</h2>
+                <p class="mc-mg-sub">เวอร์ชันและค่าขีดจำกัดของ PHP สำหรับเว็บไซต์นี้</p>
+                <div class="mc-mg-grid cols-2">
+                    <div>
+                        <div class="mc-mg-field">
+                            <label for="mgPhpVersion">PHP version</label>
+                            <select id="mgPhpVersion" class="form-select"><option>8.2</option><option>8.1</option><option>8.3</option></select>
+                        </div>
+                        <div class="mc-mg-field">
+                            <label for="mgPhpMemory">memory_limit</label>
+                            <input id="mgPhpMemory" class="form-control" type="text" value="256M">
+                        </div>
+                        <div class="mc-mg-field">
+                            <label for="mgPhpUpload">upload_max_filesize</label>
+                            <input id="mgPhpUpload" class="form-control" type="text" value="128M">
+                        </div>
+                    </div>
+                    <div class="mc-mg-block">
+                        <h3><i class="fa-solid fa-puzzle-piece"></i> ส่วนขยายที่เปิดใช้</h3>
+                        <div class="mc-mg-ext">
+                            <span><i class="fa-solid fa-check"></i> curl</span>
+                            <span><i class="fa-solid fa-check"></i> gd</span>
+                            <span><i class="fa-solid fa-check"></i> mbstring</span>
+                            <span><i class="fa-solid fa-check"></i> mysqli</span>
+                            <span><i class="fa-solid fa-check"></i> pdo_mysql</span>
+                        </div>
+                        <p class="mt-3">max_execution_time 60 วินาที · display_errors ปิด</p>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-primary btn-sm" data-mg-demo="บันทึกการตั้งค่า PHP">บันทึกการตั้งค่า</button>
+            </div>
+
+            <!-- SSL -->
+            <div class="mc-mg-panel" role="tabpanel" data-mg-panel="ssl">
+                <h2>ความปลอดภัย &amp; SSL</h2>
+                <p class="mc-mg-sub">ใบรับรองฟรีจาก Let's Encrypt พร้อมต่ออายุอัตโนมัติ</p>
+                <div class="mc-mg-grid cols-2">
+                    <div class="mc-mg-block">
+                        <h3><i class="fa-solid fa-lock-open"></i> สถานะใบรับรอง</h3>
+                        <dl class="mc-mg-kv">
+                            <dt>สถานะ</dt><dd>ยังไม่เปิดใช้งาน</dd>
+                            <dt>ผู้ให้บริการ</dt><dd>Let's Encrypt</dd>
+                            <dt>บังคับ HTTPS</dt><dd>ปิด</dd>
+                        </dl>
+                    </div>
+                    <div class="mc-mg-block">
+                        <h3><i class="fa-solid fa-shield-halved"></i> ออกใบรับรอง</h3>
+                        <p>ใช้เวลา 1–2 นาทีหลังกดยืนยัน ระบบจะตรวจ DNS ให้ก่อน</p>
+                        <button type="button" class="btn btn-primary btn-sm mt-3" data-mg-demo="ออกใบรับรอง SSL">ออกใบรับรอง</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Backups -->
+            <div class="mc-mg-panel" role="tabpanel" data-mg-panel="backups">
+                <h2>สำรองข้อมูล</h2>
+                <p class="mc-mg-sub">สำรองทั้งไฟล์และฐานข้อมูล เก็บย้อนหลัง 7 วัน</p>
+                <div class="mc-mg-empty">
+                    <i class="fa-regular fa-clock"></i>
+                    <p>ยังไม่มีการสำรองข้อมูล</p>
+                    <button type="button" class="btn btn-sm btn-primary" data-mg-demo="สร้างข้อมูลสำรอง">สร้างข้อมูลสำรอง</button>
+                </div>
+            </div>
+
+            <!-- DNS -->
+            <div class="mc-mg-panel" role="tabpanel" data-mg-panel="dns">
+                <h2>DNS &amp; ซับโดเมน</h2>
+                <p class="mc-mg-sub">ระเบียน DNS ของ demo-ddns.minimalcloud.sbs</p>
+                <div class="table-responsive">
+                    <table class="mc-mg-table table">
+                        <thead><tr><th>ประเภท</th><th>ชื่อ</th><th>ค่า</th><th>TTL</th><th>Proxy</th></tr></thead>
+                        <tbody>
+                            <tr><td><code>A</code></td><td>@</td><td>203.0.113.10</td><td>3600</td><td><span class="mc-status is-active">เปิด</span></td></tr>
+                            <tr><td><code>CNAME</code></td><td>www</td><td>@</td><td>3600</td><td><span class="mc-status is-active">เปิด</span></td></tr>
+                            <tr><td><code>MX</code></td><td>@</td><td>mail.demo-ddns.minimalcloud.sbs</td><td>3600</td><td><span class="mc-status is-paused">ปิด</span></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="mc-mg-hint"><i class="fa-solid fa-circle-info"></i> ระเบียน DNS ในหน้านี้เป็นข้อมูลตัวอย่าง ไม่มีการแก้ไขที่ผู้ให้บริการจริง</p>
+            </div>
+
+            <!-- Cron -->
+            <div class="mc-mg-panel" role="tabpanel" data-mg-panel="cron">
+                <h2>Cron Jobs</h2>
+                <p class="mc-mg-sub">ตั้งเวลารันสคริปต์ตามตาราง cron</p>
+                <div class="mc-mg-empty">
+                    <i class="fa-regular fa-clock"></i>
+                    <p>ยังไม่มี Cron Job</p>
+                    <button type="button" class="btn btn-sm btn-primary" data-mg-demo="เพิ่ม Cron Job">เพิ่ม Cron Job</button>
+                </div>
+            </div>
+
+            <!-- Mail -->
+            <div class="mc-mg-panel" role="tabpanel" data-mg-panel="mail">
+                <h2>อีเมลโดเมน</h2>
+                <p class="mc-mg-sub">กล่องอีเมลบนโดเมนของคุณ (0/0)</p>
+                <div class="mc-mg-empty">
+                    <i class="fa-regular fa-envelope"></i>
+                    <p>ยังไม่มีกล่องอีเมลในแพ็กเกจนี้</p>
+                    <button type="button" class="btn btn-sm btn-outline-primary" data-mg-demo="อัปเกรดแพ็กเกจ">ดูแพ็กเกจที่มีอีเมล</button>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <p class="mc-mg-hint"><i class="fa-solid fa-lock"></i> หน้านี้ทำงานแบบ static ทั้งหมด — ไม่มี Livewire, ไม่มี API และไม่ส่งข้อมูลไปเซิร์ฟเวอร์จริง</p>
+</div>
+
+
+                    </div>
+                    <!-- / Content -->
+
+                    <div class="content-backdrop fade"></div>
+                </div>
+                <!-- Content wrapper -->
+            </div>
+            <!-- / Layout page -->
+        </div>
+    </div>
+    <!-- / Layout wrapper -->
+
+    <!-- JS Main -->
+    <script src="/assets/sneat/vendor/js/helpers.js"></script>
+    <script src="/assets/sneat/js/config.js"></script>
+    <script src="/assets/sneat/vendor/libs/jquery/jquery.js"></script>
+    <script src="/assets/sneat/vendor/libs/popper/popper.js"></script>
+    <script src="/assets/sneat/vendor/js/bootstrap.js"></script>
+    <script src="/assets/sneat/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+    <script src="/assets/sneat/vendor/js/menu.js"></script>
+    <script src="/assets/sneat/js/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- Theme Switcher Engine -->
+    <script>
+        function getStoredTheme() {
+            return localStorage.getItem('theme') === 'dark' ? 'dark' : 'light';
+        }
+
+        function applyTheme(theme) {
+            const html = document.documentElement;
+            html.setAttribute('data-bs-theme', theme);
+            
+            const icon = document.getElementById('themeToggleIcon');
+            const btn = document.getElementById('themeToggleBtn');
+            
+            if (theme === 'dark') {
+                html.classList.remove('light-style');
+                html.classList.add('dark-style');
+                if (icon) {
+                    icon.className = 'fa-solid fa-sun text-warning';
+                }
+                if (btn) {
+                    btn.setAttribute('title', 'สลับเป็นโหมดสว่าง (Light Mode)');
+                }
+            } else {
+                html.classList.remove('dark-style');
+                html.classList.add('light-style');
+                if (icon) {
+                    icon.className = 'fa-solid fa-moon text-secondary';
+                }
+                if (btn) {
+                    btn.setAttribute('title', 'สลับเป็นโหมดมืด (Dark Mode)');
+                }
+            }
+            
+            localStorage.setItem('theme', theme);
+            window.dispatchEvent(new CustomEvent('theme-changed', { detail: { theme } }));
+        }
+
+        function toggleTheme() {
+            const current = document.documentElement.getAttribute('data-bs-theme') || 'light';
+            const next = current === 'dark' ? 'light' : 'dark';
+            applyTheme(next);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const theme = getStoredTheme();
+            applyTheme(theme);
+        });
+
+        // Global Livewire Alert & Confirm Adapter for SweetAlert2
+        document.addEventListener('livewire:init', () => {
+            Livewire.on('alert', (event) => {
+                const data = Array.isArray(event) ? event[0] : event;
+                if (typeof Swal !== 'undefined') {
+                    Swal.fire({
+                        icon: data.type || 'info',
+                        title: data.title || (data.type === 'success' ? 'สำเร็จ' : (data.type === 'error' ? 'แจ้งเตือนข้อผิดพลาด' : 'แจ้งเตือน')),
+                        text: data.message || '',
+                        confirmButtonText: 'ตกลง',
+                        confirmButtonColor: '#2f6bff'
+                    });
+                }
+            });
+
+            // Override Livewire 3 wire:confirm directive implementation with SweetAlert2
+            if (typeof Livewire.directive === 'function') {
+                Livewire.directive('confirm', ({ el, directive }) => {
+                    let message = directive.expression;
+                    let shouldPrompt = directive.modifiers.includes('prompt');
+                    message = message.replaceAll('\\n', '\n');
+                    if (message === '') message = 'คุณแน่ใจหรือไม่?';
+
+                    el.__livewire_confirm = (action, instead) => {
+                        if (shouldPrompt) {
+                            let [question, expected] = message.split('|');
+                            Swal.fire({
+                                title: 'ยืนยันการทำรายการ',
+                                text: question || 'กรุณากรอกข้อความเพื่อยืนยัน',
+                                input: 'text',
+                                inputPlaceholder: expected || '',
+                                showCancelButton: true,
+                                confirmButtonColor: '#2f6bff',
+                                cancelButtonColor: '#8592a3',
+                                confirmButtonText: 'ยืนยัน',
+                                cancelButtonText: 'ยกเลิก',
+                                reverseButtons: true
+                            }).then((result) => {
+                                if (result.isConfirmed && result.value === expected) {
+                                    action();
+                                } else {
+                                    instead();
+                                }
+                            });
+                        } else {
+                            Swal.fire({
+                                title: 'ยืนยันการทำรายการ',
+                                text: message,
+                                icon: 'warning',
+                                showCancelButton: true,
+                                confirmButtonColor: '#2f6bff',
+                                cancelButtonColor: '#8592a3',
+                                confirmButtonText: 'ยืนยัน',
+                                cancelButtonText: 'ยกเลิก',
+                                reverseButtons: true
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    action();
+                                } else {
+                                    instead();
+                                }
+                            });
+                        }
+                    };
+                });
+            }
+
+            // Global Livewire 3 Error Interceptor & Graceful Recovery
+            if (typeof Livewire.hook === 'function') {
+                Livewire.hook('request', ({ uri, options, payload, respond, succeed, fail }) => {
+                    fail(({ status, content, preventDefault }) => {
+                        // Prevent the intrusive default modal in production / UX
+                        if (typeof preventDefault === 'function') {
+                            preventDefault();
+                        }
+                        
+                        let errTitle = 'การเชื่อมต่อขัดข้อง';
+                        let errMsg = 'เซิร์ฟเวอร์ตอบสนองล่าช้า หรือหมดเวลาเชื่อมต่อ กรุณาลองใหม่อีกครั้ง';
+
+                        if (status === 419) {
+                            errTitle = 'เซสชันหมดอายุ (Session Expired)';
+                            errMsg = 'เซสชันการใช้งานของคุณหมดอายุแล้ว กำลังรีเฟรชหน้าเว็บ...';
+                            if (typeof Swal !== 'undefined') {
+                                Swal.fire({
+                                    icon: 'warning',
+                                    title: errTitle,
+                                    text: errMsg,
+                                    showConfirmButton: false,
+                                    timer: 2500
+                                }).then(() => {
+                                    window.location.reload();
+                                });
+                                return;
+                            } else {
+                                window.location.reload();
+                                return;
+                            }
+                        } else if (status === 404) {
+                            errTitle = 'ไม่พบข้อมูลปลายทาง (404 Not Found)';
+                            errMsg = 'ไม่พบทรัพยากรหรือบริการที่ร้องขอ';
+                        } else if (status === 500) {
+                            errTitle = 'ข้อผิดพลาดระบบ (500 Server Error)';
+                            errMsg = 'เซิร์ฟเวอร์เกิดข้อผิดพลาดในการประมวลผลคำสั่ง';
+                        }
+
+                        if (typeof Swal !== 'undefined') {
+                            Swal.fire({
+                                icon: 'error',
+                                title: errTitle,
+                                text: errMsg,
+                                confirmButtonText: 'ตกลง',
+                                confirmButtonColor: '#2f6bff'
+                            });
+                        } else {
+                            console.error('Livewire Request Failed:', status, content);
+                        }
+                    });
+                });
+            }
+        });
+    </script>
+
+    <!-- Livewire Scripts -->
+        <script src="/assets/js/theme-mode.js"></script>
+
+    <!-- Demo mode: tabs are local only (no server calls) -->
+    <script>
+        (function () {
+            const buttons = [...document.querySelectorAll('.service-nav-btn')];
+            const body = document.querySelector('.card.mb-4.shadow-sm.border-0 > .card-body');
+            if (!buttons.length || !body) return;
+            const filesTab = buttons[0];
+            let note = null;
+
+            buttons.forEach(btn => {
+                btn.removeAttribute('wire:click');
+                btn.addEventListener('click', () => {
+                    const isFiles = btn === filesTab;
+                    buttons.forEach(b => b.classList.toggle('active', b === btn));
+                    body.hidden = !isFiles;
+                    if (!note) {
+                        note = document.createElement('div');
+                        note.className = 'alert alert-info d-flex align-items-center gap-2 mt-3 mb-0';
+                        note.innerHTML = '<i class="fa-solid fa-circle-info"></i><span>โหมดตัวอย่าง — แท็บนี้มีเฉพาะข้อมูลจำลอง ไม่เชื่อมต่อเซิร์ฟเวอร์จริง</span>';
+                        body.parentNode.appendChild(note);
+                    }
+                    note.hidden = isFiles;
+                });
+            });
+        })();
+    </script>
+    <script src="/assets/js/manage.js"></script>
+</body>
+</html>
+

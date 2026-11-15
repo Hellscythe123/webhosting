@@ -1,0 +1,7 @@
+# Not part of the deployed site
+.claude/
+.freebuff/
+.oil-ui/
+review/
+*.md
+*.zip

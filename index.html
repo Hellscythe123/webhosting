@@ -1,0 +1,1819 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Charset -->
+    <meta charset="utf-8">
+    <!-- Device Viewport -->
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <!-- Title Website -->
+    <title>MinimalCloud Computing Solution TH</title>
+    <!-- Meta Website Content -->
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <!-- Favicons -->
+    <link href="/assets/img/minimalhouse-128x128.ico" rel="icon">
+    <link href="/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+    <!-- Vendor CSS Files -->
+    <link href="/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="/assets/vendor/aos/aos.css" rel="stylesheet">
+    <link href="/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+    <link href="/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/js/all.min.js"></script>
+    <!-- Main CSS File -->
+    <link href="/assets/css/main.css" rel="stylesheet">
+
+    <!-- Zero-Flicker Preload Script for Theme (Bootstrap 5.3 Color Modes) -->
+    <script>
+        (() => {
+            'use strict';
+            const getStoredTheme = () => localStorage.getItem('theme');
+            // light is the default; there is no auto (OS-follow) mode
+            const getPreferredTheme = () => (getStoredTheme() === 'dark' ? 'dark' : 'light');
+
+            const setTheme = theme => {
+                const activeTheme = theme === 'dark' ? 'dark' : 'light';
+                document.documentElement.setAttribute('data-bs-theme', activeTheme);
+                document.documentElement.setAttribute('data-theme-mode', activeTheme);
+                document.documentElement.classList.remove('light-style', 'dark-style');
+                document.documentElement.classList.add(activeTheme === 'dark' ? 'dark-style' : 'light-style');
+            };
+
+            setTheme(getPreferredTheme());
+        })();
+    </script>
+    <link rel="stylesheet" href="/assets/css/landing-pricing.css" />
+</head>
+
+<body class="index-page">
+
+    <header id="header" class="header d-flex align-items-center fixed-top">
+        <div class="container-fluid container-xl position-relative d-flex align-items-center">
+
+            <a href="#" class="logo d-flex align-items-center me-auto">
+                <!-- Uncomment the line below if you also wish to use an image logo -->
+                <img src="/assets/img/logo-cloud.png" alt="logo">
+                <h1 class="sitename">
+                    MinimalCloud
+                </h1>
+            </a>
+
+            <nav id="navmenu" class="navmenu">
+
+                <ul>
+
+                    <li>
+                        <a href="#hero" class="active">
+                            <i class="fa-solid fa-house me-1"></i>
+                            หน้าแรก
+                        </a>
+                    </li>
+
+                    <!-- Services & Solutions Dropdown -->
+                    <li class="dropdown">
+                        <a href="#features">
+                            <span><i class="fa-solid fa-cloud me-1"></i> บริการ & โซลูชัน</span>
+                            <i class="bi bi-chevron-down toggle-dropdown"></i>
+                        </a>
+                        <ul>
+                            <li>
+                                <a href="#about" class="nav-dropdown-item">
+                                    <div class="nav-dropdown-icon">
+                                        <i class="fa-solid fa-bolt"></i>
+                                    </div>
+                                    <div class="nav-dropdown-info">
+                                        <span class="nav-dropdown-title">ระบบอัตโนมัติ 5 นาที</span>
+                                        <span class="nav-dropdown-desc">ขั้นตอนเติมเงินและเปิดบริการทันใจ</span>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#features" class="nav-dropdown-item">
+                                    <div class="nav-dropdown-icon">
+                                        <i class="fa-solid fa-server"></i>
+                                    </div>
+                                    <div class="nav-dropdown-info">
+                                        <span class="nav-dropdown-title">บริการ & ฟีเจอร์หลัก</span>
+                                        <span class="nav-dropdown-desc">ระบบคลาวด์ NVMe SSD ความเร็วสูง</span>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#apps" class="nav-dropdown-item">
+                                    <div class="nav-dropdown-icon">
+                                        <i class="fa-solid fa-cubes"></i>
+                                    </div>
+                                    <div class="nav-dropdown-info">
+                                        <span class="nav-dropdown-title">แอปสำเร็จรูป (One-Click)</span>
+                                        <span class="nav-dropdown-desc">WordPress, Node.js, Docker ทันใจ</span>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#pricing" class="nav-dropdown-item">
+                                    <div class="nav-dropdown-icon">
+                                        <i class="fa-solid fa-tags"></i>
+                                    </div>
+                                    <div class="nav-dropdown-info">
+                                        <span class="nav-dropdown-title">แพ็กเกจและราคา</span>
+                                        <span class="nav-dropdown-desc">Cloud Hosting, VPS, โดเมน คุ้มค่า</span>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#partners" class="nav-dropdown-item">
+                                    <div class="nav-dropdown-icon">
+                                        <i class="fa-solid fa-diagram-project"></i>
+                                    </div>
+                                    <div class="nav-dropdown-info">
+                                        <span class="nav-dropdown-title">พันธมิตรเทคโนโลยี (Ecosystem)</span>
+                                        <span class="nav-dropdown-desc">Software + Hardware + Cloud ครบวงจร</span>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <!-- Affiliate & Referral Direct Link -->
+                    <li>
+                        <a href="#affiliate" class="d-flex align-items-center">
+                            <i class="fa-solid fa-handshake-angle me-1"></i>
+                            <span>แนะนำเพื่อน & พันธมิตร</span>
+                            <span class="badge bg-danger-subtle text-danger border border-danger-subtle ms-2 px-2 py-0.5 rounded-pill small" style="font-size: 10px;">HOT</span>
+                        </a>
+                    </li>
+
+                    <!-- Help & Support Dropdown -->
+                    <li class="dropdown">
+                        <a href="#knowledge">
+                            <span><i class="fa-solid fa-circle-question me-1"></i> ช่วยเหลือ & ฟอรัม</span>
+                            <i class="bi bi-chevron-down toggle-dropdown"></i>
+                        </a>
+                        <ul>
+                            <li>
+                                <a href="#knowledge" class="nav-dropdown-item">
+                                    <div class="nav-dropdown-icon">
+                                        <i class="fa-solid fa-book-bookmark"></i>
+                                    </div>
+                                    <div class="nav-dropdown-info">
+                                        <span class="nav-dropdown-title">คู่มือ & ศูนย์ความรู้</span>
+                                        <span class="nav-dropdown-desc">บทความแก้ปัญหาและแนะนำการตั้งค่า</span>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#faq" class="nav-dropdown-item">
+                                    <div class="nav-dropdown-icon">
+                                        <i class="fa-solid fa-circle-question"></i>
+                                    </div>
+                                    <div class="nav-dropdown-info">
+                                        <span class="nav-dropdown-title">คำถามที่พบบ่อย</span>
+                                        <span class="nav-dropdown-desc">เริ่มใช้งาน อัปเกรดแพ็กเกจ และการช่วยเหลือ</span>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#contact" class="nav-dropdown-item">
+                                    <div class="nav-dropdown-icon">
+                                        <i class="fa-solid fa-headset"></i>
+                                    </div>
+                                    <div class="nav-dropdown-info">
+                                        <span class="nav-dropdown-title">ติดต่อทีมงานซัพพอร์ต</span>
+                                        <span class="nav-dropdown-desc">ทีมงานดูแลและให้คำปรึกษาตลอด 24 ชม.</span>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <!-- Client / Admin Portal CTA -->
+                                            <li>
+                            <a href="/login" class="btn btn-sm btn-outline-primary rounded-pill px-3 py-1 ms-lg-2">
+                                <i class="fa-solid fa-arrow-right-to-bracket me-1"></i>
+                                สำหรับลูกค้า
+                            </a>
+                        </li>
+                    
+                    <!-- Theme switcher: day/night toggle (replica of 50-button-29) -->
+                    <li class="nav-item theme-pill ms-lg-2" id="themePill">
+                        <button class="mc-daynight" id="bd-theme" type="button" aria-label="ธีมการแสดงผล: สว่าง" aria-pressed="false">
+                            <span class="dn-stars" aria-hidden="true"></span>
+                            <span class="dn-clouds" aria-hidden="true">
+                                <img class="dn-cloud-bg" src="/assets/img/theme-switch/cloud-a.svg" alt="" width="246" height="110">
+                                <img class="dn-cloud-a" src="/assets/img/theme-switch/cloud-a.svg" alt="" width="246" height="90">
+                                <img class="dn-cloud-b" src="/assets/img/theme-switch/cloud-b.svg" alt="" width="246" height="90">
+                            </span>
+                            <span class="dn-glow" aria-hidden="true"><img src="/assets/img/theme-switch/glow-c.svg" alt="" width="196" height="195"></span>
+                            <span class="dn-knob">
+                                <img class="dn-sun" src="/assets/img/theme-switch/sun.svg" alt="" width="51" height="50">
+                                <img class="dn-moon" src="/assets/img/theme-switch/moon.svg" alt="" width="51" height="50">
+                            </span>
+                        </button>
+                    </li>
+
+                </ul>
+                <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+            </nav>
+
+        </div>
+    </header>
+
+    <main class="main">
+
+        <!-- Header Section -->
+        <section id="hero" class="hero section bg-mesh-gradient py-5 py-lg-6">
+
+            <div class="container py-4 py-lg-5">
+                <div class="row gy-5 gx-lg-5 gx-xl-5 align-items-center">
+                    <div class="col-lg-6 order-2 order-lg-1 d-flex flex-column justify-content-center" data-aos="fade-up" data-aos-delay="100">
+                        <div class="glass-card p-4 p-md-5 me-lg-2">
+                            <div class="d-inline-flex align-items-center gap-2 mb-3 px-3 py-1 rounded-pill bg-primary bg-opacity-10 text-primary fw-semibold small" style="width: fit-content;">
+                                <span class="pulse-dot"></span>
+                                <span>Enterprise NVMe Cloud Platform</span>
+                            </div>
+                            <h1 class="display-5 fw-bold mb-3 text-body-emphasis" style="line-height: 1.2;">Next-Gen Cloud Solutions <br><span class="text-gradient">for Developers</span></h1>
+                            <p class="lead text-muted mb-4" style="font-size: 1.08rem; line-height: 1.65;">
+                                โครงสร้างพื้นฐาน Cloud Hosting, VPS และ Domain ประสิทธิภาพสูง เปิดใช้งานอัตโนมัติทันทีในราคาที่คุ้มค่า
+                            </p>
+                            <div class="d-flex flex-wrap gap-2 mb-4">
+                                <span class="hero-trust-pill"><i class="fa-solid fa-shield-halved"></i> Anti-DDoS Protection</span>
+                                <span class="hero-trust-pill"><i class="fa-solid fa-bolt"></i> Auto Deploy &lt; 5 นาที</span>
+                                <span class="hero-trust-pill"><i class="fa-solid fa-hard-drive"></i> NVMe SSD 100%</span>
+                            </div>
+                            <div class="d-flex flex-column flex-sm-row gap-3 mt-2">
+                                <a href="/register" class="btn btn-glow hero-cta px-4 py-3 rounded-pill fw-semibold">เริ่มต้นใช้งานทันที <i class="fa-solid fa-arrow-right ms-2"></i></a>
+                                <a href="#pricing" class="btn btn-outline-glow px-4 py-3 rounded-pill fw-semibold">ดูแพ็กเกจทั้งหมด</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 order-1 order-lg-2 hero-img text-center" data-aos="zoom-in" data-aos-delay="200">
+                        <div class="hero-img-wrapper">
+                            <div class="hero-glow-backdrop"></div>
+                            <img src="/assets/img/hero-img.png" class="img-fluid animated animated-float drop-shadow-2xl" alt="MinimalCloud Infrastructure" style="filter: drop-shadow(0 0 40px rgba(99, 102, 241, 0.45)); max-height: 500px;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+        <!-- /Header Section -->
+
+        <!-- About Section -->
+        <section id="about" class="about section py-5">
+
+            <div class="container">
+
+                <div class="row gy-4 align-items-center">
+
+                    <div class="col-lg-6 order-1 order-lg-2" data-aos="fade-up" data-aos-delay="100">
+                        <div class="platform-visual-card">
+                            <div class="d-flex align-items-center justify-content-between mb-3">
+                                <div class="d-flex align-items-center gap-2">
+                                    <span class="pulse-dot"></span>
+                                    <span class="fw-semibold small text-body-emphasis">Automated Provisioning Engine</span>
+                                </div>
+                                <span class="badge bg-success-subtle text-success border border-success-subtle rounded-pill px-2 py-1" style="font-size: 11px;">
+                                    <i class="fa-solid fa-check me-1"></i>Online &lt; 5 min
+                                </span>
+                            </div>
+
+                            <div class="provision-terminal mb-3">
+                                <div class="d-flex align-items-center gap-2 mb-2 pb-2 border-bottom border-secondary border-opacity-25">
+                                    <span class="rounded-circle bg-danger" style="width:10px;height:10px;display:inline-block;"></span>
+                                    <span class="rounded-circle bg-warning" style="width:10px;height:10px;display:inline-block;"></span>
+                                    <span class="rounded-circle bg-success" style="width:10px;height:10px;display:inline-block;"></span>
+                                    <span class="text-secondary ms-2 small">minimalcloud-cli ~ provision</span>
+                                </div>
+                                <div class="text-info">$ deploy --plan=cloud-nvme --ssl=auto</div>
+                                <div class="text-secondary mt-1">[1/3] Verifying credit balance... <span class="text-success">OK</span></div>
+                                <div class="text-secondary">[2/3] Allocating NVMe container &amp; DNS... <span class="text-success">OK</span></div>
+                                <div class="text-secondary">[3/3] Issuing Let's Encrypt SSL... <span class="text-success">READY</span></div>
+                            </div>
+
+                            <div class="d-flex flex-column gap-2">
+                                <div class="provision-step-row">
+                                    <div class="d-flex align-items-center gap-2">
+                                        <i class="fa-solid fa-wallet text-primary"></i>
+                                        <span class="small fw-semibold text-body-emphasis">Payment &amp; Credit</span>
+                                    </div>
+                                    <span class="badge bg-primary-subtle text-primary rounded-pill">Instant</span>
+                                </div>
+                                <div class="provision-step-row">
+                                    <div class="d-flex align-items-center gap-2">
+                                        <i class="fa-solid fa-cubes text-primary"></i>
+                                        <span class="small fw-semibold text-body-emphasis">Container &amp; Database Setup</span>
+                                    </div>
+                                    <span class="badge bg-primary-subtle text-primary rounded-pill">Automated</span>
+                                </div>
+                                <div class="provision-step-row">
+                                    <div class="d-flex align-items-center gap-2">
+                                        <i class="fa-solid fa-shield-halved text-success"></i>
+                                        <span class="small fw-semibold text-body-emphasis">SSL &amp; Edge Firewall</span>
+                                    </div>
+                                    <span class="badge bg-success-subtle text-success rounded-pill">Active</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 order-2 order-lg-1 d-flex flex-column justify-content-center" data-aos="fade-up" data-aos-delay="200">
+                        <div class="glass-card-light p-4 p-md-5">
+                            <h2 class="fw-bold mb-3 text-body-emphasis">ระบบบริการอัตโนมัติ <br><span class="text-gradient">Automated Cloud Platform</span></h2>
+                            <p class="text-muted mb-4">
+                                จัดสรรทรัพยากรคลาวด์อัตโนมัติหลังชำระเงิน พร้อมใช้งานเต็มระบบภายใน 5 นาที
+                            </p>
+                            
+                            <div class="d-flex flex-column gap-3 mb-4">
+                                <div class="d-flex align-items-start">
+                                    <div class="icon-circle bg-body-secondary text-primary me-3 d-flex align-items-center justify-content-center flex-shrink-0" style="width: 40px; height: 40px; border-radius: 50%;">
+                                        <i class="fa-solid fa-1"></i>
+                                    </div>
+                                    <div>
+                                        <h5 class="fw-bold mb-1">เติมเครดิต</h5>
+                                        <p class="text-muted small mb-0">รองรับ PromptPay, บัตรเครดิต และโอนเงินอัตโนมัติ</p>
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-start">
+                                    <div class="icon-circle bg-body-secondary text-primary me-3 d-flex align-items-center justify-content-center flex-shrink-0" style="width: 40px; height: 40px; border-radius: 50%;">
+                                        <i class="fa-solid fa-2"></i>
+                                    </div>
+                                    <div>
+                                        <h5 class="fw-bold mb-1">เลือกแพ็กเกจที่ต้องการ</h5>
+                                        <p class="text-muted small mb-0">ปรับแต่ง Cloud Hosting, VPS และโดเมนให้เหมาะกับงาน</p>
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-start">
+                                    <div class="icon-circle bg-body-secondary text-primary me-3 d-flex align-items-center justify-content-center flex-shrink-0" style="width: 40px; height: 40px; border-radius: 50%;">
+                                        <i class="fa-solid fa-3"></i>
+                                    </div>
+                                    <div>
+                                        <h5 class="fw-bold mb-1">ชำระเงินและเริ่มใช้งานทันที</h5>
+                                        <p class="text-muted small mb-0">รับข้อมูลเชื่อมต่อและจัดการผ่านแดชบอร์ดได้ทันที</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-2">
+                                <a href="/register" class="btn btn-glow px-4 py-3 rounded-pill w-100 w-sm-auto text-center">
+                                    สมัครใช้บริการเลย <i class="fa-solid fa-arrow-right ms-2"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+        <!-- /About Section -->
+
+        <!-- Stats Section -->
+        <section id="stats" class="stats section py-5">
+            <div class="container position-relative" data-aos="fade-up" data-aos-delay="100">
+                <div class="bg-gradient-primary p-4 p-md-5 rounded-4 shadow-lg">
+                    <div class="row gy-4 text-center">
+                        <div class="col-6 col-lg-3">
+                            <div class="stats-item">
+                                <div class="stats-icon-badge"><i class="fa-solid fa-users"></i></div>
+                                <span data-purecounter-start="0" data-purecounter-end="7" data-purecounter-duration="1" class="purecounter display-5 fw-bold text-white d-block"></span>
+                                <p class="text-white-50 mt-2 mb-0 fw-medium">ลูกค้าทั้งหมด</p>
+                            </div>
+                        </div><!-- End Stats Item -->
+
+                        <div class="col-6 col-lg-3">
+                            <div class="stats-item">
+                                <div class="stats-icon-badge"><i class="fa-solid fa-globe"></i></div>
+                                <span data-purecounter-start="0" data-purecounter-end="11" data-purecounter-duration="1" class="purecounter display-5 fw-bold text-white d-block"></span>
+                                <p class="text-white-50 mt-2 mb-0 fw-medium">เว็บไซต์ทั้งหมด</p>
+                            </div>
+                        </div><!-- End Stats Item -->
+
+                        <div class="col-6 col-lg-3">
+                            <div class="stats-item">
+                                <div class="stats-icon-badge"><i class="fa-solid fa-server"></i></div>
+                                <span data-purecounter-start="0" data-purecounter-end="2" data-purecounter-duration="1" class="purecounter display-5 fw-bold text-white d-block"></span>
+                                <p class="text-white-50 mt-2 mb-0 fw-medium">ระบบคลาวด์</p>
+                            </div>
+                        </div><!-- End Stats Item -->
+
+                        <div class="col-6 col-lg-3">
+                            <div class="stats-item">
+                                <div class="stats-icon-badge"><i class="fa-solid fa-headset"></i></div>
+                                <span data-purecounter-start="0" data-purecounter-end="1" data-purecounter-duration="1" class="purecounter display-5 fw-bold text-white d-block"></span>
+                                <p class="text-white-50 mt-2 mb-0 fw-medium">ผู้ช่วยเหลือ</p>
+                            </div>
+                        </div><!-- End Stats Item -->
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- /Partners & Ecosystem Section -->
+
+        <!-- Features Section -->
+        <section id="features" class="features section features-surface py-5">
+
+            <!-- Section Title -->
+            <div class="container section-title text-center mb-5" data-aos="fade-up">
+                <h2 class="fw-bold">บริการของเรา</h2>
+                <p class="text-muted">ครบครันทุกความต้องการ สำหรับธุรกิจและนักพัฒนา</p>
+            </div>
+            <!-- End Section Title -->
+
+            <div class="container">
+                <div class="row g-4">
+                    
+                    <!-- Feature 1: Web Hosting (Active) -->
+                    <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
+                        <div class="glass-card-light card-hover-lift p-4 h-100 position-relative overflow-hidden border">
+                            <span class="badge bg-success position-absolute top-0 end-0 m-3 px-2 py-1 font-monospace" style="font-size: 11px;">
+                                <i class="fa-solid fa-bolt me-1"></i>พร้อมให้บริการ
+                            </span>
+                            <div class="feature-icon-box">
+                                <i class="fa-solid fa-server"></i>
+                            </div>
+                            <h4 class="fw-bold mb-3">เว็บโฮสติ้ง (Cloud Hosting)</h4>
+                            <p class="text-muted mb-3">
+                                ให้บริการเช่าพื้นที่เว็บไซต์ความเร็วสูง NVMe Storage พร้อมระบบควบคุมเว็บโฮสติ้งมาตรฐาน รองรับการใช้งานของนักพัฒนาและธุรกิจ
+                            </p>
+                            <ul class="list-unstyled text-muted small mb-0">
+                                <li class="mb-2"><i class="fa-solid fa-circle-check text-success me-2"></i>รองรับ WordPress, Laravel, PHP 7.4 - 8.3</li>
+                                <li class="mb-2"><i class="fa-solid fa-circle-check text-success me-2"></i>ฟรี SSL Certificate อัตโนมัติทุกโดเมน</li>
+                                <li><i class="fa-solid fa-circle-check text-success me-2"></i>ระบบสำรองข้อมูลอัตโนมัติและฐานข้อมูล MySQL</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Feature 2: Cloud VPS -->
+                    <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="200">
+                        <div class="glass-card-light card-hover-lift p-4 h-100 position-relative overflow-hidden border">
+                            <span class="badge bg-primary position-absolute top-0 end-0 m-3 px-2 py-1 font-monospace" style="font-size: 11px;">
+                                เร็วๆนี้
+                            </span>
+                            <div class="feature-icon-box">
+                                <i class="fa-solid fa-microchip"></i>
+                            </div>
+                            <h4 class="fw-bold mb-3">คลาวด์เซิร์ฟเวอร์เสมือน (Cloud VPS)</h4>
+                            <p class="text-muted mb-3">
+                                เซิร์ฟเวอร์เสมือนประสิทธิภาพสูง Dedicated CPU & RAM แยกอิสระจากกัน ปรับสเปกได้ตามต้องการ ควบคุมผ่านคอนโซลเต็มรูปแบบ
+                            </p>
+                            <ul class="list-unstyled text-muted small mb-0">
+                                <li class="mb-2"><i class="fa-solid fa-circle-check text-success me-2"></i>ระบบ KVM Virtualization ความเร็วสูง</li>
+                                <li><i class="fa-solid fa-circle-check text-success me-2"></i>เลือกระบบปฏิบัติการได้ทั้ง Ubuntu, Debian, AlmaLinux</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Feature 3: Domain Registry -->
+                    <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="300">
+                        <div class="glass-card-light card-hover-lift p-4 h-100 position-relative overflow-hidden border">
+                            <span class="badge bg-warning text-dark position-absolute top-0 end-0 m-3 px-2 py-1 font-monospace" style="font-size: 11px;">
+                                ใหม่
+                            </span>
+                            <div class="feature-icon-box">
+                                <i class="fa-solid fa-globe"></i>
+                            </div>
+                            <h4 class="fw-bold mb-3">จดทะเบียนโดเมน (Domain Registry)</h4>
+                            <p class="text-muted mb-3">
+                                ตัวแทนจดทะเบียนชื่อเว็บไซต์ .th, .com, .net, .org พร้อมระบบจัดการ DNS Records ที่สะดวก รวดเร็ว และแม่นยำ
+                            </p>
+                            <ul class="list-unstyled text-muted small mb-0">
+                                <li class="mb-2"><i class="fa-solid fa-circle-check text-success me-2"></i>รองรับการชี้ DNS ใช้งานร่วมกับโฮสติ้งได้ทันที</li>
+                                <li><i class="fa-solid fa-circle-check text-success me-2"></i>ระบบจัดการ NameServer และ DNS Management</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Feature 4: Affiliate & Referral Program -->
+                    <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="400">
+                        <div class="glass-card-light card-hover-lift p-4 h-100 position-relative overflow-hidden border" style="border-left: 4px solid #6366f1 !important;">
+                            <span class="badge bg-info text-white position-absolute top-0 end-0 m-3 px-2 py-1 font-monospace" style="font-size: 11px;">
+                                <i class="fa-solid fa-gift me-1"></i>รับ ฿10 / คน
+                            </span>
+                            <div class="feature-icon-box" style="background: rgba(99, 102, 241, 0.15); color: #6366f1;">
+                                <i class="fa-solid fa-handshake-angle"></i>
+                            </div>
+                            <h4 class="fw-bold mb-3">แนะนำเพื่อน & พันธมิตร (Affiliate)</h4>
+                            <p class="text-muted mb-3">
+                                เข้าร่วมโปรแกรมสร้างรายได้ง่ายๆ แชร์ลิ้งก์แนะนำเพื่อนของคุณ เมื่อเพื่อนสมัครสมาชิก รับค่าคอมมิชชัน ฿10 เข้าเครดิตทันที!
+                            </p>
+                            <ul class="list-unstyled text-muted small mb-0">
+                                <li class="mb-2"><i class="fa-solid fa-circle-check text-success me-2"></i>มีลิงก์และรหัสแนะนำส่วนตัวให้ทันที</li>
+                                <li><i class="fa-solid fa-circle-check text-success me-2"></i>ใช้เครดิตซื้อหรือต่ออายุบริการได้ทุกชนิด</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Feature 5: Cloud Storage -->
+                    <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="500">
+                        <div class="glass-card-light card-hover-lift p-4 h-100 border">
+                            <div class="feature-icon-box">
+                                <i class="fa-solid fa-cloud-arrow-up"></i>
+                            </div>
+                            <h4 class="fw-bold mb-3">ระบบจัดเก็บข้อมูล (Cloud Storage)</h4>
+                            <p class="text-muted mb-0">
+                                บริการเก็บข้อมูลออนไลน์ สำหรับองค์กร หรือใช้งานส่วนตัว พร้อมระบบ File Manager จัดการไฟล์ สำรองข้อมูล และดาวน์โหลดได้ทุกที่ทุกเวลา
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Feature 6: WAF & DDoS Protection -->
+                    <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="600">
+                        <div class="glass-card-light card-hover-lift p-4 h-100 border">
+                            <div class="feature-icon-box">
+                                <i class="fa-solid fa-shield-halved"></i>
+                            </div>
+                            <h4 class="fw-bold mb-3">ความปลอดภัยระดับองค์กร (WAF & DDoS)</h4>
+                            <p class="text-muted mb-0">
+                                ฟรี! ระบบป้องกันการโจมตี DDoS Protection Layer 3, 4, 7 และ Web Application Firewall ช่วยให้เว็บไซต์และระบบออนไลน์ต่อเนื่อง 99.9%
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </section>
+        <!-- /Affiliate & Referral Spotlight Section -->
+
+        <!-- 🚀 1-Click Applications Showcase Section -->
+        <section id="apps" class="section py-5 bg-body">
+            <div class="container section-title text-center" data-aos="fade-up">
+                <h2 class="fw-bold display-6">คลังแอปพลิเคชัน & เฟรมเวิร์กยอดนิยม</h2>
+                <p class="text-muted lead max-w-2xl mx-auto">ติดตั้งเว็บและระบบระดับโลกได้ในคลิกเดียว พร้อมปรับแต่งเวอร์ชัน PHP และการตั้งค่าเว็บเซิร์ฟเวอร์อัตโนมัติ</p>
+            </div>
+
+            <div class="container">
+                <div class="row g-4 justify-content-center">
+                                            <div class="col-xl-3 col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                            <div class="card h-100 border shadow-sm rounded-4 p-3 hover-shadow transition bg-body">
+                                <div class="d-flex align-items-center gap-3 mb-3">
+                                    <div class="p-3 bg-body-secondary rounded-3 d-flex align-items-center justify-content-center" style="width: 54px; height: 54px;">
+                                        <i class="fa-brands fa-laravel text-danger fs-3 text-primary"></i>
+                                    </div>
+                                    <div>
+                                        <h5 class="fw-bold mb-0 text-body-emphasis">Laravel Framework</h5>
+                                        <span class="badge bg-label-info font-monospace" style="font-size: 11px;">Frameworks</span>
+                                    </div>
+                                </div>
+                                <p class="text-muted small mb-3" style="min-height: 44px; line-height: 1.5;">
+                                    The PHP Framework for Web Artisans. รองรับ Composer create-project, สร้าง .env พร้อม APP_KEY, ส...
+                                </p>
+                                <div class="mt-auto pt-2 border-top d-flex justify-content-between align-items-center">
+                                    <span class="badge bg-body-secondary text-body-secondary font-monospace">รองรับ PHP 8.2, 8.3, 8.4</span>
+                                    <span class="badge bg-label-primary font-monospace" style="font-size: 11px;">1-Click Ready</span>
+                                </div>
+                            </div>
+                        </div>
+                                            <div class="col-xl-3 col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                            <div class="card h-100 border shadow-sm rounded-4 p-3 hover-shadow transition bg-body">
+                                <div class="d-flex align-items-center gap-3 mb-3">
+                                    <div class="p-3 bg-body-secondary rounded-3 d-flex align-items-center justify-content-center" style="width: 54px; height: 54px;">
+                                        <i class="fa-solid fa-cake-candles text-danger fs-3 text-primary"></i>
+                                    </div>
+                                    <div>
+                                        <h5 class="fw-bold mb-0 text-body-emphasis">CakePHP</h5>
+                                        <span class="badge bg-label-info font-monospace" style="font-size: 11px;">Frameworks</span>
+                                    </div>
+                                </div>
+                                <p class="text-muted small mb-3" style="min-height: 44px; line-height: 1.5;">
+                                    Build fast, grow solid PHP Framework. ติดตั้งผ่าน Composer พร้อมโครงสร้าง MVC ครบครันและคอนฟิก...
+                                </p>
+                                <div class="mt-auto pt-2 border-top d-flex justify-content-between align-items-center">
+                                    <span class="badge bg-body-secondary text-body-secondary font-monospace">รองรับ PHP 8.1, 8.2, 8.3</span>
+                                    <span class="badge bg-label-primary font-monospace" style="font-size: 11px;">1-Click Ready</span>
+                                </div>
+                            </div>
+                        </div>
+                                            <div class="col-xl-3 col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                            <div class="card h-100 border shadow-sm rounded-4 p-3 hover-shadow transition bg-body">
+                                <div class="d-flex align-items-center gap-3 mb-3">
+                                    <div class="p-3 bg-body-secondary rounded-3 d-flex align-items-center justify-content-center" style="width: 54px; height: 54px;">
+                                        <i class="fa-brands fa-symfony text-dark fs-3 text-primary"></i>
+                                    </div>
+                                    <div>
+                                        <h5 class="fw-bold mb-0 text-body-emphasis">Symfony</h5>
+                                        <span class="badge bg-label-info font-monospace" style="font-size: 11px;">Frameworks</span>
+                                    </div>
+                                </div>
+                                <p class="text-muted small mb-3" style="min-height: 44px; line-height: 1.5;">
+                                    High performance PHP Framework for web applications. รองรับ Symfony Skeleton และ Apache Pack (....
+                                </p>
+                                <div class="mt-auto pt-2 border-top d-flex justify-content-between align-items-center">
+                                    <span class="badge bg-body-secondary text-body-secondary font-monospace">รองรับ PHP 8.2, 8.3</span>
+                                    <span class="badge bg-label-primary font-monospace" style="font-size: 11px;">1-Click Ready</span>
+                                </div>
+                            </div>
+                        </div>
+                                            <div class="col-xl-3 col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                            <div class="card h-100 border shadow-sm rounded-4 p-3 hover-shadow transition bg-body">
+                                <div class="d-flex align-items-center gap-3 mb-3">
+                                    <div class="p-3 bg-body-secondary rounded-3 d-flex align-items-center justify-content-center" style="width: 54px; height: 54px;">
+                                        <i class="fa-brands fa-wordpress text-primary fs-3 text-primary"></i>
+                                    </div>
+                                    <div>
+                                        <h5 class="fw-bold mb-0 text-body-emphasis">WordPress</h5>
+                                        <span class="badge bg-label-info font-monospace" style="font-size: 11px;">CMS &amp; Portals</span>
+                                    </div>
+                                </div>
+                                <p class="text-muted small mb-3" style="min-height: 44px; line-height: 1.5;">
+                                    ระบบจัดการเนื้อหา (CMS) ยอดนิยมอันดับ 1 ของโลก สำหรับสร้างบล็อก เว็บไซต์องค์กร และร้านค้าออนไลน...
+                                </p>
+                                <div class="mt-auto pt-2 border-top d-flex justify-content-between align-items-center">
+                                    <span class="badge bg-body-secondary text-body-secondary font-monospace">รองรับ PHP 8.1, 8.2, 8.3</span>
+                                    <span class="badge bg-label-primary font-monospace" style="font-size: 11px;">1-Click Ready</span>
+                                </div>
+                            </div>
+                        </div>
+                                            <div class="col-xl-3 col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                            <div class="card h-100 border shadow-sm rounded-4 p-3 hover-shadow transition bg-body">
+                                <div class="d-flex align-items-center gap-3 mb-3">
+                                    <div class="p-3 bg-body-secondary rounded-3 d-flex align-items-center justify-content-center" style="width: 54px; height: 54px;">
+                                        <i class="fa-solid fa-cubes text-primary fs-3 text-primary"></i>
+                                    </div>
+                                    <div>
+                                        <h5 class="fw-bold mb-0 text-body-emphasis">Yii Framework</h5>
+                                        <span class="badge bg-label-info font-monospace" style="font-size: 11px;">Frameworks</span>
+                                    </div>
+                                </div>
+                                <p class="text-muted small mb-3" style="min-height: 44px; line-height: 1.5;">
+                                    High-performance component-based PHP framework for developing large-scale Web applications. โคร...
+                                </p>
+                                <div class="mt-auto pt-2 border-top d-flex justify-content-between align-items-center">
+                                    <span class="badge bg-body-secondary text-body-secondary font-monospace">รองรับ PHP 8.0, 8.1, 8.2, 8.3</span>
+                                    <span class="badge bg-label-primary font-monospace" style="font-size: 11px;">1-Click Ready</span>
+                                </div>
+                            </div>
+                        </div>
+                                            <div class="col-xl-3 col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                            <div class="card h-100 border shadow-sm rounded-4 p-3 hover-shadow transition bg-body">
+                                <div class="d-flex align-items-center gap-3 mb-3">
+                                    <div class="p-3 bg-body-secondary rounded-3 d-flex align-items-center justify-content-center" style="width: 54px; height: 54px;">
+                                        <i class="fa-brands fa-drupal text-info fs-3 text-primary"></i>
+                                    </div>
+                                    <div>
+                                        <h5 class="fw-bold mb-0 text-body-emphasis">Drupal</h5>
+                                        <span class="badge bg-label-info font-monospace" style="font-size: 11px;">CMS &amp; Portals</span>
+                                    </div>
+                                </div>
+                                <p class="text-muted small mb-3" style="min-height: 44px; line-height: 1.5;">
+                                    Enterprise-level Open Source Content Management System สำหรับองค์กรขนาดใหญ่และหน่วยงานราชการ
+                                </p>
+                                <div class="mt-auto pt-2 border-top d-flex justify-content-between align-items-center">
+                                    <span class="badge bg-body-secondary text-body-secondary font-monospace">รองรับ PHP 8.1, 8.2, 8.3</span>
+                                    <span class="badge bg-label-primary font-monospace" style="font-size: 11px;">1-Click Ready</span>
+                                </div>
+                            </div>
+                        </div>
+                                            <div class="col-xl-3 col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                            <div class="card h-100 border shadow-sm rounded-4 p-3 hover-shadow transition bg-body">
+                                <div class="d-flex align-items-center gap-3 mb-3">
+                                    <div class="p-3 bg-body-secondary rounded-3 d-flex align-items-center justify-content-center" style="width: 54px; height: 54px;">
+                                        <i class="fa-solid fa-fire text-danger fs-3 text-primary"></i>
+                                    </div>
+                                    <div>
+                                        <h5 class="fw-bold mb-0 text-body-emphasis">CodeIgniter</h5>
+                                        <span class="badge bg-label-info font-monospace" style="font-size: 11px;">Frameworks</span>
+                                    </div>
+                                </div>
+                                <p class="text-muted small mb-3" style="min-height: 44px; line-height: 1.5;">
+                                    A powerful PHP framework with a very small footprint, built for developers who need a simple an...
+                                </p>
+                                <div class="mt-auto pt-2 border-top d-flex justify-content-between align-items-center">
+                                    <span class="badge bg-body-secondary text-body-secondary font-monospace">รองรับ PHP 8.1, 8.2, 8.3, 8.4</span>
+                                    <span class="badge bg-label-primary font-monospace" style="font-size: 11px;">1-Click Ready</span>
+                                </div>
+                            </div>
+                        </div>
+                                            <div class="col-xl-3 col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                            <div class="card h-100 border shadow-sm rounded-4 p-3 hover-shadow transition bg-body">
+                                <div class="d-flex align-items-center gap-3 mb-3">
+                                    <div class="p-3 bg-body-secondary rounded-3 d-flex align-items-center justify-content-center" style="width: 54px; height: 54px;">
+                                        <i class="fa-brands fa-joomla text-warning fs-3 text-primary"></i>
+                                    </div>
+                                    <div>
+                                        <h5 class="fw-bold mb-0 text-body-emphasis">Joomla</h5>
+                                        <span class="badge bg-label-info font-monospace" style="font-size: 11px;">CMS &amp; Portals</span>
+                                    </div>
+                                </div>
+                                <p class="text-muted small mb-3" style="min-height: 44px; line-height: 1.5;">
+                                    ระบบจัดการเนื้อหาทรงพลัง ใช้งานง่าย รองรับการขยายตัวและโมดูลหลากหลาย
+                                </p>
+                                <div class="mt-auto pt-2 border-top d-flex justify-content-between align-items-center">
+                                    <span class="badge bg-body-secondary text-body-secondary font-monospace">รองรับ PHP 8.1, 8.2</span>
+                                    <span class="badge bg-label-primary font-monospace" style="font-size: 11px;">1-Click Ready</span>
+                                </div>
+                            </div>
+                        </div>
+                                    </div>
+            </div>
+        </section>
+        <!-- /Features Section -->
+
+        <!-- Pricing Section -->
+        <section id="pricing" class="pricing section py-5 lp-pricing">
+
+            <!-- Section Title -->
+            <div class="container section-title text-center mb-4" data-aos="fade-up">
+                <h2 class="fw-bold">อัตราค่าบริการ</h2>
+                <p class="text-muted">เลือกแพ็กเกจ Web Hosting ที่เหมาะสมกับความต้องการของคุณ</p>
+            </div><!-- End Section Title -->
+
+            <div class="container">
+                <div class="lp-period" role="tablist" aria-label="แสดงราคาแบบ" data-aos="fade-up">
+                    <span class="lp-period-thumb" aria-hidden="true"></span>
+                    <button type="button" role="tab" class="is-on" aria-selected="true" data-period="m">ต่อเดือน</button>
+                    <button type="button" role="tab" aria-selected="false" data-period="y">ต่อปี</button>
+                </div>
+
+                <!-- Prices and limits are the live site's; yearly = monthly x 12 (no discount invented) -->
+                <div class="row g-4 lp-plans">
+                    <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
+                        <article class="lp-plan">
+                            <span class="lp-plan-tab">เริ่มต้นฟรี <span class="lp-dot"></span></span>
+                            <h3 class="lp-plan-name">Cloud Hosting Freedom</h3>
+                            <div class="lp-plan-price">
+                                <span class="lp-plan-amt" data-m="ฟรี" data-y="ฟรี">ฟรี</span>
+                                <span class="lp-plan-unit"><span>ไม่มีค่าใช้จ่าย</span><small>ใช้งานได้ไม่จำกัดเวลา</small></span>
+                            </div>
+                            <p class="lp-plan-desc">ลองเปิดเว็บไซต์แรกได้ทันที เหมาะกับโปรเจกต์ส่วนตัวและการทดลองใช้งาน</p>
+                            <ul class="lp-plan-feats">
+                                <li>พื้นที่จัดเก็บ <b>50 MB</b></li>
+                                <li><b>1</b> ฐานข้อมูล</li>
+                                <li class="is-off">อีเมลโดเมน</li>
+                                <li>ฟรี Subdomain</li>
+                                <li class="is-off">ใบรับรองเว็บไซต์ (SSL)</li>
+                                <li class="is-off">สำรองข้อมูลอัตโนมัติ</li>
+                            </ul>
+                            <a href="/client/order" class="lp-plan-cta">เริ่มใช้ฟรี</a>
+                        </article>
+                    </div>
+
+                    <div class="col-lg-4" data-aos="fade-up" data-aos-delay="200">
+                        <article class="lp-plan is-featured">
+                            <span class="lp-plan-tab">ยอดนิยม <span class="lp-dot"></span></span>
+                            <h3 class="lp-plan-name">Cloud Hosting Starter</h3>
+                            <div class="lp-plan-price">
+                                <span class="lp-plan-amt" data-m="฿150" data-y="฿1,825">฿150</span>
+                                <span class="lp-plan-unit"><span data-m="/ เดือน" data-y="/ ปี">/ เดือน</span><small>คิดรายวัน ฿5 / วัน</small></span>
+                            </div>
+                            <p class="lp-plan-desc">เว็บไซต์ธุรกิจพร้อม SSL และอีเมลโดเมน จ่ายตามจำนวนวันที่ใช้จริง</p>
+                            <ul class="lp-plan-feats">
+                                <li>พื้นที่จัดเก็บ <b>300 MB</b></li>
+                                <li><b>1</b> ฐานข้อมูล</li>
+                                <li>อีเมลโดเมน <b>1</b> บัญชี</li>
+                                <li>ฟรี Subdomain</li>
+                                <li>ใบรับรองเว็บไซต์ (SSL)</li>
+                                <li class="is-off">สำรองข้อมูลอัตโนมัติ</li>
+                            </ul>
+                            <a href="/client/order" class="lp-plan-cta">สั่งซื้อ Starter</a>
+                        </article>
+                    </div>
+
+                    <div class="col-lg-4" data-aos="fade-up" data-aos-delay="300">
+                        <article class="lp-plan">
+                            <span class="lp-plan-tab">พื้นที่มากที่สุด <span class="lp-dot"></span></span>
+                            <h3 class="lp-plan-name">Cloud Hosting Junior</h3>
+                            <div class="lp-plan-price">
+                                <span class="lp-plan-amt" data-m="฿50" data-y="฿600">฿50</span>
+                                <span class="lp-plan-unit"><span data-m="/ เดือน" data-y="/ ปี">/ เดือน</span><small data-m="ชำระรายเดือน" data-y="฿50 × 12 เดือน">ชำระรายเดือน</small></span>
+                            </div>
+                            <p class="lp-plan-desc">ร้านค้าออนไลน์และเว็บไซต์ที่ต้องการพื้นที่และฐานข้อมูลมากขึ้น</p>
+                            <ul class="lp-plan-feats">
+                                <li>พื้นที่จัดเก็บ <b>1 GB</b></li>
+                                <li><b>2</b> ฐานข้อมูล</li>
+                                <li>อีเมลโดเมน <b>1</b> บัญชี</li>
+                                <li>ฟรี Subdomain</li>
+                                <li>ใบรับรองเว็บไซต์ (SSL)</li>
+                                <li class="is-off">สำรองข้อมูลอัตโนมัติ</li>
+                            </ul>
+                            <a href="/client/order" class="lp-plan-cta">สั่งซื้อ Junior</a>
+                        </article>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+        <!-- /Stats Section -->
+
+        <!-- Partners & Ecosystem Section -->
+        <section id="partners" class="section py-5">
+            <div class="container">
+                <div class="section-title text-center mb-5" data-aos="fade-up">
+                    <h2 class="fw-bold">พันธมิตรเทคโนโลยี 3 เสาหลัก</h2>
+                    <p class="text-muted mx-auto" style="max-width: 680px;">
+                        ผสานความเชี่ยวชาญครบทั้ง Software, Cloud Infrastructure และ Hardware &amp; Network เพื่อรองรับทุกโปรเจกต์ตั้งแต่เริ่มต้นจนถึงระดับองค์กร
+                    </p>
+                </div>
+
+                <div class="row g-4 align-items-stretch">
+                    <!-- Pillar 1: Software (GAZADEV) -->
+                    <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
+                        <div class="partner-card">
+                            <div class="d-flex align-items-center justify-content-between mb-3">
+                                <div class="partner-icon-wrap bg-primary bg-opacity-10 text-primary">
+                                    <i class="fa-solid fa-code"></i>
+                                </div>
+                                <span class="badge bg-primary-subtle text-primary rounded-pill px-3 py-1">Software &amp; Digital</span>
+                            </div>
+                            <h4 class="fw-bold mb-2">GAZADEV &amp; GAZADEV Store</h4>
+                            <p class="text-muted small mb-3">
+                                สตูดิโอพัฒนาซอฟต์แวร์ เว็บแอปพลิเคชัน งานครีเอทีฟ 3D/WebGL และคลัง UI Template / Source Code พร้อมใช้งาน (Laravel, React, Next.js, Tailwind CSS)
+                            </p>
+                            <ul class="list-unstyled small text-muted mb-4">
+                                <li class="mb-1"><i class="fa-solid fa-check text-primary me-2"></i>รับออกแบบและพัฒนา Web App / 3D Interactive</li>
+                                <li><i class="fa-solid fa-check text-primary me-2"></i>คลังซอร์สโค้ดและเทมเพลตพร้อมรันบนคลาวด์</li>
+                            </ul>
+                            <div class="mt-auto d-flex flex-wrap gap-2">
+                                <a href="https://www.gazadevs.com" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline-primary rounded-pill px-3">
+                                    gazadevs.com <i class="fa-solid fa-arrow-up-right-from-square ms-1"></i>
+                                </a>
+                                <a href="https://gazadevstore.com" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline-secondary rounded-pill px-3">
+                                    gazadevstore.com <i class="fa-solid fa-arrow-up-right-from-square ms-1"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Pillar 2: Cloud Infrastructure (MinimalCloud) -->
+                    <div class="col-lg-4" data-aos="fade-up" data-aos-delay="200">
+                        <div class="partner-card border-primary border-opacity-50">
+                            <div class="d-flex align-items-center justify-content-between mb-3">
+                                <div class="partner-icon-wrap bg-gradient-primary text-white">
+                                    <i class="fa-solid fa-cloud"></i>
+                                </div>
+                                <span class="badge bg-success-subtle text-success rounded-pill px-3 py-1">Cloud Infrastructure</span>
+                            </div>
+                            <h4 class="fw-bold mb-2">MinimalCloud by MinimalHouse</h4>
+                            <p class="text-muted small mb-3">
+                                แกนกลางโครงสร้างพื้นฐานคลาวด์ความเร็วสูง Cloud Hosting, Cloud VPS, Domain และ Automated Provisioning เชื่อมต่อระบบซอฟต์แวร์และเครือข่ายอย่างไร้รอยต่อ
+                            </p>
+                            <ul class="list-unstyled small text-muted mb-4">
+                                <li class="mb-1"><i class="fa-solid fa-check text-success me-2"></i>NVMe Enterprise SSD &amp; Dedicated Resources</li>
+                                <li><i class="fa-solid fa-check text-success me-2"></i>ปรับขยายสเปกและ Deploy ผ่านระบบอัตโนมัติ</li>
+                            </ul>
+                            <div class="mt-auto">
+                                <a href="#pricing" class="btn btn-sm btn-glow rounded-pill px-4">
+                                    ดูบริการ Cloud ทั้งหมด <i class="fa-solid fa-arrow-right ms-1"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Pillar 3: Hardware & Network (Novatech69) -->
+                    <div class="col-lg-4" data-aos="fade-up" data-aos-delay="300">
+                        <div class="partner-card">
+                            <div class="d-flex align-items-center justify-content-between mb-3">
+                                <div class="partner-icon-wrap bg-info bg-opacity-10 text-info">
+                                    <i class="fa-solid fa-network-wired"></i>
+                                </div>
+                                <span class="badge bg-info-subtle text-info rounded-pill px-3 py-1">Hardware &amp; Network</span>
+                            </div>
+                            <h4 class="fw-bold mb-2">Novatech69 Solutions</h4>
+                            <p class="text-muted small mb-3">
+                                บริษัท โนวาเทค69 โซลูชั่น จำกัด ผู้เชี่ยวชาญด้านที่ปรึกษา ออกแบบวางระบบคอมพิวเตอร์ เน็ตเวิร์กเครือข่าย กล้องวงจรปิด และฮาร์ดแวร์ไอทีโซลูชันครบวงจร
+                            </p>
+                            <ul class="list-unstyled small text-muted mb-4">
+                                <li class="mb-1"><i class="fa-solid fa-check text-info me-2"></i>วางระบบ Network, Server On-Premise &amp; CCTV</li>
+                                <li><i class="fa-solid fa-check text-info me-2"></i>โซลูชันฮาร์ดแวร์สำหรับองค์กรและธุรกิจ</li>
+                            </ul>
+                            <div class="mt-auto">
+                                <a href="https://novatech69.com" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline-info rounded-pill px-3">
+                                    novatech69.com <i class="fa-solid fa-arrow-up-right-from-square ms-1"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- /Pricing Section -->
+
+        <!-- Affiliate & Referral Spotlight Section -->
+        <section id="affiliate" class="section py-5 position-relative overflow-hidden">
+            <div class="container" data-aos="fade-up">
+                <div class="glass-card p-4 p-md-5 rounded-4 position-relative border" style="background: linear-gradient(135deg, rgba(99, 102, 241, 0.08) 0%, rgba(139, 92, 246, 0.12) 100%);">
+                    <div class="row align-items-center gy-4">
+                        <div class="col-lg-7">
+                            <h2 class="fw-bold display-6 mb-3">แนะนำเพื่อนใช้ MinimalCloud <br><span class="text-gradient">รับค่าคอมมิชชัน ฿10 ทันที</span></h2>
+                            <p class="lead text-muted mb-4">
+                                สร้างรายได้เสริมร่วมกับเรา เพียงแชร์ลิงก์แนะนำของคุณให้เพื่อนหรือลูกค้า เมื่อมีการสมัครสมาชิกใหม่ บัญชีของคุณจะได้รับเครดิตเข้าทันที สามารถนำเครดิตไปเช่าโฮสติ้ง หรือต่ออายุบริการได้โดยไม่มีวันหมดอายุ
+                            </p>
+                            <div class="row g-3 mb-4">
+                                <div class="col-sm-4">
+                                    <div class="d-flex align-items-center gap-2">
+                                        <div class="badge bg-primary rounded-circle p-2"><i class="fa-solid fa-link"></i></div>
+                                        <div>
+                                            <div class="fw-bold small">1. รับลิงก์แนะนำ</div>
+                                            <small class="text-muted">อัตโนมัติในแดชบอร์ด</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="d-flex align-items-center gap-2">
+                                        <div class="badge bg-success rounded-circle p-2"><i class="fa-solid fa-user-plus"></i></div>
+                                        <div>
+                                            <div class="fw-bold small">2. เพื่อนสมัคร</div>
+                                            <small class="text-muted">ผ่านลิงก์หรือรหัส</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="d-flex align-items-center gap-2">
+                                        <div class="badge bg-warning text-dark rounded-circle p-2"><i class="fa-solid fa-coins"></i></div>
+                                        <div>
+                                            <div class="fw-bold small">3. รับเครดิต</div>
+                                            <small class="text-muted">฿10 เข้าทันที</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-flex flex-wrap gap-3">
+                                <a href="/register" class="btn btn-glow px-4 py-3 rounded-pill">
+                                    <i class="fa-solid fa-user-plus me-2"></i> สมัครสมาชิกและเริ่มแนะนำเพื่อน
+                                </a>
+                                <a href="/client" class="btn btn-outline-glow px-4 py-3 rounded-pill">
+                                    <i class="fa-solid fa-arrow-up-right-from-square me-2"></i> ไปยังแดชบอร์ดพันธมิตร
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-lg-5 text-center" data-aos="zoom-in" data-aos-delay="200">
+                            <div class="glass-card-light p-4 rounded-4 shadow-lg border">
+                                <div class="display-1 text-primary mb-3">
+                                    <i class="fa-solid fa-handshake-simple animated-float"></i>
+                                </div>
+                                <h3 class="fw-bold mb-2">฿10.00</h3>
+                                <p class="text-muted mb-0">ต่อการแนะนำสมาชิกใหม่ 1 บัญชี</p>
+                                <hr class="my-3 opacity-25">
+                                <div class="d-flex justify-content-between text-muted small">
+                                    <span>สะสมเครดิต</span>
+                                    <span class="text-success fw-bold">ไม่จำกัดจำนวน</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 📚 Knowledge Base & Community Forum Section -->
+        <section id="knowledge" class="section py-5 bg-body-tertiary">
+            <div class="container section-title text-center" data-aos="fade-up">
+                <h2 class="fw-bold display-6">คู่มือการใช้งาน & ประกาศจากระบบ</h2>
+                <p class="text-muted lead max-w-2xl mx-auto">แหล่งรวบรวมเทคนิค วิธีการตั้งค่าโดเมน DNS, Plesk Git Auto Deploy และข้อมูลการอัปเกรดระบบ</p>
+            </div>
+
+            <div class="container">
+                <div class="row g-4">
+                                            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="150">
+                            <div class="card h-100 border shadow-sm rounded-4 overflow-hidden bg-body">
+                                <div class="card-header bg-transparent border-bottom p-4">
+                                    <div class="d-flex align-items-center gap-2 mb-2">
+                                        <span class="badge bg-primary text-white p-2 rounded-circle">
+                                            <i class="fa-solid fa-wallet fs-6"></i>
+                                        </span>
+                                        <h5 class="fw-bold mb-0 text-body-emphasis">คู่มือสมาชิก &amp; การเงิน (Account &amp; Billing)</h5>
+                                    </div>
+                                                                            <p class="text-muted small mb-0">คู่มือการสมัครสมาชิก การยืนยันตัวตน และขั้นตอนการเติมเครดิตชำระเงิน</p>
+                                                                    </div>
+
+                                <div class="card-body p-3">
+                                    <div class="list-group list-group-flush">
+                                                                                    <div class="list-group-item list-group-item-action border-0 px-3 py-3 rounded-3 mb-2 topic-card-item"
+                                                 style="cursor: pointer; transition: all 0.2s ease;"
+                                                 data-topic-title="คู่มือการสมัครสมาชิกและการเลือกประเภทบัญชี (Account Registration Guide)"
+                                                 data-topic-category="คู่มือสมาชิก &amp;amp; การเงิน (Account &amp;amp; Billing)"
+                                                 data-topic-badge="bg-primary"
+                                                 data-topic-date="10 พฤศจิกายน 2569"
+                                                 data-topic-views="609">
+                                                <div class="d-flex justify-content-between align-items-start gap-2">
+                                                    <div class="fw-bold text-body-emphasis fs-6">
+                                                                                                                     <i class="fa-solid fa-thumbtack text-warning me-1" title="ปักหมุด"></i>
+                                                                                                                คู่มือการสมัครสมาชิกและการเลือกประเภทบัญชี (Account Registration Guide)
+                                                    </div>
+                                                    <span class="badge bg-body-secondary text-body-secondary font-monospace small flex-shrink-0">
+                                                        <i class="fa-regular fa-eye me-1"></i>609
+                                                    </span>
+                                                </div>
+                                                                                                    <p class="text-muted small mb-2 mt-1 text-truncate" style="line-height: 1.4;">
+                                                        ขั้นตอนการลงทะเบียนผู้ใช้งานใหม่ การเลือกประเภทบัญชีบุคคล/นิติบุคคล และการยืนยันตัวตน
+                                                    </p>
+                                                                                                <div class="d-flex justify-content-between align-items-center text-muted" style="font-size: 11px;">
+                                                    <span><i class="fa-regular fa-calendar-days me-1 text-primary"></i> 10 พฤศจิกายน 2569</span>
+                                                    <span class="text-primary fw-semibold"><i class="fa-solid fa-book-open-reader me-1"></i>คลิกเพื่ออ่านบทความ</span>
+                                                </div>
+
+                                                <!-- Hidden full content payload -->
+                                                <div class="d-none topic-content-payload">## ขั้นตอนการสมัครสมาชิก (Account Registration)<br />
+<br />
+ระบบ MinimalHouse ให้บริการลงทะเบียนใช้งานสำหรับผู้ใช้งาน 3 รูปแบบตามประเภทนิติสัมพันธ์และเอกสารทางภาษี:<br />
+<br />
+### 1. การเลือกประเภทบัญชี (Account Types)<br />
+1. เข้าไปที่หน้าแรกของเว็บไซต์ แล้วคลิกปุ่ม **&quot;สมัครสมาชิก (Register)&quot;** ที่แถบเมนูด้านบน<br />
+2. เลือกประเภทบัญชีที่สอดคล้องกับการใช้งานของคุณ:<br />
+   - **บุคคลทั่วไป (Individual):** สำหรับบุคคลธรรมดาหรือฟรีแลนซ์ ใช้งานบริการส่วนบุคคล<br />
+   - **นิติบุคคล / บริษัท (Corporate):** สำหรับบริษัทจำกัด ห้างหุ้นส่วนจำกัด หรือองค์กรธุรกิจ เพื่อใช้ออกใบกำกับภาษีเต็มรูปแบบ<br />
+   - **หน่วยงานราชการ / รัฐวิสาหกิจ (Government):** สำหรับส่วนราชการ สถานศึกษา และหน่วยงานรัฐ<br />
+<br />
+---<br />
+<br />
+### 2. ข้อมูลที่ต้องระบุตามประเภทบัญชี<br />
+- **บุคคลทั่วไป:**<br />
+  - ชื่อ - นามสกุลจริง (ภาษาไทย หรือ อังกฤษ)<br />
+  - เลขประจำตัวประชาชน 13 หลัก (ระบบมีระบบตรวจสอบความถูกต้อง Checksum Modulo 11 ตามมาตรฐานกรมการปกครอง)<br />
+  - อีเมลหลักสำหรับรับข้อมูลและรหัสผ่าน<br />
+  - หมายเลขโทรศัพท์มือถือที่ติดต่อได้<br />
+  - รหัสผ่านความปลอดภัยสูง (อย่างน้อย 8 ตัวอักษร ประกอบด้วยตัวพิมพ์เล็ก พิมพ์ใหญ่ และตัวเลข)<br />
+  - **รหัสผู้แนะนำ (Referral Code):** หากมีรหัสจากเพื่อน ให้ระบุในช่องนี้เพื่อรับโบนัสเครดิตใช้งานฟรีตามโปรโมชัน<br />
+- **นิติบุคคล / บริษัท:**<br />
+  - เลขประจำตัวผู้เสียภาษีอากร 13 หลัก (Tax ID)<br />
+  - ชื่อบริษัท / องค์กรตามหนังสือรับรองกระทรวงพาณิชย์<br />
+  - ชื่อผู้มีอำนาจลงนาม หรือผู้ติดต่อหลัก<br />
+  - สำนักงานใหญ่ หรือระบุรหัสสาขา<br />
+  - ที่อยู่สำหรับออกใบกำกับภาษีและจัดส่งเอกสาร<br />
+- **หน่วยงานราชการ:**<br />
+  - เลขประจำตัวผู้เสียภาษีหน่วยงาน<br />
+  - ชื่อส่วนราชการ / กรม / กอง / สถาบัน<br />
+  - ที่อยู่หน่วยงานราชการ<br />
+<br />
+---<br />
+<br />
+### 3. การยืนยันอีเมลและการเข้าสู่ระบบ (Email Verification &amp; Login)<br />
+1. เมื่อกรอกข้อมูลครบถ้วนแล้ว ให้กดปุ่ม **&quot;ยืนยันการสมัครสมาชิก&quot;**<br />
+2. ระบบจะจัดส่งอีเมลยืนยันตัวตนไปยังอีเมลที่ท่านลงทะเบียนไว้<br />
+3. เปิดกล่องข้อความในอีเมล แล้วคลิกปุ่ม **&quot;ยืนยันที่อยู่อีเมล (Verify Email Address)&quot;**<br />
+4. เมื่อยืนยันสำเร็จ ระบบจะนำท่านเข้าสู่แดชบอร์ดหลักของ MinimalHouse ทันที พร้อมรับสิทธิประโยชน์และเริ่มต้นสั่งซื้อบริการได้ทันที</div>
+                                            </div>
+                                                                                    <div class="list-group-item list-group-item-action border-0 px-3 py-3 rounded-3 mb-2 topic-card-item"
+                                                 style="cursor: pointer; transition: all 0.2s ease;"
+                                                 data-topic-title="ขั้นตอนการเติมเครดิตและช่องทางการชำระเงิน (Credit Top-up Guide)"
+                                                 data-topic-category="คู่มือสมาชิก &amp;amp; การเงิน (Account &amp;amp; Billing)"
+                                                 data-topic-badge="bg-primary"
+                                                 data-topic-date="10 พฤศจิกายน 2569"
+                                                 data-topic-views="725">
+                                                <div class="d-flex justify-content-between align-items-start gap-2">
+                                                    <div class="fw-bold text-body-emphasis fs-6">
+                                                                                                                    <i class="fa-regular fa-file-lines text-primary me-1"></i>
+                                                                                                                ขั้นตอนการเติมเครดิตและช่องทางการชำระเงิน (Credit Top-up Guide)
+                                                    </div>
+                                                    <span class="badge bg-body-secondary text-body-secondary font-monospace small flex-shrink-0">
+                                                        <i class="fa-regular fa-eye me-1"></i>725
+                                                    </span>
+                                                </div>
+                                                                                                    <p class="text-muted small mb-2 mt-1 text-truncate" style="line-height: 1.4;">
+                                                        วิธีการเติมเครดิตเข้าสู่กระเป๋าเงิน (Wallet) ผ่าน PromptPay QR Code อัตโนมัติ 24 ชั่วโมง และการโอนเงินผ่านธนาคาร
+                                                    </p>
+                                                                                                <div class="d-flex justify-content-between align-items-center text-muted" style="font-size: 11px;">
+                                                    <span><i class="fa-regular fa-calendar-days me-1 text-primary"></i> 10 พฤศจิกายน 2569</span>
+                                                    <span class="text-primary fw-semibold"><i class="fa-solid fa-book-open-reader me-1"></i>คลิกเพื่ออ่านบทความ</span>
+                                                </div>
+
+                                                <!-- Hidden full content payload -->
+                                                <div class="d-none topic-content-payload">## ขั้นตอนการเติมเครดิตเข้าสู่ระบบ (Credit Top-up)<br />
+<br />
+ระบบ MinimalHouse ใช้ระบบกระเป๋าเงินดิจิทัล (Wallet Credit) เพื่อความสะดวกรวดเร็วในการชำระค่าบริการโฮสติ้ง จดโดเมน ต่ออายุ และสั่งซื้อ Cloud VPS โดยไม่ต้องตัดบัตรเครดิตซ้ำทุกครั้ง<br />
+<br />
+---<br />
+<br />
+### 1. เข้าสู่หน้าเติมเครดิต<br />
+1. เข้าสู่ระบบบัญชีผู้ใช้ของคุณ<br />
+2. ดูที่แถบเมนูด้านบนขวา หรือเมนูฝั่งซ้าย คลิกที่ **&quot;เติมเครดิต / ชำระเงิน (Top-up)&quot;**<br />
+3. ระบบจะแสดงยอดเครดิตคงเหลือปัจจุบันแบบ Real-time และประวัติการทำรายการย้อนหลัง<br />
+<br />
+---<br />
+<br />
+### 2. ช่องทางการเติมเครดิตที่มีให้บริการ<br />
+ระบบรองรับ 2 ช่องทางหลัก:<br />
+<br />
+#### ก. ชำระผ่าน Thai QR Payment (PromptPay) - ยอดเข้าทันที 24 ชม.<br />
+1. ระบุจำนวนเงินที่ต้องการเติม (เริ่มต้นขั้นต่ำ 50 บาท)<br />
+2. เลือกช่องทาง **&quot;PromptPay QR Code&quot;** แล้วกดปุ่ม *ดำเนินการต่อ*<br />
+3. ระบบจะสร้าง Dynamic QR Code ที่ระบุยอดเงินตรงตามที่ระบุ<br />
+4. เปิดแอปพลิเคชัน Mobile Banking ของทุกธนาคารในไทย (SCB, KBank, KTB, BBL, TTB, GSB ฯลฯ) แล้วสแกน QR Code<br />
+5. ตรวจสอบชื่อบัญชีปลายทางและกดยืนยันการโอนเงิน<br />
+6. เมื่อทำรายการสำเร็จ ระบบจะตรวจจับยอดเงินและเพิ่มเครดิตเข้าบัญชีของคุณโดยอัตโนมัติภายใน 1-3 วินาที<br />
+<br />
+#### ข. โอนเงินผ่านบัญชีธนาคาร (Bank Transfer &amp; Slip Upload)<br />
+1. เลือกช่องทาง **&quot;โอนเงินผ่านธนาคาร&quot;**<br />
+2. คัดลอกเลขที่บัญชีธนาคารของบริษัทที่แสดงบนหน้าจอ<br />
+3. ทำการโอนเงินผ่าน Mobile Banking หรือตู้ ATM<br />
+4. อัปโหลดภาพหลักฐานการโอนเงิน (สลิปการโอนเงิน)<br />
+5. ระบุวันและเวลาที่โอนเงินให้ตรงกับสลิป แล้วกดยื่นตรวจสอบ<br />
+6. เจ้าหน้าที่ฝ่ายการเงินจะตรวจสอบความถูกต้องและปรับปรุงยอดเครดิตให้ภายใน 5-15 นาที<br />
+<br />
+---<br />
+<br />
+### 3. การนำเครดิตไปใช้งาน<br />
+- ชำระค่าแพ็กเกจ Cloud Web Hosting รายเดือน / รายปี<br />
+- ชำระค่าจดทะเบียนชื่อโดเมนใหม่ หรือต่ออายุโดเมน<br />
+- ชำระบิลค่าใช้จ่ายที่ระบบแจ้งเตือนล่วงหน้า 30 วันก่อนวันครบกำหนดอัตโนมัติ<br />
+- สั่งซื้อและต่ออายุ Cloud VPS</div>
+                                            </div>
+                                                                            </div>
+                                </div>
+                            </div>
+                        </div>
+                                            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="150">
+                            <div class="card h-100 border shadow-sm rounded-4 overflow-hidden bg-body">
+                                <div class="card-header bg-transparent border-bottom p-4">
+                                    <div class="d-flex align-items-center gap-2 mb-2">
+                                        <span class="badge bg-info text-white p-2 rounded-circle">
+                                            <i class="fa-solid fa-globe fs-6"></i>
+                                        </span>
+                                        <h5 class="fw-bold mb-0 text-body-emphasis">การจดทะเบียนโดเมน &amp; DNS (Domain &amp; DNS Registry)</h5>
+                                    </div>
+                                                                            <p class="text-muted small mb-0">คู่มือค้นหา สั่งซื้อจดทะเบียนโดเมน การชี้ DNS และการสั่งซื้อพ่วง Cloud Web Hosting</p>
+                                                                    </div>
+
+                                <div class="card-body p-3">
+                                    <div class="list-group list-group-flush">
+                                                                                    <div class="list-group-item list-group-item-action border-0 px-3 py-3 rounded-3 mb-2 topic-card-item"
+                                                 style="cursor: pointer; transition: all 0.2s ease;"
+                                                 data-topic-title="ขั้นตอนการค้นหาและจดทะเบียนชื่อโดเมน พร้อมบริการพ่วง Cloud Web Hosting"
+                                                 data-topic-category="การจดทะเบียนโดเมน &amp;amp; DNS (Domain &amp;amp; DNS Registry)"
+                                                 data-topic-badge="bg-info"
+                                                 data-topic-date="10 พฤศจิกายน 2569"
+                                                 data-topic-views="575">
+                                                <div class="d-flex justify-content-between align-items-start gap-2">
+                                                    <div class="fw-bold text-body-emphasis fs-6">
+                                                                                                                     <i class="fa-solid fa-thumbtack text-warning me-1" title="ปักหมุด"></i>
+                                                                                                                ขั้นตอนการค้นหาและจดทะเบียนชื่อโดเมน พร้อมบริการพ่วง Cloud Web Hosting
+                                                    </div>
+                                                    <span class="badge bg-body-secondary text-body-secondary font-monospace small flex-shrink-0">
+                                                        <i class="fa-regular fa-eye me-1"></i>575
+                                                    </span>
+                                                </div>
+                                                                                                    <p class="text-muted small mb-2 mt-1 text-truncate" style="line-height: 1.4;">
+                                                        วิธีการตรวจสอบชื่อโดเมนว่าง การเลือกจำนวนปี บริการพ่วง Cloudflare DNS และแพ็กเกจโฮสติ้งราคาพิเศษ
+                                                    </p>
+                                                                                                <div class="d-flex justify-content-between align-items-center text-muted" style="font-size: 11px;">
+                                                    <span><i class="fa-regular fa-calendar-days me-1 text-primary"></i> 10 พฤศจิกายน 2569</span>
+                                                    <span class="text-primary fw-semibold"><i class="fa-solid fa-book-open-reader me-1"></i>คลิกเพื่ออ่านบทความ</span>
+                                                </div>
+
+                                                <!-- Hidden full content payload -->
+                                                <div class="d-none topic-content-payload">## คู่มือการค้นหาและจดทะเบียนชื่อโดเมน (Domain Registration)<br />
+<br />
+MinimalHouse ให้บริการจดทะเบียนชื่อโดเมนสากลระดับโลก (gTLD เช่น .com, .net, .org, .info, .biz ฯลฯ) ผ่าน Registrar Wholesale Gateway คุณภาพสูง พร้อมระบบรักษาความปลอดภัยระดับองค์กร<br />
+<br />
+---<br />
+<br />
+### ขั้นตอนที่ 1: ค้นหาและตรวจสอบสถานะชื่อโดเมน (Domain Search)<br />
+1. เข้าสู่ระบบบัญชีผู้ใช้ แล้วไปที่เมนู **&quot;จดทะเบียนโดเมน -&gt; ค้นหา &amp; จดโดเมนใหม่&quot;** (URL: `/client/domain-registry`)<br />
+2. พิมพ์ชื่อโดเมนที่ต้องการลงในช่องค้นหา (เช่น `yourbrand.com`) แล้วกดปุ่ม **&quot;ค้นหา&quot;**<br />
+3. ระบบจะแสดงสถานะ:<br />
+   - **พร้อมจดทะเบียน (Available):** แสดงราคาเป็นเงินบาท (THB) พร้อมปุ่มสั่งซื้อ<br />
+   - **มีผู้จดทะเบียนแล้ว (Taken):** คุณสามารถคลิกดูรายละเอียด **WHOIS Information** เพื่อดูประวัติการจดทะเบียน วันที่เริ่มจด วันหมดอายุ และ Registrar ต้นทางได้<br />
+<br />
+---<br />
+<br />
+### ขั้นตอนที่ 2: ปรับแต่งตัวเลือกการสั่งซื้อ (Order Customization)<br />
+1. **เลือกระยะเวลาการจดทะเบียน:** เลือกได้ตั้งแต่ 1 ปี ถึง 10 ปี (ระบบคำนวณราคารวม THB ให้โดยอัตโนมัติ)<br />
+2. **บริการพ่วงฟรี (Free Addon):**<br />
+   - **Cloudflare DNS Management &amp; DDoS Protection (ฟรี ฿0):** ช่วยปกป้องเว็บไซต์จากการโจมตี และกระจายแคชทั่วโลก<br />
+3. **บริการพ่วง Cloud Web Hosting (Addon Hosting Package):**<br />
+   - คุณสามารถเลือกติ๊กถูกสั่งซื้อแพ็กเกจ **Cloud Web Hosting** ควบคู่ไปกับชื่อโดเมนได้ทันทีในขั้นตอนนี้<br />
+   - เมื่อเลือกสั่งซื้อพ่วง ระบบจะผูกชื่อโดเมนเข้ากับพื้นที่โฮสติ้ง ตั้งค่า vhost และเตรียมฐานข้อมูลให้อัตโนมัติทันทีที่คำสั่งซื้อได้รับการอนุมัติ ไม่ต้องเสียเวลาตั้งค่า DNS เอง<br />
+4. **เปิดการต่ออายุอัตโนมัติ (Auto-Renew):**<br />
+   - หากเปิดใช้งาน ระบบจะสร้างใบแจ้งหนี้ล่วงหน้า 30 วันก่อนครบกำหนด เพื่อให้คุณชำระต่ออายุได้อย่างต่อเนื่อง ป้องกันโดเมนหลุด<br />
+<br />
+---<br />
+<br />
+### ขั้นตอนที่ 3: ยืนยันคำสั่งซื้อและการตรวจสอบของเจ้าหน้าที่ (Staff Verification)<br />
+1. ตรวจสอบยอดเงินรวม แล้วกดปุ่ม **&quot;ดำเนินการสั่งซื้อ&quot;**<br />
+2. ระบบจะสร้างรายการคำสั่งซื้อและส่งเข้าคิว **รอการตรวจสอบ (Pending Verification)**<br />
+3. เจ้าหน้าที่ (Staff) จะทำการตรวจสอบความถูกต้องของข้อมูลผู้ถือครองโดเมน (Registrant Info)<br />
+4. เมื่อเจ้าหน้าที่กดยืนยันอนุมัติคำสั่งซื้อ:<br />
+   - ระบบจะหักเครดิตจาก Wallet ตามจำนวนจริง<br />
+   - ระบบจะยิงคำสั่งซื้อผ่าน Registrar API ไปยังเครือข่ายสากลทันที<br />
+   - หากพบปัญหาจาก API ต้นทาง ระบบจะมีกลไก **คืนเครดิตอัตโนมัติ (Auto Refund)** คืนเงินเข้ากระเป๋าของคุณทันที 100%<br />
+<br />
+---<br />
+<br />
+### ขั้นตอนที่ 4: การจัดการโดเมนที่ถือครอง (My Domains Management)<br />
+1. ไปที่เมนู **&quot;จดทะเบียนโดเมน -&gt; ทะเบียนโดเมนที่ถือครอง&quot;** (URL: `/client/domain-registry/my-domains`)<br />
+2. คุณสามารถ:<br />
+   - ตรวจสอบวันหมดอายุ และจำนวนวันที่เหลือก่อนครบกำหนด<br />
+   - เปิดหรือปิด สวิตช์การต่ออายุอัตโนมัติ (Auto-Renew Toggle)<br />
+   - ดูข้อมูล Nameserver และประวัติบิลค่าใช้จ่ายที่เกี่ยวข้อง</div>
+                                            </div>
+                                                                            </div>
+                                </div>
+                            </div>
+                        </div>
+                                            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="150">
+                            <div class="card h-100 border shadow-sm rounded-4 overflow-hidden bg-body">
+                                <div class="card-header bg-transparent border-bottom p-4">
+                                    <div class="d-flex align-items-center gap-2 mb-2">
+                                        <span class="badge bg-success text-white p-2 rounded-circle">
+                                            <i class="fa-solid fa-server fs-6"></i>
+                                        </span>
+                                        <h5 class="fw-bold mb-0 text-body-emphasis">คู่มือใช้งาน Cloud Web Hosting (Cloud Hosting Handbook)</h5>
+                                    </div>
+                                                                            <p class="text-muted small mb-0">คู่มือการสั่งซื้อแพลน การตั้งค่าเซิร์ฟเวอร์ และการใช้งานเครื่องมือควบคุมโฮสติ้งทุกเมนู</p>
+                                                                    </div>
+
+                                <div class="card-body p-3">
+                                    <div class="list-group list-group-flush">
+                                                                                    <div class="list-group-item list-group-item-action border-0 px-3 py-3 rounded-3 mb-2 topic-card-item"
+                                                 style="cursor: pointer; transition: all 0.2s ease;"
+                                                 data-topic-title="การสั่งซื้อแพ็กเกจโฮสติ้ง และการตั้งค่าเริ่มต้น (Hosting Setup &amp;amp; Purchase)"
+                                                 data-topic-category="คู่มือใช้งาน Cloud Web Hosting (Cloud Hosting Handbook)"
+                                                 data-topic-badge="bg-success"
+                                                 data-topic-date="10 พฤศจิกายน 2569"
+                                                 data-topic-views="546">
+                                                <div class="d-flex justify-content-between align-items-start gap-2">
+                                                    <div class="fw-bold text-body-emphasis fs-6">
+                                                                                                                     <i class="fa-solid fa-thumbtack text-warning me-1" title="ปักหมุด"></i>
+                                                                                                                การสั่งซื้อแพ็กเกจโฮสติ้ง และการตั้งค่าเริ่มต้น (Hosting Setup &amp; Purchase)
+                                                    </div>
+                                                    <span class="badge bg-body-secondary text-body-secondary font-monospace small flex-shrink-0">
+                                                        <i class="fa-regular fa-eye me-1"></i>546
+                                                    </span>
+                                                </div>
+                                                                                                    <p class="text-muted small mb-2 mt-1 text-truncate" style="line-height: 1.4;">
+                                                        เรียนรู้วิธีการเลือกแพ็กเกจโฮสติ้งที่เหมาะกับการใช้งาน และขั้นตอนการผูกชื่อโดเมนครั้งแรก
+                                                    </p>
+                                                                                                <div class="d-flex justify-content-between align-items-center text-muted" style="font-size: 11px;">
+                                                    <span><i class="fa-regular fa-calendar-days me-1 text-primary"></i> 10 พฤศจิกายน 2569</span>
+                                                    <span class="text-primary fw-semibold"><i class="fa-solid fa-book-open-reader me-1"></i>คลิกเพื่ออ่านบทความ</span>
+                                                </div>
+
+                                                <!-- Hidden full content payload -->
+                                                <div class="d-none topic-content-payload">## การสั่งซื้อแพ็กเกจ Cloud Web Hosting และการตั้งค่าเริ่มต้น<br />
+<br />
+MinimalHouse Cloud Web Hosting ทำงานบนสถาปัตยกรรม High-Performance Cloud Node ขับเคลื่อนด้วยระบบแยก Resource อิสระ รองรับทั้งเว็บไซต์ทั่วไปและเว็บแอปพลิเคชันระดับองค์กร<br />
+<br />
+---<br />
+<br />
+### 1. การเลือกแพ็กเกจ Cloud Web Hosting<br />
+1. เข้าไปที่เมนู **&quot;บริการของฉัน -&gt; Cloud Web Hosting&quot;** แล้วเลือก **&quot;สั่งซื้อบริการใหม่&quot;**<br />
+2. เลือกแพ็กเกจที่ตรงกับความต้องการของเว็บไซต์คุณ:<br />
+   - **Storage Quota (SSD/NVMe):** พื้นที่เก็บไฟล์เว็บไซต์ รูปภาพ และฐานข้อมูล<br />
+   - **Bandwidth Limit:** ปริมาณรับ-ส่งข้อมูลต่อเดือน (High-Speed Traffic)<br />
+   - **MySQL Databases:** จำนวนฐานข้อมูลที่อนุญาตให้สร้างได้<br />
+   - **Subdomains Limit:** จำนวนโดเมนย่อยที่สามารถเพิ่มได้ เช่น `blog.yourdomain.com`<br />
+   - **Snapshots Limit:** โควตาการสำรองข้อมูลเว็บไซต์แบบ One-Click Snapshot<br />
+3. สำหรับลูกค้าที่ได้รับแพ็กเกจโปรโมชันพิเศษเฉพาะราย (Private/Exclusive Plan) เจ้าหน้าที่จะเปิดสิทธิ์ให้บัญชีของคุณสามารถมองเห็นและสั่งซื้อได้ผ่านหน้าสั่งซื้อเดียวกัน<br />
+<br />
+---<br />
+<br />
+### 2. การผูกชื่อโดเมนเข้ากับโฮสติ้ง<br />
+คุณสามารถเลือกใช้งานชื่อโดเมนได้ 2 รูปแบบ:<br />
+1. **ใช้ชื่อโดเมนของคุณเอง (Custom Domain):**<br />
+   - นำชื่อโดเมนของคุณ (เช่น `mybusiness.com`) ไปตั้งค่า DNS โดยชี้ **A Record** ค่า `@` และ `www` มายัง **Proxy IP** ของ MinimalHouse ที่แสดงบนแดชบอร์ด<br />
+2. **ใช้งานชื่อโดเมนย่อยฟรี (Free DDNS Subdomain):**<br />
+   - ระบบแจกโดเมนย่อยฟรี เช่น `myname.minimalcloud.sbs` สามารถใช้งานได้ทันทีโดยไม่ต้องจดโดเมนใหม่ เหมาะสำหรับเว็บไซต์ทดสอบหรือโปรเจกต์ส่วนตัว<br />
+<br />
+---<br />
+<br />
+### 3. การเปิดใช้งาน SSL Certificate ฟรี (HTTPS)<br />
+1. หลังจากผูกชื่อโดเมนและชี้ DNS เรียบร้อยแล้ว ให้เข้าไปที่หน้าจัดการโฮสติ้ง<br />
+2. ไปที่แท็บ **&quot;SSL / TLS Certificate&quot;**<br />
+3. กดปุ่ม **&quot;ขอรับใบรับรอง SSL อัตโนมัติ (Issue Let&#039;s Encrypt SSL)&quot;**<br />
+4. ระบบจะทำการตรวจสอบความเป็นเจ้าของโดเมนและออกใบรับรองแบบ 256-bit Encryption ให้ทันที ทำให้เว็บไซต์ของคุณปลอดภัยและแสดงเครื่องหมายกุญแจเขียว (HTTPS)</div>
+                                            </div>
+                                                                                    <div class="list-group-item list-group-item-action border-0 px-3 py-3 rounded-3 mb-2 topic-card-item"
+                                                 style="cursor: pointer; transition: all 0.2s ease;"
+                                                 data-topic-title="คู่มือฟังก์ชันและเครื่องมือควบคุม Cloud Web Hosting ครบทุกเมนู (Complete Features)"
+                                                 data-topic-category="คู่มือใช้งาน Cloud Web Hosting (Cloud Hosting Handbook)"
+                                                 data-topic-badge="bg-success"
+                                                 data-topic-date="10 พฤศจิกายน 2569"
+                                                 data-topic-views="893">
+                                                <div class="d-flex justify-content-between align-items-start gap-2">
+                                                    <div class="fw-bold text-body-emphasis fs-6">
+                                                                                                                    <i class="fa-regular fa-file-lines text-primary me-1"></i>
+                                                                                                                คู่มือฟังก์ชันและเครื่องมือควบคุม Cloud Web Hosting ครบทุกเมนู (Complete Features)
+                                                    </div>
+                                                    <span class="badge bg-body-secondary text-body-secondary font-monospace small flex-shrink-0">
+                                                        <i class="fa-regular fa-eye me-1"></i>893
+                                                    </span>
+                                                </div>
+                                                                                                    <p class="text-muted small mb-2 mt-1 text-truncate" style="line-height: 1.4;">
+                                                        อธิบายการใช้งานเครื่องมือในคอนโทรลพาเนลอย่างละเอียด: File Manager, SFTP, MySQL, PHP Selector, Mailbox, Git Deploy และ Snapshots
+                                                    </p>
+                                                                                                <div class="d-flex justify-content-between align-items-center text-muted" style="font-size: 11px;">
+                                                    <span><i class="fa-regular fa-calendar-days me-1 text-primary"></i> 10 พฤศจิกายน 2569</span>
+                                                    <span class="text-primary fw-semibold"><i class="fa-solid fa-book-open-reader me-1"></i>คลิกเพื่ออ่านบทความ</span>
+                                                </div>
+
+                                                <!-- Hidden full content payload -->
+                                                <div class="d-none topic-content-payload">## คู่มือการใช้งานเครื่องมือควบคุม Cloud Web Hosting ครบทุกฟังก์ชัน<br />
+<br />
+เมื่อเข้าสู่หน้าจัดการโฮสติ้ง (URL: `/client/cloud-hosting/{id}`) คุณจะพบแถบเครื่องมือควบคุมระดับมืออาชีพ ดังนี้:<br />
+<br />
+---<br />
+<br />
+### 1. Web File Manager (ตัวจัดการไฟล์ออนไลน์)<br />
+- **ตำแหน่งโฟลเดอร์หลัก:** โฟลเดอร์สำหรับอัปโหลดไฟล์เว็บไซต์สู่สาธารณะคือ `/public_html`<br />
+- **โปรแกรมแก้ไขโค้ดในตัว (Code Editor):** รองรับ Syntax Highlighting เสมือนใช้งาน VS Code บนบราวเซอร์ สามารถแก้ไขไฟล์ HTML, PHP, CSS, JS ได้ทันที<br />
+- **เครื่องมือบีบอัดไฟล์:** รองรับการอัปโหลดไฟล์ `.zip` และแตกไฟล์ (Extract) บนเซิร์ฟเวอร์โดยตรง<br />
+<br />
+---<br />
+<br />
+### 2. การเชื่อมต่อ SFTP / SSH (Secure File Transfer)<br />
+- หากต้องการอัปโหลดโปรเจกต์ขนาดใหญ่ แนะนำให้ใช้โปรแกรม **FileZilla**, **Cyberduck** หรือ **WinSCP**<br />
+- **พอร์ตการเชื่อมต่อ:** พอร์ตมาตรฐาน `22`<br />
+- **Host / Server:** ระบุ IP หรือ Hostname ที่ระบุในหน้าแดชบอร์ด<br />
+- **Username &amp; Password:** ใช้ข้อมูลบัญชีผู้ใช้ระบบโฮสติ้งที่ระบบออกให้<br />
+<br />
+---<br />
+<br />
+### 3. ระบบจัดการฐานข้อมูล (MySQL Databases &amp; phpMyAdmin)<br />
+- **สร้างฐานข้อมูลใหม่:** กดสร้างฐานข้อมูล กำหนดชื่อ Database และรหัสผ่าน<br />
+- **phpMyAdmin:** มีปุ่มคลิกเดียวเข้าสู่หน้าต่าง phpMyAdmin อัตโนมัติ (Single Sign-On) สำหรับ Import/Export ไฟล์ `.sql` และจัดการตารางข้อมูล<br />
+<br />
+---<br />
+<br />
+### 4. ปรับเปลี่ยนเวอร์ชัน PHP และ Directives Config (PHP Selector)<br />
+- **เลือกเวอร์ชัน PHP:** สลับเปลี่ยนเวอร์ชันระหว่าง PHP 8.0, PHP 8.1, PHP 8.2, PHP 8.3 และ **PHP 8.4** ได้ทันทีตามที่สคริปต์ของคุณต้องการ<br />
+- **ปรับแต่งค่า PHP Config:**<br />
+  - `upload_max_filesize`: เพิ่มขนาดรองรับการอัปโหลดไฟล์ได้สูงสุด 1,024 MB<br />
+  - `post_max_size`: เพิ่มขนาดรับส่งข้อมูล POST<br />
+  - `memory_limit`: จัดสรรหน่วยความจำ RAM สำหรับประมวลผลสคริปต์<br />
+- **ปุ่มรีสตาร์ท PHP-FPM:** สามารถกดคำสั่งรีสตาร์ท Process ของ PHP ได้ทันทีเมื่อต้องการเคลียร์ OpCache หรือโหลดค่า config ใหม่<br />
+<br />
+---<br />
+<br />
+### 5. การจัดการอีเมลองค์กร (Corporate Email &amp; Webmail)<br />
+- **สร้างกล่องจดหมาย:** สร้างอีเมลตามชื่อโดเมนของคุณ เช่น `support@yourdomain.com`<br />
+- **กำหนดโควตา:** จัดสรรขนาดพื้นที่จัดเก็บสำหรับแต่ละกล่องจดหมาย<br />
+- **เข้าใช้งาน Webmail:** รองรับเว็บเมลมาตรฐาน Roundcube เข้าใช้งานได้ทุกที่ทั้งบนคอมพิวเตอร์และมือถือ<br />
+<br />
+---<br />
+<br />
+### 6. การติดตั้งแอปพลิเคชันใน 1 คลิก (1-Click App Installer)<br />
+- **WordPress:** กดปุ่มเดียว ระบบจะดาวน์โหลด Core ล่าสุด สร้างฐานข้อมูล MySQL และติดตั้ง vhost พร้อมใช้งานใน 5 วินาที<br />
+- **Laravel Framework:** รองรับโครงสร้าง Laravel โฟลเดอร์ `public` พร้อมรัน Composer และตั้งค่า Permissions ให้อัตโนมัติ<br />
+<br />
+---<br />
+<br />
+### 7. การเชื่อมต่อ Git Auto Deploy (Plesk/cPanel Git Flow)<br />
+- รองรับการดึงโค้ดอัตโนมัติจาก **GitHub**, **GitLab** หรือ **Bitbucket**<br />
+- ระบุ Repository URL และ Branch (เช่น `main` หรือ `production`)<br />
+- นำ **Webhook URL** ไปผูกที่ GitHub เมื่อคุณสั่ง `git push` เซิร์ฟเวอร์จะทำการ Pull โค้ดล่าสุดมาอัปเดตเว็บให้อัตโนมัติทันที<br />
+<br />
+---<br />
+<br />
+### 8. การสำรองข้อมูล (Snapshots) และ Cron Jobs<br />
+- **Snapshots:** สร้างจุดบันทึกสำรองข้อมูลไฟล์และฐานข้อมูลทั้งระบบ สามารถกดย้อนเวลากลับมา (Restore) ได้ตลอดเวลาเมื่อเกิดข้อผิดพลาด<br />
+- **Cron Jobs:** กำหนดเวลาสั่งรันคำสั่ง PHP หรือสคริปต์เบื้องหลังอัตโนมัติ มีพรีเซ็ตสำเร็จรูปให้เลือกใช้งาน<br />
+<br />
+---<br />
+<br />
+### ⚠️ ข้อควรระวังและแนวทางปฏิบัติที่ปลอดภัย (Best Practices)<br />
+1. **ความปลอดภัยของรหัสผ่าน:** ห้ามใช้รหัสผ่านเดียวกับอีเมลส่วนตัว และควรมีความยาวไม่ต่ำกว่า 10 ตัวอักษร<br />
+2. **การอัปโหลดไฟล์:** ตรวจสอบสิทธิ์ Folder Permissions ไม่ควรตั้งค่าเป็น `777` ให้ใช้ `755` สำหรับโฟลเดอร์ และ `644` สำหรับไฟล์<br />
+3. **การสำรองข้อมูล:** ควรสร้าง Snapshot อย่างน้อยสัปดาห์ละ 1 ครั้ง หรือก่อนการอัปเกรดปลั๊กอิน/ธีมเว็บไซต์ใหญ่ทุกครั้ง</div>
+                                            </div>
+                                                                            </div>
+                                </div>
+                            </div>
+                        </div>
+                                            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="150">
+                            <div class="card h-100 border shadow-sm rounded-4 overflow-hidden bg-body">
+                                <div class="card-header bg-transparent border-bottom p-4">
+                                    <div class="d-flex align-items-center gap-2 mb-2">
+                                        <span class="badge bg-danger text-white p-2 rounded-circle">
+                                            <i class="fa-solid fa-bullhorn fs-6"></i>
+                                        </span>
+                                        <h5 class="fw-bold mb-0 text-body-emphasis">ข่าวสารและประกาศจากระบบ (Announcements)</h5>
+                                    </div>
+                                                                            <p class="text-muted small mb-0">ข่าวสารการปรับปรุงระบบ เซิร์ฟเวอร์ใหม่ และกำหนดการบำรุงรักษาเครือข่าย</p>
+                                                                    </div>
+
+                                <div class="card-body p-3">
+                                    <div class="list-group list-group-flush">
+                                                                                    <div class="list-group-item list-group-item-action border-0 px-3 py-3 rounded-3 mb-2 topic-card-item"
+                                                 style="cursor: pointer; transition: all 0.2s ease;"
+                                                 data-topic-title="ประกาศ: ระบบจดทะเบียนโดเมนสากล (Wholesale Gateway) และการเชื่อมต่อ Cloudflare DNS"
+                                                 data-topic-category="ข่าวสารและประกาศจากระบบ (Announcements)"
+                                                 data-topic-badge="bg-danger"
+                                                 data-topic-date="10 พฤศจิกายน 2569"
+                                                 data-topic-views="318">
+                                                <div class="d-flex justify-content-between align-items-start gap-2">
+                                                    <div class="fw-bold text-body-emphasis fs-6">
+                                                                                                                     <i class="fa-solid fa-thumbtack text-warning me-1" title="ปักหมุด"></i>
+                                                                                                                ประกาศ: ระบบจดทะเบียนโดเมนสากล (Wholesale Gateway) และการเชื่อมต่อ Cloudflare DNS
+                                                    </div>
+                                                    <span class="badge bg-body-secondary text-body-secondary font-monospace small flex-shrink-0">
+                                                        <i class="fa-regular fa-eye me-1"></i>318
+                                                    </span>
+                                                </div>
+                                                                                                    <p class="text-muted small mb-2 mt-1 text-truncate" style="line-height: 1.4;">
+                                                        เปิดตัวระบบค้นหาและจดทะเบียนชื่อโดเมนระดับโลก พร้อมระบบพ่วง Cloud Web Hosting และ Cloudflare DNS อัตโนมัติ
+                                                    </p>
+                                                                                                <div class="d-flex justify-content-between align-items-center text-muted" style="font-size: 11px;">
+                                                    <span><i class="fa-regular fa-calendar-days me-1 text-primary"></i> 10 พฤศจิกายน 2569</span>
+                                                    <span class="text-primary fw-semibold"><i class="fa-solid fa-book-open-reader me-1"></i>คลิกเพื่ออ่านบทความ</span>
+                                                </div>
+
+                                                <!-- Hidden full content payload -->
+                                                <div class="d-none topic-content-payload">## ประกาศการเปิดตัวระบบ Wholesale Domain Gateway และ Cloudflare DNS<br />
+<br />
+MinimalHouse ได้เปิดตัวบริการจดทะเบียนชื่อโดเมนผ่าน Registrar Wholesale Gateway มาตรฐานระดับโลก พร้อมฟังก์ชันระดับ Enterprise:<br />
+<br />
+### ไฮไลท์การพัฒนาและฟังก์ชันใหม่<br />
+1. **Wholesale Domain Registry:** ค้นหาและจดทะเบียนชื่อโดเมนสากล (.com, .net, .org ฯลฯ) ในราคาต้นทุนขายส่ง คำนวณเป็นเงินบาท (THB) เที่ยงตรงตามอัตราแลกเปลี่ยนจริง<br />
+2. **Domain Order Verification Queue:** เจ้าหน้าที่ตรวจสอบคำสั่งซื้อก่อนตัดเครดิตและยิงคำสั่งจดทะเบียน พร้อมระบบคืนเงินอัตโนมัติ (Auto-Refund) ปลอดภัย 100%<br />
+3. **Auto Cloudflare DNS Integration:** ระบบเชื่อมต่อ DNS เข้ากับ Cloudflare DNS อัตโนมัติ ป้องกันการโจมตีทางไซเบอร์และซ่อน IP แท้จริงของเครื่องเซิร์ฟเวอร์<br />
+4. **Cloud Web Hosting Addon:** ลูกค้าสามารถสั่งซื้อโดเมนพ่วงแพ็กเกจโฮสติ้งได้ในขั้นตอนเดียว ระบบผูกข้อมูลและพร้อมใช้งานทันที</div>
+                                            </div>
+                                                                            </div>
+                                </div>
+                            </div>
+                        </div>
+                                    </div>
+            </div>
+        </section>
+
+        <!-- 📖 Enhanced Topic Reader Modal (Max Size, Not Full Screen, Clean Layout) -->
+        <div class="modal fade" id="homeTopicModal" tabindex="-1" aria-hidden="true" style="z-index: 99999; backdrop-filter: blur(8px); background-color: rgba(15, 23, 42, 0.7);">
+            <div class="modal-dialog modal-xl modal-dialog-centered" style="max-width: 1120px; width: 95vw; margin: auto;">
+                <div class="modal-content shadow-2xl border-0 rounded-4 overflow-hidden bg-body">
+                    <div class="modal-header border-bottom py-3 px-4 bg-body d-flex justify-content-between align-items-center">
+                        <div class="d-flex align-items-center gap-2 flex-wrap">
+                            <span class="badge px-3 py-2 rounded-pill font-monospace" id="modalTopicCategory">หมวดหมู่</span>
+                            <span class="text-muted small"><i class="fa-regular fa-calendar-days me-1 text-primary"></i> <span id="modalTopicDate">-</span></span>
+                            <span class="text-muted small ms-2"><i class="fa-regular fa-eye me-1 text-info"></i> เข้าชม <span id="modalTopicViews">0</span> ครั้ง</span>
+                        </div>
+                        <button type="button" class="btn btn-sm btn-icon btn-outline-secondary rounded-circle" data-bs-dismiss="modal" aria-label="Close">
+                            <i class="fa-solid fa-xmark fs-5"></i>
+                        </button>
+                    </div>
+
+                    <div class="modal-body p-4 p-md-5 bg-body-tertiary" style="max-height: 72vh; overflow-y: auto;">
+                        <div class="bg-body p-4 p-md-5 rounded-4 shadow-sm border">
+                            <h3 class="fw-bold text-body-emphasis mb-4 pb-3 border-bottom" id="modalTopicTitle" style="line-height: 1.4;">
+                                หัวข้อคู่มือ
+                            </h3>
+
+                            <div id="modalTopicContent" class="article-reader-body text-body" style="font-size: 16px; line-height: 1.9;">
+                                เนื้อหา...
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer border-top py-3 px-4 justify-content-between bg-body">
+                        <div class="text-muted small">
+                            <i class="fa-solid fa-circle-check text-success me-1"></i> ศูนย์การเรียนรู้ทางการ MinimalHouse Computing Solution
+                        </div>
+                        <button type="button" class="btn btn-secondary px-4 rounded-pill" data-bs-dismiss="modal">
+                            <i class="fa-solid fa-check me-1"></i> ปิดหน้าต่าง (Close)
+                        </button>
+                    </div>
+                </div>
+        </div>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                var topicItems = document.querySelectorAll('.topic-card-item');
+                var topicModalEl = document.getElementById('homeTopicModal');
+                var topicModal = new bootstrap.Modal(topicModalEl);
+
+                topicItems.forEach(function (item) {
+                    item.addEventListener('click', function () {
+                        var title = this.getAttribute('data-topic-title');
+                        var category = this.getAttribute('data-topic-category');
+                        var badgeClass = this.getAttribute('data-topic-badge') || 'bg-primary';
+                        var date = this.getAttribute('data-topic-date');
+                        var views = this.getAttribute('data-topic-views');
+                        var contentPayload = this.querySelector('.topic-content-payload').innerHTML;
+
+                        document.getElementById('modalTopicTitle').innerText = title;
+                        
+                        var catBadge = document.getElementById('modalTopicCategory');
+                        catBadge.innerText = category;
+                        catBadge.className = 'badge px-3 py-2 rounded-pill font-monospace text-white ' + badgeClass;
+
+                        document.getElementById('modalTopicDate').innerText = 'เผยแพร่: ' + date;
+                        document.getElementById('modalTopicViews').innerText = views;
+                        document.getElementById('modalTopicContent').innerHTML = contentPayload;
+
+                        topicModal.show();
+                    });
+                });
+            });
+        </script>
+
+        <!-- FAQ Section -->
+        <section id="faq" class="faq section bg-mesh-light py-5">
+            <div class="container section-title" data-aos="fade-up">
+                <h2 class="fw-bold">คำถามที่พบบ่อย (FAQ)</h2>
+                <p>ข้อสงสัยเบื้องต้นก่อนตัดสินใจใช้บริการ</p>
+            </div>
+            
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8" data-aos="fade-up" data-aos-delay="200">
+                        <div class="accordion accordion-flush glass-card-light rounded-4 p-2 p-md-4" id="faqAccordion">
+                            
+                            <div class="accordion-item border-0 mb-3 rounded-4 shadow-sm">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed fw-bold rounded-4" type="button" data-bs-toggle="collapse" data-bs-target="#faq-content-1">
+                                        สมัครแล้วสามารถใช้งานได้เมื่อไหร่?
+                                    </button>
+                                </h2>
+                                <div id="faq-content-1" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                    <div class="accordion-body text-muted">
+                                        ระบบประมวลผลด้วย Automated Provisioning เมื่อยืนยันการสั่งซื้อและชำระเงิน ระบบจะสร้าง Instance พร้อมกำหนดค่า Network และจัดส่ง Credentials เข้าสู่ระบบภายใน 5 นาที
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="accordion-item border-0 mb-3 rounded-4 shadow-sm">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed fw-bold rounded-4" type="button" data-bs-toggle="collapse" data-bs-target="#faq-content-2">
+                                        รองรับภาษาและ Framework อะไรบ้าง?
+                                    </button>
+                                </h2>
+                                <div id="faq-content-2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                    <div class="accordion-body text-muted">
+                                        เรารองรับภาษาและเทคโนโลยีที่หลากหลาย โดยเฉพาะสแตก PHP ยอดนิยม (Laravel, CodeIgniter, WordPress, Symfony ฯลฯ) พร้อมปรับแต่งเวอร์ชัน PHP 8.1 - 8.4 ได้อิสระ เพื่อให้นักพัฒนาสามารถปรับแต่งและใช้งานได้อย่างเต็มที่ตามความต้องการของแต่ละโปรเจกต์
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="accordion-item border-0 mb-3 rounded-4 shadow-sm">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed fw-bold rounded-4" type="button" data-bs-toggle="collapse" data-bs-target="#faq-content-3">
+                                        สามารถอัปเกรดแพ็กเกจภายหลังได้หรือไม่?
+                                    </button>
+                                </h2>
+                                <div id="faq-content-3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                    <div class="accordion-body text-muted">
+                                        รองรับ Vertical Scaling สามารถปรับขยาย Resource พื้นที่จัดเก็บ และขีดความสามารถของเซิร์ฟเวอร์ได้ทันทีผ่านระบบควบคุม ข้อมูลและการตั้งค่าทั้งหมดจะถูกรักษาไว้อย่างสมบูรณ์
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="accordion-item border-0 rounded-4 shadow-sm">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed fw-bold rounded-4" type="button" data-bs-toggle="collapse" data-bs-target="#faq-content-4">
+                                        มีบริการช่วยเหลือแก้ไขปัญหาหรือไม่?
+                                    </button>
+                                </h2>
+                                <div id="faq-content-4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                    <div class="accordion-body text-muted">
+                                        เรามีทีมงานซัพพอร์ตคอยให้คำปรึกษาและแก้ไขปัญหาผ่านระบบ Ticket ตลอด 24 ชั่วโมง เพื่อให้คุณมั่นใจว่าเว็บไซต์จะทำงานได้อย่างราบรื่น
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- /FAQ Section -->
+
+        <!-- Contact Section -->
+        <section id="contact" class="contact section">
+
+            <!-- Section Title -->
+            <div class="container section-title" data-aos="fade-up">
+                <h2>
+                    ติดต่อเรา
+                </h2>
+                <p>
+
+                </p>
+            </div><!-- End Section Title -->
+
+            <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+                <div class="row gy-4">
+
+                    <div class="col-lg-6">
+
+                        <div class="row gy-4">
+
+                            <div class="col-md-6">
+                                <div class="info-item" data-aos="fade" data-aos-delay="200">
+                                    <i class="bi bi-geo-alt"></i>
+                                    <h3>ที่อยู่</h3>
+                                    <p>160 ถ.พิบูลสงคราม ต.สวนใหญ่</p>
+                                    <p>อ.เมือง จ.นนทบุรี</p>
+                                </div>
+                            </div>
+                            <!-- End Info Item -->
+
+                            <div class="col-md-6">
+                                <div class="info-item" data-aos="fade" data-aos-delay="300">
+                                    <i class="bi bi-telephone"></i>
+                                    <h3>ติดต่อเรา</h3>
+                                    <p>+66 83-251-7938</p>
+                                    <p>+66 83-941-4574</p>
+                                </div>
+                            </div><!-- End Info Item -->
+
+                            <div class="col-md-6">
+                                <div class="info-item" data-aos="fade" data-aos-delay="400">
+                                    <i class="bi bi-envelope"></i>
+                                    <h3>อีเมล์</h3>
+                                    <p>support@minimalhouse.com</p>
+                                    <p>admin@minimalhouse.com</p>
+                                </div>
+                            </div><!-- End Info Item -->
+
+                            <div class="col-md-6">
+                                <div class="info-item" data-aos="fade" data-aos-delay="500">
+                                    <i class="bi bi-clock"></i>
+                                    <h3>เวลาทำการ</h3>
+                                    <p>จันทร์ - ศุกร์</p>
+                                    <p>9:00 น. - 16:00 น.</p>
+                                </div>
+                            </div><!-- End Info Item -->
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-lg-6">
+                        <form action="forms/contact.php" method="post" class="php-email-form" data-aos="fade-up"
+                            data-aos-delay="200">
+                            <div class="row gy-4">
+
+                                <div class="col-md-6">
+                                    <input type="text" name="name" class="form-control"
+                                        placeholder="ชื่อ-นามสกุล" required="">
+                                </div>
+
+                                <div class="col-md-6 ">
+                                    <input type="email" class="form-control" name="email" placeholder="อีเมล์"
+                                        required="">
+                                </div>
+
+                                <div class="col-12">
+                                    <input type="text" class="form-control" name="subject" placeholder="หัวข้อ"
+                                        required="">
+                                </div>
+
+                                <div class="col-12">
+                                    <textarea class="form-control" name="message" rows="6" placeholder="ข้อความ" required=""></textarea>
+                                </div>
+
+                                <div class="col-12 text-center">
+                                    <div class="loading">
+                                        กำลังโหลด</div>
+                                    <div class="error-message"></div>
+                                    <div class="sent-message">
+                                        ส่งข้อความสำเร็จแล้ว. ขอบคุณที่ติดต่อ และแสดงความคิดเห็น
+                                    </div>
+
+                                    <button type="submit">
+                                        ส่งข้อความ
+                                    </button>
+                                </div>
+
+                            </div>
+                        </form>
+                    </div><!-- End Contact Form -->
+
+                </div>
+
+            </div>
+
+        </section><!-- /Contact Section -->
+
+    </main>
+
+    <footer id="footer" class="footer footer-pro bg-mesh-gradient pt-5 pb-4">
+
+        <div class="container footer-top">
+            <div class="row gy-4 justify-content-between">
+                <div class="col-lg-4 col-md-12 footer-about">
+                    <a href="#hero" class="logo d-flex align-items-center mb-3">
+                        <img src="/assets/img/logo-cloud.png" alt="MinimalCloud">
+                        <span class="sitename">MinimalCloud</span>
+                    </a>
+                    <p class="small text-muted mb-3" style="line-height: 1.7;">
+                        แพลตฟอร์ม Cloud Hosting, Cloud VPS และ Domain Registry ประสิทธิภาพสูงบน NVMe Enterprise ออกแบบมาเพื่อนักพัฒนาและธุรกิจยุคใหม่ พร้อมระบบเปิดใช้งานอัตโนมัติใน 5 นาที
+                    </p>
+                    <div class="d-inline-flex align-items-center gap-2 px-3 py-1 rounded-pill bg-success bg-opacity-10 border border-success border-opacity-25 text-success small fw-medium mb-3">
+                        <span class="pulse-dot"></span>
+                        <span>All Systems Operational • 99.9% SLA</span>
+                    </div>
+                    <div class="social-links d-flex gap-2 mt-2">
+                        <a href="#contact" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+                        <a href="#contact" aria-label="Twitter"><i class="bi bi-twitter-x"></i></a>
+                        <a href="https://github.com" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><i class="bi bi-github"></i></a>
+                        <a href="#contact" aria-label="Line"><i class="bi bi-chat-dots"></i></a>
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-6 footer-links">
+                    <h4>บริการคลาวด์</h4>
+                    <ul>
+                        <li><a href="#features"><i class="bi bi-chevron-right small"></i> Cloud Web Hosting</a></li>
+                        <li><a href="#features"><i class="bi bi-chevron-right small"></i> Cloud VPS</a></li>
+                        <li><a href="#pricing"><i class="bi bi-chevron-right small"></i> แพ็กเกจและราคา</a></li>
+                        <li><a href="#apps"><i class="bi bi-chevron-right small"></i> One-Click Apps</a></li>
+                        <li><a href="/login"><i class="bi bi-chevron-right small"></i> แดชบอร์ดลูกค้า</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-3 col-6 footer-links">
+                    <h4>ระบบนิเวศ &amp; พันธมิตร</h4>
+                    <ul>
+                        <li><a href="#partners"><i class="bi bi-chevron-right small"></i> พันธมิตร 3 เสาหลัก</a></li>
+                        <li><a href="https://www.gazadevs.com" target="_blank" rel="noopener noreferrer"><i class="bi bi-chevron-right small"></i> GAZADEV (Software)</a></li>
+                        <li><a href="https://gazadevstore.com" target="_blank" rel="noopener noreferrer"><i class="bi bi-chevron-right small"></i> GAZADEV Store (UI/Code)</a></li>
+                        <li><a href="https://novatech69.com" target="_blank" rel="noopener noreferrer"><i class="bi bi-chevron-right small"></i> Novatech69 (Hardware)</a></li>
+                        <li><a href="#affiliate"><i class="bi bi-chevron-right small"></i> แนะนำเพื่อน (Affiliate)</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-3 col-md-12 footer-contact text-start">
+                    <h4>ติดต่อเรา</h4>
+                    <p class="small mb-1"><i class="bi bi-geo-alt me-2 text-primary"></i>160 ถ.พิบูลสงคราม ต.สวนใหญ่ อ.เมือง จ.นนทบุรี</p>
+                    <p class="small mb-1"><i class="bi bi-telephone me-2 text-primary"></i>+66 83-251-7938, +66 83-941-4574</p>
+                    <p class="small mb-1"><i class="bi bi-envelope me-2 text-primary"></i>support@minimalhouse.com</p>
+                    <p class="small mb-0"><i class="bi bi-clock me-2 text-primary"></i>จันทร์ - ศุกร์ (09:00 - 16:00 น.) • Ticket 24/7</p>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="container copyright text-center mt-4 pt-4 footer-divider">
+            <p class="small mb-1">© 2026 <strong class="px-1 sitename">MinimalHouse / MinimalCloud</strong>. All Rights Reserved.</p>
+            <div class="credits small text-muted">
+                Powered by <a href="#partners" class="text-decoration-none">MinimalCloud Infrastructure</a> • Ecosystem with <a href="https://www.gazadevs.com" target="_blank" rel="noopener noreferrer">GAZADEV</a> &amp; <a href="https://novatech69.com" target="_blank" rel="noopener noreferrer">Novatech69</a>
+            </div>
+        </div>
+
+    </footer>
+
+    <!-- Scroll Top -->
+    <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center">
+        <i class="bi bi-arrow-up-short"></i>
+    </a>
+
+    <!-- Preloader -->
+    <div id="preloader"></div>
+
+    <!-- Vendor JS Files -->
+    <script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/assets/vendor/php-email-form/validate.js"></script>
+    <script src="/assets/vendor/aos/aos.js"></script>
+    <script src="/assets/vendor/glightbox/js/glightbox.min.js"></script>
+    <script src="/assets/vendor/purecounter/purecounter_vanilla.js"></script>
+    <script src="/assets/vendor/swiper/swiper-bundle.min.js"></script>
+    <script src="/assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
+    <script src="/assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+
+    <!-- Main JS File -->
+    <script src="/assets/js/main.js"></script>
+
+    <!-- Bootstrap 5.3 Color Modes Engine (Auto / Light / Dark) -->
+    <script>
+        (() => {
+            'use strict';
+
+            const getStoredTheme = () => localStorage.getItem('theme');
+            const setStoredTheme = theme => localStorage.setItem('theme', theme);
+
+            // light is the default; there is no auto (OS-follow) mode
+            const getPreferredTheme = () => (getStoredTheme() === 'dark' ? 'dark' : 'light');
+
+            const setTheme = theme => {
+                const activeTheme = theme === 'dark' ? 'dark' : 'light';
+                document.documentElement.setAttribute('data-bs-theme', activeTheme);
+                document.documentElement.classList.remove('light-style', 'dark-style');
+                document.documentElement.classList.add(activeTheme === 'dark' ? 'dark-style' : 'light-style');
+            };
+
+            // the knob/clouds/stars are driven by <html data-theme-mode>
+            const showActiveTheme = theme => {
+                const themeSwitcher = document.querySelector('#bd-theme');
+                if (!themeSwitcher) return;
+                document.documentElement.dataset.themeMode = theme;
+                themeSwitcher.setAttribute('aria-pressed', theme === 'dark' ? 'true' : 'false');
+                themeSwitcher.setAttribute("aria-label", "ธีมการแสดงผล: " + ({ light: "สว่าง", dark: "มืด" }[theme] || theme));
+            };
+
+            window.addEventListener('DOMContentLoaded', () => {
+                const currentTheme = getStoredTheme() === 'dark' ? 'dark' : 'light';
+                showActiveTheme(currentTheme);
+
+                // one tap flips between the two modes
+                const themeSwitcher = document.getElementById('bd-theme');
+                if (themeSwitcher) {
+                    themeSwitcher.addEventListener('click', () => {
+                        const current = document.documentElement.dataset.themeMode === 'dark' ? 'dark' : 'light';
+                        const theme = current === 'dark' ? 'light' : 'dark';
+                        setStoredTheme(theme);
+                        setTheme(theme);
+                        showActiveTheme(theme);
+                    });
+                }
+            });
+        })();
+    </script>
+
+    <script src="/assets/js/landing-pricing.js"></script>
+</body>
+
+</html>

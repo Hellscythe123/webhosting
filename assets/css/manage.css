@@ -1,0 +1,207 @@
+/* Service console (client/cloud-hosting/manage) — static demo redesign.
+   Uses the tokens declared in client-theme.css so it follows light / dark. */
+
+.mc-mg { display: flex; flex-direction: column; gap: var(--g-5); --mc-track: rgba(148, 163, 184, 0.18); }
+
+/* The shared muted grey (#94a3b8) sits around 2.5:1 on white — too faint for
+   12-14px Thai text, so this page uses a readable grey in the light theme. */
+[data-bs-theme="light"] .mc-mg { --mc-text-muted: #5b6b80; --mc-track: rgba(15, 23, 42, 0.1); }
+
+/* ---------- Header ---------- */
+.mc-mg-head {
+  display: flex; align-items: center; justify-content: space-between; gap: var(--g-5);
+  flex-wrap: wrap; padding: var(--g-6);
+  background: var(--mc-bg-card); border: 1px solid var(--mc-border); border-radius: 14px;
+}
+
+/* The global type scale pins h1 at 32px with !important, which breaks this long
+   domain onto ugly mid-word lines on phones — keep it local to this page. */
+.mc-mg-title { font-size: 1.6rem !important; line-height: 1.3 !important; }
+.mc-mg-eyebrow {
+  display: inline-flex; align-items: center; gap: var(--g-2);
+  font-size: var(--g-text-xs); font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+  color: var(--mc-accent-text); margin-bottom: var(--g-2);
+}
+.mc-mg-title {
+  margin: 0; font-weight: 700; color: var(--mc-text-heading);
+  overflow-wrap: anywhere; word-break: normal;
+}
+.mc-mg-chips { display: flex; flex-wrap: wrap; gap: var(--g-2); margin-top: var(--g-3); }
+.mc-mg-chips .mc-chip {
+  display: inline-flex; align-items: center; gap: 6px; white-space: nowrap;
+  height: 26px; padding: 0 10px; border-radius: 6px;
+  border: 1px solid var(--mc-border); background: var(--mc-bg-raised);
+  font-size: 13px; font-weight: 600; color: var(--mc-text-body);
+}
+.mc-mg-chips .mc-chip :is(i, svg) { font-size: 11px; color: var(--mc-text-muted); }
+.mc-mg-actions { display: flex; align-items: center; gap: var(--g-2); flex-wrap: wrap; }
+
+/* ---------- Stats strip ---------- */
+.mc-mg-stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--g-4); }
+.mc-mg-stat {
+  display: flex; flex-direction: column; gap: 6px;
+  padding: var(--g-5); border-radius: 14px;
+  background: var(--mc-bg-card); border: 1px solid var(--mc-border);
+}
+.mc-mg-stat-top { display: flex; align-items: center; justify-content: space-between; gap: var(--g-2); }
+.mc-mg-stat-top > span:first-child { font-size: var(--g-text-sm); color: var(--mc-text-muted); display: inline-flex; align-items: center; gap: 6px; min-width: 0; }
+.mc-mg-pct { font-size: 12px; font-weight: 700; color: var(--mc-text-body); font-variant-numeric: tabular-nums; }
+.mc-mg-stat-note { font-size: 12px; line-height: 1.4; color: var(--mc-text-muted); }
+.mc-mg-stat strong { font-size: var(--g-text-xl); font-weight: 700; color: var(--mc-text-heading); font-variant-numeric: tabular-nums; }
+.mc-mg-stat strong small { font-size: var(--g-text-sm); font-weight: 500; color: var(--mc-text-muted); }
+.mc-mg-bar { display: block; height: 8px; border-radius: 99px; background: var(--mc-track, rgba(15,23,42,.1)); overflow: hidden; }
+.mc-mg-bar i { display: block; min-width: 8px; height: 100%; border-radius: 99px; background: linear-gradient(90deg, #34d399, #059669); }
+.mc-mg-bar i.is-warn { background: linear-gradient(90deg, #fbbf24, #f59e0b); }
+.mc-mg-bar i.is-bad { background: linear-gradient(90deg, #f87171, #dc2626); }
+
+/* ---------- Console shell ---------- */
+.mc-mg-console {
+  display: grid; grid-template-columns: 232px minmax(0, 1fr); gap: 0;
+  background: var(--mc-bg-card); border: 1px solid var(--mc-border); border-radius: 14px; overflow: hidden;
+}
+.mc-mg-tabs { display: flex; flex-direction: column; gap: 2px; padding: var(--g-3); border-right: 1px solid var(--mc-border); background: var(--mc-bg-body); }
+.mc-mg-tab {
+  display: flex; align-items: center; gap: var(--g-3); width: 100%; height: 40px; padding: 0 var(--g-3);
+  border: 0; border-radius: 8px; background: none; cursor: pointer;
+  font-size: var(--g-text-sm); font-weight: 600; color: var(--mc-text-muted); text-align: left;
+  transition: background-color .15s ease, color .15s ease;
+}
+.mc-mg-tab :is(i, svg) { flex: 0 0 18px; width: 18px; text-align: center; font-size: 14px; }
+.mc-mg-tab:hover { color: var(--mc-text-heading); background: var(--mc-row-hover, rgba(148,163,184,.08)); }
+.mc-mg-tab.is-on { color: #fff; background: var(--mc-accent); }
+.mc-mg-tab .mc-mg-badge {
+  margin-left: auto; font-size: 11px; font-weight: 700; line-height: 1;
+  padding: 3px 6px; border-radius: 5px; background: rgba(148,163,184,.18); color: inherit;
+}
+
+.mc-mg-panels { padding: var(--g-6); min-width: 0; }
+.mc-mg-panel { display: none; }
+.mc-mg-panel.is-on { display: block; }
+/* client-theme.css pins every heading size with !important — restate the sizes
+   these panel headings actually need (h1 > h2 > h3 hierarchy, 24/18/16px). */
+.mc-mg-panel > h2 { margin: 0 0 var(--g-2); font-size: var(--g-text-lg) !important; line-height: 1.4 !important; font-weight: 700; color: var(--mc-text-heading); }
+.mc-mg-panel > .mc-mg-sub { margin: 0 0 var(--g-5); font-size: var(--g-text-sm); color: var(--mc-text-muted); }
+
+/* toolbar above a table */
+.mc-mg-bar-row { display: flex; align-items: center; justify-content: space-between; gap: var(--g-3); flex-wrap: wrap; margin-bottom: var(--g-4); }
+.mc-mg-path { display: inline-flex; align-items: center; gap: var(--g-2); font-size: var(--g-text-sm); font-weight: 600; color: var(--mc-text-heading); }
+.mc-mg-path :is(i, svg) { color: var(--mc-text-muted); }
+.mc-mg-muted { font-weight: 400; color: var(--mc-text-muted); }
+.mc-mg-tools { display: flex; align-items: center; gap: var(--g-2); flex-wrap: wrap; }
+/* keep the action button optically level with the 36px search field */
+.mc-mg-tools .btn { height: 36px; display: inline-flex; align-items: center; gap: 6px; }
+.mc-mg-search { position: relative; display: inline-flex; align-items: center; }
+/* Font Awesome loads as JS here, so every <i> becomes <svg>: position both. */
+.mc-mg-search :is(i, svg) {
+  position: absolute; left: 11px; top: 50%; transform: translateY(-50%);
+  width: 12px; height: 12px; font-size: 12px; color: var(--mc-text-muted); pointer-events: none;
+}
+.mc-mg-search input {
+  height: 36px; width: 200px; padding: 0 12px 0 32px; border-radius: 8px;
+  border: 1px solid var(--mc-border); background: var(--mc-bg-body); color: var(--mc-text-body);
+  font-size: var(--g-text-sm);
+}
+.mc-mg-search input:focus { outline: 2px solid var(--mc-accent); outline-offset: 1px; }
+.mc-mg-search input::placeholder { color: var(--mc-text-muted); opacity: 1; }
+
+/* table */
+.mc-mg-table { margin: 0; --bs-table-bg: transparent; }
+.mc-mg-table th {
+  font-size: var(--g-text-xs); font-weight: 700; letter-spacing: .04em; text-transform: uppercase;
+  color: var(--mc-text-muted); border-bottom: 1px solid var(--mc-border); white-space: nowrap;
+}
+.mc-mg-table td { vertical-align: middle; font-size: var(--g-text-sm); color: var(--mc-text-body); border-color: var(--mc-border); }
+.mc-mg-table tbody tr:hover { background: var(--mc-row-hover, rgba(148,163,184,.06)); }
+.mc-mg-file { display: inline-flex; align-items: center; gap: var(--g-2); font-weight: 600; color: var(--mc-text-heading); }
+.mc-mg-file :is(i, svg) { color: #3b82f6; }
+.mc-mg-table code { font-size: var(--g-text-xs); color: var(--mc-text-muted); }
+/* Align the table edges with the panel heading + toolbar.
+   client-theme.css sets table gutters with !important, so match it here. */
+.mc-mg-table > :not(caption) > * > *:first-child { padding-left: 0 !important; }
+.mc-mg-table > :not(caption) > * > *:last-child { padding-right: 0 !important; }
+
+/* generic blocks */
+.mc-mg-grid { display: grid; gap: var(--g-4); }
+.mc-mg-grid.cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.mc-mg-grid.cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.mc-mg-block { padding: var(--g-4); border: 1px solid var(--mc-border); border-radius: 12px; background: var(--mc-bg-body); }
+.mc-mg-block h3 { margin: 0 0 var(--g-2); font-size: var(--g-text-md) !important; line-height: 1.5 !important; font-weight: 700; color: var(--mc-text-heading); display: flex; align-items: center; gap: var(--g-2); }
+.mc-mg-block p { margin: 0; font-size: var(--g-text-sm); color: var(--mc-text-muted); }
+.mc-mg-kv { display: grid; grid-template-columns: auto 1fr; gap: 6px var(--g-4); margin: 0; font-size: var(--g-text-sm); }
+.mc-mg-kv dt { color: var(--mc-text-muted); font-weight: 400; }
+.mc-mg-kv dd { margin: 0; color: var(--mc-text-heading); font-weight: 600; }
+
+.mc-mg-field { display: flex; flex-direction: column; gap: 6px; margin-bottom: var(--g-4); }
+.mc-mg-field label { font-size: var(--g-text-sm); font-weight: 600; color: var(--mc-text-heading); }
+.mc-mg-field .form-control, .mc-mg-field .form-select {
+  height: 38px; border-radius: 8px; border-color: var(--mc-border);
+  background: var(--mc-bg-body); color: var(--mc-text-body); font-size: var(--g-text-sm);
+}
+.mc-mg-field small { font-size: var(--g-text-xs); color: var(--mc-text-muted); }
+
+.mc-mg-key {
+  display: flex; gap: var(--g-2); align-items: stretch; margin-top: var(--g-2);
+}
+.mc-mg-key textarea {
+  flex: 1 1 auto; min-height: 66px; resize: vertical; padding: var(--g-2) var(--g-3);
+  border-radius: 8px; border: 1px solid var(--mc-border); background: var(--mc-bg-card);
+  color: var(--mc-text-body); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 11px; line-height: 1.5;
+}
+
+.mc-mg-app { display: flex; flex-direction: column; gap: var(--g-3); padding: var(--g-4); border: 1px solid var(--mc-border); border-radius: 12px; background: var(--mc-bg-body); }
+.mc-mg-app .ic { width: 38px; height: 38px; border-radius: 10px; display: inline-flex; align-items: center; justify-content: center; background: var(--mc-accent-soft); color: var(--mc-accent-text); font-size: 16px; }
+.mc-mg-app strong { color: var(--mc-text-heading); font-size: var(--g-text-md); }
+.mc-mg-app span { font-size: var(--g-text-xs); color: var(--mc-text-muted); }
+
+.mc-mg-empty { display: flex; flex-direction: column; align-items: center; gap: var(--g-3); padding: var(--g-6) var(--g-4); text-align: center; border: 1px dashed var(--mc-border); border-radius: 12px; }
+.mc-mg-empty :is(i, svg) { font-size: 22px; width: 22px; height: 22px; color: var(--mc-text-muted); }
+.mc-mg-empty p { margin: 0; font-size: var(--g-text-sm); color: var(--mc-text-muted); }
+
+.mc-mg-hint { display: flex; align-items: center; gap: var(--g-2); margin: var(--g-4) 0 0; font-size: var(--g-text-xs); color: var(--mc-text-muted); }
+.mc-mg-hint :is(i, svg) { color: var(--mc-accent-text); }
+
+.mc-mg-ext { display: flex; flex-wrap: wrap; gap: var(--g-2); margin-top: var(--g-2); }
+.mc-mg-ext span {
+  display: inline-flex; align-items: center; gap: 6px; height: 26px; padding: 0 10px; border-radius: 99px;
+  font-size: var(--g-text-xs); font-weight: 600; color: var(--mc-ok-text, #34d399);
+  background: var(--mc-ok-soft, rgba(52,211,153,.12)); border: 1px solid transparent;
+}
+
+/* ---------- Interaction states & a11y ---------- */
+.mc-mg .btn:focus-visible,
+.mc-mg-tab:focus-visible { outline: 2px solid var(--mc-accent); outline-offset: 2px; }
+.mc-mg-tabs :is(i, svg) { pointer-events: none; }
+.mc-mg-table td, .mc-mg-kv dd { font-variant-numeric: tabular-nums; }
+.mc-mg-tab { touch-action: manipulation; }
+
+@media (prefers-reduced-motion: reduce) {
+  .mc-mg-tab, .mc-mg .btn, .mc-mg-chips .mc-chip { transition: none !important; }
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1199.98px) {
+  .mc-mg-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 991.98px) {
+  .mc-mg-console { grid-template-columns: 1fr; }
+  .mc-mg-tabs {
+    flex-direction: row; overflow-x: auto; border-right: 0; border-bottom: 1px solid var(--mc-border);
+    scrollbar-width: thin;
+  }
+  .mc-mg-tab { width: auto; white-space: nowrap; min-height: 44px; }
+  .mc-mg-grid.cols-3 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 575.98px) {
+  .mc-mg-head { padding: var(--g-4); }
+  .mc-mg-title { font-size: 1.15rem !important; }
+  .mc-mg-chips .mc-chip { height: 28px; font-size: 12px; }
+  .mc-mg-actions { display: grid; grid-template-columns: 1fr 1fr; width: 100%; }
+  .mc-mg-actions > :first-child { grid-column: 1 / -1; }
+  .mc-mg-actions .btn { padding-left: var(--g-3); padding-right: var(--g-3); }
+  .mc-mg-stats { grid-template-columns: 1fr; }
+  .mc-mg-grid.cols-2, .mc-mg-grid.cols-3 { grid-template-columns: 1fr; }
+  .mc-mg-panels { padding: var(--g-4); }
+  .mc-mg-search input { width: 100%; height: 40px; }
+  .mc-mg-search { flex: 1 1 100%; }
+  .mc-mg-tools .btn { min-height: 40px; }
+}
